@@ -16,8 +16,13 @@ import java.util.Date;
 @Entity
 public class OpeningHours extends AbstractEntity {
 
+    @ManyToOne
+    protected WorkSchedule workSchedule;
+
     private @Enumerated(EnumType.STRING)
     @Column(unique = true, nullable = false) Day day;
+
+    private Boolean opens;
 
     private @Temporal(TemporalType.TIME) Date openingTime;
     private @Temporal(TemporalType.TIME) Date closingTime;

@@ -1,8 +1,9 @@
 package com.doctorspolis.backend.model.DTO;
 
-import com.doctorspolis.backend.model.OpeningHours;
-import com.doctorspolis.backend.model.referential.Language;
-import com.doctorspolis.backend.model.referential.Speciality;
+
+import com.doctorspolis.backend.model.referential.DTO.LanguageDTO;
+import com.doctorspolis.backend.model.referential.DTO.SpecialityDTO;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -25,9 +26,10 @@ public class DoctorDTO extends PersonDTO {
     private String overview;
 
     private String availability;
-    private List<OpeningHours> openingHours;
 
-    private List<Speciality> Specialities;
-    private List<Language> languages;
+    private List<LanguageDTO> languages;
+    private List<SpecialityDTO> Specialities;
+
+    private List<WorkScheduleDTO> workSchedule;
 
 }

@@ -1,6 +1,7 @@
 package com.doctorspolis.backend.service;
 
 import com.doctorspolis.backend.commun.AbstractService;
+import com.doctorspolis.backend.exception.DoctorNotFoundException;
 import com.doctorspolis.backend.model.DTO.DoctorDTO;
 import com.doctorspolis.backend.model.Doctor;
 import com.doctorspolis.backend.repository.DoctorRepository;
@@ -8,7 +9,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,8 +27,19 @@ public class DoctorService extends AbstractService {
     }
 
     public List<DoctorDTO> getDoctors() {
-        List<Doctor> doctors = this.doctorRepository.findAll();
-        return doctors.stream().map(doctor -> modelMapper.map(doctor, DoctorDTO.class)).collect(Collectors.toList());
+        return this.doctorRepository.findAll().stream().map(doctor -> modelMapper.map(doctor, DoctorDTO.class)).collect(Collectors.toList());
+    }
+
+    public DoctorDTO getDoctorBy(Long ID) throws DoctorNotFoundException {
+        Optional<Doctor> doctor = this.doctorRepository.findById(ID);
+        if (doctor.isPresent())
+            return modelMapper.map(doctor.get(), DoctorDTO.class);
+        else
+            throw new DoctorNotFoundException();
+    }
+
+    public DoctorDTO createDoctor(Doctor doctor) {
+        return modelMapper.map(this.doctorRepository.save(doctor), DoctorDTO.class);
     }
 
 }

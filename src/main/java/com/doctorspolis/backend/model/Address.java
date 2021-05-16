@@ -19,9 +19,15 @@ import javax.persistence.OneToOne;
 @Entity
 public class Address extends AbstractEntity {
 
-    private String postalCode;
+    private @Column(nullable = false) String streetAddress;
 
-    private String city;
+    private String optionalStreetAddress;
+
+    private @Column(nullable = false) String state;
+
+    private @Column(nullable = false) String postalCode;
+
+    private @Column(nullable = false) String city;
 
     @OneToOne()
     private Country country;

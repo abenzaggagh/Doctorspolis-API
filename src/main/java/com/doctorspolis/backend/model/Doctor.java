@@ -19,18 +19,19 @@ public class Doctor extends Person {
 
     private @Column(length=500) String overview;
 
-    private @Enumerated(EnumType.STRING) Availability availability;
-
-    @OneToMany()
-    private Collection<Speciality> Specialities;
-
-    @OneToMany()
+    @OneToMany
     private Collection<Language> languages;
 
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
-    )
-    private Collection<OpeningHours> openingHours;
+    @OneToMany
+    private Collection<Education> educations;
+
+    @OneToMany
+    private Collection<Speciality> Specialities;
+
+    private @Enumerated(EnumType.STRING) Availability availability;
+
+    @OneToMany
+    @JoinColumn(name="DOCTOR_ID", referencedColumnName="ID")
+    private Collection<WorkSchedule> workSchedule;
 
 }

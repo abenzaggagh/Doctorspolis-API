@@ -1,13 +1,13 @@
 package com.doctorspolis.backend.controller;
 
 import com.doctorspolis.backend.commun.AbstractController;
+import com.doctorspolis.backend.exception.DoctorNotFoundException;
 import com.doctorspolis.backend.model.DTO.DoctorDTO;
+import com.doctorspolis.backend.model.Doctor;
 import com.doctorspolis.backend.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -26,5 +26,16 @@ public class DoctorController extends AbstractController {
     public ResponseEntity<Collection<DoctorDTO>> getAllDoctors() {
         return ResponseEntity.ok(this.doctorService.getDoctors());
     }
+
+    @GetMapping("/doctor/{ID}")
+    public ResponseEntity<DoctorDTO> getDoctor(@PathVariable Long ID) throws DoctorNotFoundException {
+        return ResponseEntity.ok(this.doctorService.getDoctorBy(ID));
+    }
+
+    @PostMapping("/doctor")
+    public ResponseEntity<DoctorDTO> createDoctor(@RequestBody Doctor doctor) {
+        return ResponseEntity.ok(this.doctorService.createDoctor(doctor));
+    }
+
 
 }
