@@ -16,7 +16,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class AbstractReferential extends AbstractEntity {
 
-    private @Column(nullable = false) String code;
+    private @Column(unique = true, nullable = false) String code;
     private @Column(nullable = false) String value;
 
 }

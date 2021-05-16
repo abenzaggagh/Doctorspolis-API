@@ -6,6 +6,7 @@ import com.doctorspolis.backend.model.enumeration.Gender;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 
 @Getter
@@ -28,5 +29,8 @@ public abstract class Person extends AbstractEntity {
 
     private @Column(length=20, unique = true) String phone;
     private @Column(length=100, unique = true) String email;
+
+    @OneToMany()
+    private Collection<Address> addresses;
 
 }

@@ -1,15 +1,14 @@
 package com.doctorspolis.backend.model.DTO;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.doctorspolis.backend.model.OpeningHours;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,15 +16,9 @@ import java.util.Date;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public class OpeningHoursDTO {
+public class WorkScheduleDTO {
 
-    private String day;
+    private String description;
 
-    private Boolean opens;
-
-    @JsonFormat(pattern="HH:mm:ss")
-    private Date openingTime;
-    @JsonFormat(pattern="HH:mm:ss")
-    private Date closingTime;
-
+    private List<OpeningHoursDTO> openingHours;
 }

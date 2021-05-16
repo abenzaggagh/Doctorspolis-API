@@ -1,0 +1,25 @@
+package com.doctorspolis.backend.model;
+
+import com.doctorspolis.backend.commun.AbstractEntity;
+import com.doctorspolis.backend.model.referential.University;
+import lombok.*;
+
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import java.util.Date;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+
+@Entity
+public class Education extends AbstractEntity {
+
+    private Date graduationDate;
+
+    @OneToOne
+    private University university;
+
+}

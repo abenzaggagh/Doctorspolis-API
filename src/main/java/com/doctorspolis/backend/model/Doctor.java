@@ -7,6 +7,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -19,18 +20,19 @@ public class Doctor extends Person {
 
     private @Column(length=500) String overview;
 
-    private @Enumerated(EnumType.STRING) Availability availability;
-
-    @OneToMany()
-    private Collection<Speciality> Specialities;
-
-    @OneToMany()
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private Collection<Language> languages;
 
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
-    )
-    private Collection<OpeningHours> openingHours;
+    @OneToMany
+    private Collection<Education> educations;
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private Collection<Speciality> Specialities;
+
+    private @Enumerated(EnumType.STRING) Availability availability;
+
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="DOCTOR_ID", referencedColumnName="ID")
+    private Collection<WorkSchedule> workSchedule;
 
 }
