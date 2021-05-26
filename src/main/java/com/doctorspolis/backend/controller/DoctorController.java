@@ -38,9 +38,9 @@ public class DoctorController extends AbstractController {
         return ResponseEntity.ok(this.doctorService.createDoctor(doctor));
     }
 
-    @PutMapping("/doctor")
-    public ResponseEntity<DoctorDTO> updateDoctor(@PathVariable Long ID, @RequestBody Doctor doctor) {
-        return ResponseEntity.ok(null);
+    @PutMapping("/doctor/{doctorID}")
+    public ResponseEntity<DoctorDTO> updateDoctor(@PathVariable Long doctorID, @RequestBody DoctorDTO doctorDTO) throws DoctorNotFoundException {
+        return ResponseEntity.ok(this.doctorService.updateDoctorByID(doctorID, doctorDTO));
     }
 
     @DeleteMapping("/doctor")

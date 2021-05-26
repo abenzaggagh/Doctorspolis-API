@@ -2,35 +2,37 @@ package com.doctorspolis.backend.service;
 
 import com.doctorspolis.backend.commun.AbstractService;
 import com.doctorspolis.backend.exception.DoctorNotFoundException;
+import com.doctorspolis.backend.helper.DoctorHelper;
 import com.doctorspolis.backend.model.DTO.DoctorDTO;
 import com.doctorspolis.backend.model.Doctor;
-import com.doctorspolis.backend.model.referential.DTO.LanguageDTO;
-import com.doctorspolis.backend.model.referential.Language;
 import com.doctorspolis.backend.repository.DoctorRepository;
-import com.doctorspolis.backend.repository.referential.LanguageRepository;
+
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
-
-import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
 
 @Service
 public class DoctorService extends AbstractService {
 
     ModelMapper modelMapper = new ModelMapper();
 
-    private final LanguageRepository languageRepository;
+    private final DoctorHelper doctorHelper;
 
     private final DoctorRepository doctorRepository;
 
+    // TODO : Finish the Update methods for PUT/PATCH Http Methods
+
     @Autowired
-    public DoctorService(DoctorRepository doctorRepository,
-                         LanguageRepository languageRepository) {
+    public DoctorService(DoctorHelper doctorHelper,
+                         DoctorRepository doctorRepository) {
+        this.doctorHelper = doctorHelper;
         this.doctorRepository = doctorRepository;
-        this.languageRepository = languageRepository;
     }
 
     public List<DoctorDTO> getDoctors() {
@@ -42,23 +44,33 @@ public class DoctorService extends AbstractService {
         if (doctor.isPresent())
             return modelMapper.map(doctor.get(), DoctorDTO.class);
         else
-            throw new DoctorNotFoundException();
+            throw new DoctorNotFoundException("");
     }
 
     @Transactional
     public DoctorDTO createDoctor(DoctorDTO doctorDTO) {
         Doctor doctor = modelMapper.map(doctorDTO, Doctor.class);
 
-        ArrayList<Language> languages = new ArrayList<>();
-
-        if (doctorDTO.getLanguages() != null && doctorDTO.getLanguages().size() > 0) {
-            for(LanguageDTO languageDTO: doctorDTO.getLanguages()) {
-                languages.add(this.languageRepository.findLanguageByCode(languageDTO.getCode()));
-            }
-            doctor.setLanguages(languages);
-        }
+        doctorHelper.setLanguages(doctorDTO, doctor);
+        doctorHelper.setSpecialities(doctorDTO, doctor);
 
         return modelMapper.map(this.doctorRepository.save(doctor), DoctorDTO.class);
     }
+
+    public DoctorDTO updateDoctorByID(Long doctorID, DoctorDTO doctorDTO) throws DoctorNotFoundException {
+        Optional<Doctor> optionalDoctor = this.doctorRepository.findById(doctorID);
+
+        if (optionalDoctor.isPresent()) {
+            Doctor existingDoctor = optionalDoctor.get();
+            Doctor doctor = modelMapper.map(doctorDTO, Doctor.class);
+
+            doctorHelper.updateDoctor(doctor, existingDoctor);
+
+            return modelMapper.map(this.doctorRepository.save(doctor), DoctorDTO.class);
+        } else {
+            throw new DoctorNotFoundException("");
+        }
+    }
+
 
 }

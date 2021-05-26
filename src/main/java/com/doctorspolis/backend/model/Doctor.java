@@ -5,9 +5,10 @@ import com.doctorspolis.backend.model.referential.Language;
 import com.doctorspolis.backend.model.referential.Speciality;
 import lombok.*;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -16,6 +17,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = false)
 
 @Entity
+@DynamicUpdate
 public class Doctor extends Person {
 
     private @Column(length=500) String overview;
