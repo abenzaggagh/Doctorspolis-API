@@ -3,7 +3,6 @@ package com.doctorspolis.backend.controller;
 import com.doctorspolis.backend.commun.AbstractController;
 import com.doctorspolis.backend.exception.DoctorNotFoundException;
 import com.doctorspolis.backend.model.DTO.DoctorDTO;
-import com.doctorspolis.backend.model.Doctor;
 import com.doctorspolis.backend.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -43,9 +42,9 @@ public class DoctorController extends AbstractController {
         return ResponseEntity.ok(this.doctorService.updateDoctorByID(doctorID, doctorDTO));
     }
 
-    @DeleteMapping("/doctor")
-    public ResponseEntity<DoctorDTO> deleteDoctor(@PathVariable Long ID) {
-        return ResponseEntity.ok(null);
+    @DeleteMapping("/doctor/{ID}")
+    public void deleteDoctor(@PathVariable Long ID) {
+        this.doctorService.deleteDoctorByID(ID);
     }
 
 }

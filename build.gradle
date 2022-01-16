@@ -14,9 +14,6 @@ repositories {
 
 dependencies {
 
-	compile('org.modelmapper:modelmapper:1.1.0')
-	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
-
 	implementation "org.mapstruct:mapstruct:1.4.2.Final"
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'

@@ -17,8 +17,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class DoctorExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(DoctorNotFoundException.class)
-    protected ResponseEntity<String> handleEntityNotFound() {
-        return new ResponseEntity<>("Hello World!", HttpStatus.NOT_FOUND);
+    protected ResponseEntity<String> handleEntityNotFound(DoctorNotFoundException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
 }
