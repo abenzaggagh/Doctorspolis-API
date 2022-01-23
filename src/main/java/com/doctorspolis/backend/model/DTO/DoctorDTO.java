@@ -27,6 +27,8 @@ public class DoctorDTO extends PersonDTO {
 
     private String availability;
 
+    private AddressDTO address;
+
     private List<LanguageDTO> languages;
     private List<SpecialityDTO> specialities;
 

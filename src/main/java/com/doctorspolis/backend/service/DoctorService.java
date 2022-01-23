@@ -56,6 +56,7 @@ public class DoctorService extends AbstractService {
         return doctorMapper.map(this.doctorRepository.save(doctor));
     }
 
+    @Transactional
     public DoctorDTO updateDoctorByID(Long doctorID, DoctorDTO doctorDTO) throws DoctorNotFoundException {
         Optional<Doctor> optionalDoctor = this.doctorRepository.findById(doctorID);
 
@@ -65,7 +66,7 @@ public class DoctorService extends AbstractService {
 
             doctorHelper.updateDoctor(doctor, existingDoctor);
 
-            return doctorMapper.map(this.doctorRepository.save(doctor));
+            return doctorMapper.map(this.doctorRepository.save(existingDoctor));
         } else {
             throw new DoctorNotFoundException(doctorID);
         }

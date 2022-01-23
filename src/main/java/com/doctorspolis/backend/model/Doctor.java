@@ -22,6 +22,9 @@ public class Doctor extends Person {
 
     private @Column(length=500) String overview;
 
+    @OneToOne()
+    private Address address;
+
     @ManyToMany(cascade = CascadeType.PERSIST)
     private Collection<Language> languages;
 
