@@ -7,14 +7,15 @@ import com.doctorspolis.backend.helper.mapper.DoctorMapper;
 import com.doctorspolis.backend.model.DTO.DoctorDTO;
 import com.doctorspolis.backend.model.Doctor;
 import com.doctorspolis.backend.repository.DoctorRepository;
-
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.*;
-import java.util.stream.Collectors;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DoctorService extends AbstractService {
@@ -34,12 +35,16 @@ public class DoctorService extends AbstractService {
         this.doctorRepository = doctorRepository;
     }
 
+    public Page<Doctor> searchDoctors(Pageable pageable) {
+        return doctorRepository.findAll(pageable);
+    }
+
     public List<DoctorDTO> getDoctors() {
         return this.doctorRepository.findAll().stream().map(doctorMapper::map).collect(Collectors.toList());
     }
 
     public DoctorDTO getDoctorBy(Long doctorID) throws DoctorNotFoundException {
-        Optional<Doctor> doctor = this.doctorRepository.findById(doctorID);
+        Optional<Doctor> doctor = doctorRepository.findById(doctorID);
         if (doctor.isPresent())
             return doctorMapper.map(doctor.get());
         else
@@ -53,12 +58,12 @@ public class DoctorService extends AbstractService {
         doctorHelper.setLanguages(doctorDTO, doctor);
         doctorHelper.setSpecialities(doctorDTO, doctor);
 
-        return doctorMapper.map(this.doctorRepository.save(doctor));
+        return doctorMapper.map(doctorRepository.save(doctor));
     }
 
     @Transactional
     public DoctorDTO updateDoctorByID(Long doctorID, DoctorDTO doctorDTO) throws DoctorNotFoundException {
-        Optional<Doctor> optionalDoctor = this.doctorRepository.findById(doctorID);
+        Optional<Doctor> optionalDoctor = doctorRepository.findById(doctorID);
 
         if (optionalDoctor.isPresent()) {
             Doctor existingDoctor = optionalDoctor.get();
@@ -66,7 +71,7 @@ public class DoctorService extends AbstractService {
 
             doctorHelper.updateDoctor(doctor, existingDoctor);
 
-            return doctorMapper.map(this.doctorRepository.save(existingDoctor));
+            return doctorMapper.map(doctorRepository.save(existingDoctor));
         } else {
             throw new DoctorNotFoundException(doctorID);
         }
@@ -75,7 +80,7 @@ public class DoctorService extends AbstractService {
     public void deleteDoctorByID(Long doctorID) throws DoctorNotFoundException {
         Optional<Doctor> optionalDoctor = this.doctorRepository.findById(doctorID);
         optionalDoctor.ifPresentOrElse(
-                doctor -> this.doctorRepository.deleteById(doctor.getID()),
+                doctor -> doctorRepository.deleteById(doctor.getID()),
                 () -> { throw new DoctorNotFoundException(doctorID); }
         );
     }
