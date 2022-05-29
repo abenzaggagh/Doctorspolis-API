@@ -1,3 +1,4 @@
+/*
 DROP TABLE address CASCADE;
 DROP TABLE language CASCADE;
 DROP TABLE doctor CASCADE;
@@ -15,6 +16,7 @@ DROP TABLE education CASCADE;
 DROP TABLE university CASCADE;
 DROP TABLE work_schedule CASCADE;
 -- DROP TABLE work_schedule_opening_hours CASCADE;
+*/
 
 INSERT INTO public.speciality (id, code, value) VALUES (1, 'PNLG', 'Pneumologue');
 

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class DoctorExceptionHandler extends ResponseEntityExceptionHandler {
 
+    // TODO: Create a custom Error Message DTO
     @ExceptionHandler(DoctorNotFoundException.class)
     protected ResponseEntity<String> handleEntityNotFound(DoctorNotFoundException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);

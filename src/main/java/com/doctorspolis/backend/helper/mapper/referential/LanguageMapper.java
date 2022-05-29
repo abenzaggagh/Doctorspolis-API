@@ -1,8 +1,9 @@
-package com.doctorspolis.backend.helper.mapper;
+package com.doctorspolis.backend.helper.mapper.referential;
 
 import com.doctorspolis.backend.model.referential.Country;
 import com.doctorspolis.backend.model.referential.DTO.CountryDTO;
-
+import com.doctorspolis.backend.model.referential.DTO.LanguageDTO;
+import com.doctorspolis.backend.model.referential.Language;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;
 
@@ -12,10 +13,10 @@ import java.util.List;
     nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
     componentModel = "spring"
 )
-public interface CountryMapper {
+public interface LanguageMapper {
 
-    CountryDTO map(Country country);
+    LanguageDTO map(Language language);
 
-    List<CountryDTO> map(List<Country> country);
+    List<LanguageDTO> map(List<Language> languages);
 
 }

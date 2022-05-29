@@ -68,11 +68,13 @@ public class DoctorHelper {
         ArrayList<Language> languages = new ArrayList<>();
 
         if (!CollectionUtils.isEmpty(doctorDTO.getLanguages())) {
-            for(LanguageDTO languageDTO: doctorDTO.getLanguages()) {
-                languages.add(languageRepository.findLanguageByCode(languageDTO.getCode()));
-            }
+            doctorDTO.getLanguages().forEach(languageDTO -> languageRepository.findLanguageByCode(languageDTO.getCode()).ifPresent(languages::add));
             doctor.setLanguages(languages);
         }
+    }
+
+    public void prepareSearch(String query) {
+
     }
 
 
