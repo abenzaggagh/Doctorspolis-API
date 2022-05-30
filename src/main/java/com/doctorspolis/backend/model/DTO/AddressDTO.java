@@ -1,14 +1,14 @@
 package com.doctorspolis.backend.model.DTO;
 
-import com.doctorspolis.backend.model.OpeningHours;
+import com.doctorspolis.backend.model.referential.Country;
+import com.doctorspolis.backend.model.referential.DTO.CountryDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -16,11 +16,18 @@ import java.util.List;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public class WorkScheduleDTO {
+public class AddressDTO {
 
-    private String description;
+    private String streetAddress;
 
-    // TODO: Validate if no day is repeated
-    private List<OpeningHoursDTO> openingHours;
+    private String optionalStreetAddress;
+
+    private String state;
+
+    private String postalCode;
+
+    private String city;
+
+    private CountryDTO country;
 
 }

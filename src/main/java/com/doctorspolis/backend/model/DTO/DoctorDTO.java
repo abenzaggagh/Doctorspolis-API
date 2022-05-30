@@ -3,10 +3,8 @@ package com.doctorspolis.backend.model.DTO;
 
 import com.doctorspolis.backend.model.referential.DTO.LanguageDTO;
 import com.doctorspolis.backend.model.referential.DTO.SpecialityDTO;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,7 +25,10 @@ public class DoctorDTO extends PersonDTO {
 
     private String availability;
 
+    private AddressDTO address;
+
     private List<LanguageDTO> languages;
+
     private List<SpecialityDTO> specialities;
 
     private List<WorkScheduleDTO> workSchedule;

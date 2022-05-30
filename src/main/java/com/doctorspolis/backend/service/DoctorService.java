@@ -5,16 +5,17 @@ import com.doctorspolis.backend.exception.DoctorNotFoundException;
 import com.doctorspolis.backend.helper.DoctorHelper;
 import com.doctorspolis.backend.helper.mapper.DoctorMapper;
 import com.doctorspolis.backend.model.DTO.DoctorDTO;
+import com.doctorspolis.backend.model.DTO.PageDTO;
 import com.doctorspolis.backend.model.Doctor;
 import com.doctorspolis.backend.repository.DoctorRepository;
-
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.*;
-import java.util.stream.Collectors;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class DoctorService extends AbstractService {
@@ -34,12 +35,22 @@ public class DoctorService extends AbstractService {
         this.doctorRepository = doctorRepository;
     }
 
-    public List<DoctorDTO> getDoctors() {
-        return this.doctorRepository.findAll().stream().map(doctorMapper::map).collect(Collectors.toList());
+    public PageDTO<DoctorDTO> searchDoctors(String query, Pageable pageable) {
+        Page<Doctor> result = doctorRepository.findAllByFirstnameOrLastname(query, query, pageable);
+
+        return PageDTO.<DoctorDTO>builder()
+                .content(doctorMapper.map(result.getContent()))
+                .totalPages(result.getTotalPages())
+                .totalElements(result.getTotalElements())
+                .build();
+    }
+
+    public Collection<DoctorDTO> getDoctors() {
+        return doctorMapper.map(this.doctorRepository.findAll());
     }
 
     public DoctorDTO getDoctorBy(Long doctorID) throws DoctorNotFoundException {
-        Optional<Doctor> doctor = this.doctorRepository.findById(doctorID);
+        Optional<Doctor> doctor = doctorRepository.findById(doctorID);
         if (doctor.isPresent())
             return doctorMapper.map(doctor.get());
         else
@@ -48,35 +59,32 @@ public class DoctorService extends AbstractService {
 
     @Transactional
     public DoctorDTO createDoctor(DoctorDTO doctorDTO) {
-        Doctor doctor = doctorMapper.map(doctorDTO);
-
-        doctorHelper.setLanguages(doctorDTO, doctor);
-        doctorHelper.setSpecialities(doctorDTO, doctor);
-
-        return doctorMapper.map(this.doctorRepository.save(doctor));
+        return doctorMapper.map(doctorRepository.save(doctorHelper.setDoctor(doctorDTO)));
     }
 
-    public DoctorDTO updateDoctorByID(Long doctorID, DoctorDTO doctorDTO) throws DoctorNotFoundException {
-        Optional<Doctor> optionalDoctor = this.doctorRepository.findById(doctorID);
+    @Transactional
+    public DoctorDTO updateDoctor(Long doctorID, DoctorDTO doctorDTO) throws DoctorNotFoundException {
+        Optional<Doctor> optionalDoctor = doctorRepository.findById(doctorID);
 
         if (optionalDoctor.isPresent()) {
-            Doctor existingDoctor = optionalDoctor.get();
-            Doctor doctor = doctorMapper.map(doctorDTO);
+            Doctor doctor = optionalDoctor.get();
 
-            doctorHelper.updateDoctor(doctor, existingDoctor);
+            doctorHelper.updateDoctor(doctorDTO, doctor);
 
-            return doctorMapper.map(this.doctorRepository.save(doctor));
+            return doctorMapper.map(doctorRepository.save(doctor));
         } else {
             throw new DoctorNotFoundException(doctorID);
         }
     }
 
-    public void deleteDoctorByID(Long doctorID) throws DoctorNotFoundException {
+    public Boolean deleteDoctorByID(Long doctorID) throws DoctorNotFoundException {
         Optional<Doctor> optionalDoctor = this.doctorRepository.findById(doctorID);
-        optionalDoctor.ifPresentOrElse(
-                doctor -> this.doctorRepository.deleteById(doctor.getID()),
-                () -> { throw new DoctorNotFoundException(doctorID); }
-        );
+        if (optionalDoctor.isPresent()) {
+            doctorRepository.deleteById(doctorID);
+            return true;
+        } else {
+            throw new DoctorNotFoundException(doctorID);
+        }
     }
 
 }

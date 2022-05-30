@@ -1,19 +1,21 @@
 package com.doctorspolis.backend.controller;
 
-import com.doctorspolis.backend.commun.AbstractController;
+import com.doctorspolis.backend.utility.CRUDController;
 import com.doctorspolis.backend.exception.DoctorNotFoundException;
 import com.doctorspolis.backend.model.DTO.DoctorDTO;
+import com.doctorspolis.backend.model.DTO.PageDTO;
 import com.doctorspolis.backend.service.DoctorService;
+import com.doctorspolis.backend.utility.constants.DoctorspolisConstants;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
 @RestController
-@RequestMapping("api")
-public class DoctorController extends AbstractController {
+@RequestMapping(DoctorspolisConstants.DOCTORS)
+public class DoctorController implements CRUDController<DoctorDTO> {
 
     private final DoctorService doctorService;
 
@@ -22,29 +24,43 @@ public class DoctorController extends AbstractController {
         this.doctorService = doctorService;
     }
 
-    @GetMapping("/doctors")
-    public ResponseEntity<Collection<DoctorDTO>> getAllDoctors() {
+    @Override
+    @GetMapping
+    public ResponseEntity<Collection<DoctorDTO>> getAll() {
         return ResponseEntity.ok(this.doctorService.getDoctors());
     }
 
-    @GetMapping("/doctor/{ID}")
-    public ResponseEntity<DoctorDTO> getDoctor(@PathVariable Long ID) throws DoctorNotFoundException {
-        return ResponseEntity.ok(this.doctorService.getDoctorBy(ID));
+    @Override
+    @GetMapping(DoctorspolisConstants.DOCTOR_ID_PATH_VARIABLE)
+    public ResponseEntity<DoctorDTO> getOne(@PathVariable Long doctorID) throws DoctorNotFoundException {
+        return ResponseEntity.ok(this.doctorService.getDoctorBy(doctorID));
     }
 
-    @PostMapping("/doctor")
-    public ResponseEntity<DoctorDTO> createDoctor(@RequestBody DoctorDTO doctor) {
+    @Override
+    @PostMapping
+    public ResponseEntity<DoctorDTO> create(@RequestBody DoctorDTO doctor) {
         return ResponseEntity.ok(this.doctorService.createDoctor(doctor));
     }
 
-    @PutMapping("/doctor/{doctorID}")
-    public ResponseEntity<DoctorDTO> updateDoctor(@PathVariable Long doctorID, @RequestBody DoctorDTO doctorDTO) throws DoctorNotFoundException {
-        return ResponseEntity.ok(this.doctorService.updateDoctorByID(doctorID, doctorDTO));
+    @Override
+    @PutMapping(DoctorspolisConstants.DOCTOR_ID_PATH_VARIABLE)
+    public ResponseEntity<DoctorDTO> update(@PathVariable Long doctorID,
+                                            @RequestBody DoctorDTO doctorDTO) throws DoctorNotFoundException {
+        return ResponseEntity.ok(this.doctorService.updateDoctor(doctorID, doctorDTO));
     }
 
-    @DeleteMapping("/doctor/{ID}")
-    public void deleteDoctor(@PathVariable Long ID) {
-        this.doctorService.deleteDoctorByID(ID);
+    @Override
+    @DeleteMapping(DoctorspolisConstants.DOCTOR_ID_PATH_VARIABLE)
+    public ResponseEntity<Boolean> delete(@PathVariable Long doctorID) throws DoctorNotFoundException {
+        return ResponseEntity.ok(this.doctorService.deleteDoctorByID(doctorID));
+    }
+
+    /* Keep the Search methods for later. */
+    // TODO: Implement the search controller for doctors
+    //       Change the GET method to POST
+    @GetMapping(DoctorspolisConstants.SEARCH)
+    public ResponseEntity<PageDTO<DoctorDTO>> search(String query, Pageable pageable) {
+        return ResponseEntity.ok(this.doctorService.searchDoctors(query, pageable));
     }
 
 }

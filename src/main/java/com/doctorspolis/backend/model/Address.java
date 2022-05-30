@@ -5,9 +5,7 @@ import com.doctorspolis.backend.model.referential.Country;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 
 @Getter
