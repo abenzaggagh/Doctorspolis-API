@@ -13,6 +13,6 @@ import java.io.Serializable;
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
 
-    private @Id @GeneratedValue(strategy = GenerationType.TABLE) @Column(name = "ID") Long ID;
+    private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "ID") Long ID;
 
 }

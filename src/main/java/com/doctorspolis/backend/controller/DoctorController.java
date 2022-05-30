@@ -1,19 +1,16 @@
 package com.doctorspolis.backend.controller;
 
-import com.doctorspolis.backend.commun.CRUDController;
+import com.doctorspolis.backend.utility.CRUDController;
 import com.doctorspolis.backend.exception.DoctorNotFoundException;
 import com.doctorspolis.backend.model.DTO.DoctorDTO;
 import com.doctorspolis.backend.model.DTO.PageDTO;
 import com.doctorspolis.backend.service.DoctorService;
-import com.doctorspolis.backend.utility.DoctorspolisConstants;
+import com.doctorspolis.backend.utility.constants.DoctorspolisConstants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Collection;
 
 @RestController
@@ -28,7 +25,7 @@ public class DoctorController implements CRUDController<DoctorDTO> {
     }
 
     @Override
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<Collection<DoctorDTO>> getAll() {
         return ResponseEntity.ok(this.doctorService.getDoctors());
     }
@@ -40,8 +37,8 @@ public class DoctorController implements CRUDController<DoctorDTO> {
     }
 
     @Override
-    @PostMapping()
-    public ResponseEntity<DoctorDTO> create(@Valid @RequestBody DoctorDTO doctor) {
+    @PostMapping
+    public ResponseEntity<DoctorDTO> create(@RequestBody DoctorDTO doctor) {
         return ResponseEntity.ok(this.doctorService.createDoctor(doctor));
     }
 
@@ -49,7 +46,7 @@ public class DoctorController implements CRUDController<DoctorDTO> {
     @PutMapping(DoctorspolisConstants.DOCTOR_ID_PATH_VARIABLE)
     public ResponseEntity<DoctorDTO> update(@PathVariable Long doctorID,
                                             @RequestBody DoctorDTO doctorDTO) throws DoctorNotFoundException {
-        return ResponseEntity.ok(this.doctorService.updateDoctorByID(doctorID, doctorDTO));
+        return ResponseEntity.ok(this.doctorService.updateDoctor(doctorID, doctorDTO));
     }
 
     @Override
@@ -58,7 +55,6 @@ public class DoctorController implements CRUDController<DoctorDTO> {
         return ResponseEntity.ok(this.doctorService.deleteDoctorByID(doctorID));
     }
 
-
     /* Keep the Search methods for later. */
     // TODO: Implement the search controller for doctors
     //       Change the GET method to POST
@@ -66,6 +62,5 @@ public class DoctorController implements CRUDController<DoctorDTO> {
     public ResponseEntity<PageDTO<DoctorDTO>> search(String query, Pageable pageable) {
         return ResponseEntity.ok(this.doctorService.searchDoctors(query, pageable));
     }
-
 
 }

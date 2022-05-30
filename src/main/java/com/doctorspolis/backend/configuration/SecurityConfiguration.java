@@ -1,4 +1,4 @@
-package com.doctorspolis.backend.security;
+package com.doctorspolis.backend.configuration;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;

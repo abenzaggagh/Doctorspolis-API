@@ -1,7 +1,6 @@
 package com.doctorspolis.backend.service;
 
 import com.doctorspolis.backend.commun.AbstractService;
-import com.doctorspolis.backend.exception.DoctorNotFoundException;
 import com.doctorspolis.backend.exception.ResourceNotFoundException;
 import com.doctorspolis.backend.helper.mapper.referential.CountryMapper;
 import com.doctorspolis.backend.helper.mapper.referential.LanguageMapper;
@@ -11,7 +10,7 @@ import com.doctorspolis.backend.model.referential.DTO.LanguageDTO;
 import com.doctorspolis.backend.model.referential.Language;
 import com.doctorspolis.backend.repository.referential.CountryRepository;
 import com.doctorspolis.backend.repository.referential.LanguageRepository;
-import com.doctorspolis.backend.utility.DoctorspolisConstants;
+import com.doctorspolis.backend.utility.constants.DoctorspolisConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;

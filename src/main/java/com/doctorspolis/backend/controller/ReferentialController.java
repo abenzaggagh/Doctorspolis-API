@@ -4,7 +4,7 @@ import com.doctorspolis.backend.commun.AbstractController;
 import com.doctorspolis.backend.model.referential.DTO.CountryDTO;
 import com.doctorspolis.backend.model.referential.DTO.LanguageDTO;
 import com.doctorspolis.backend.service.ReferentialService;
-import com.doctorspolis.backend.utility.DoctorspolisConstants;
+import com.doctorspolis.backend.utility.constants.DoctorspolisConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -15,9 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class DoctorService extends AbstractService {
@@ -49,8 +47,6 @@ public class DoctorService extends AbstractService {
 
     public Collection<DoctorDTO> getDoctors() {
         return doctorMapper.map(this.doctorRepository.findAll());
-        // Use Directly MapStruct
-        // this.doctorRepository.findAll().stream().map(doctorMapper::map).collect(Collectors.toList());
     }
 
     public DoctorDTO getDoctorBy(Long doctorID) throws DoctorNotFoundException {
@@ -63,25 +59,19 @@ public class DoctorService extends AbstractService {
 
     @Transactional
     public DoctorDTO createDoctor(DoctorDTO doctorDTO) {
-        Doctor doctor = doctorMapper.map(doctorDTO);
-
-        doctorHelper.setLanguages(doctorDTO, doctor);
-        doctorHelper.setSpecialities(doctorDTO, doctor);
-
-        return doctorMapper.map(doctorRepository.save(doctor));
+        return doctorMapper.map(doctorRepository.save(doctorHelper.setDoctor(doctorDTO)));
     }
 
     @Transactional
-    public DoctorDTO updateDoctorByID(Long doctorID, DoctorDTO doctorDTO) throws DoctorNotFoundException {
+    public DoctorDTO updateDoctor(Long doctorID, DoctorDTO doctorDTO) throws DoctorNotFoundException {
         Optional<Doctor> optionalDoctor = doctorRepository.findById(doctorID);
 
         if (optionalDoctor.isPresent()) {
-            Doctor existingDoctor = optionalDoctor.get();
-            Doctor doctor = doctorMapper.map(doctorDTO);
+            Doctor doctor = optionalDoctor.get();
 
-            doctorHelper.updateDoctor(doctor, existingDoctor);
+            doctorHelper.updateDoctor(doctorDTO, doctor);
 
-            return doctorMapper.map(doctorRepository.save(existingDoctor));
+            return doctorMapper.map(doctorRepository.save(doctor));
         } else {
             throw new DoctorNotFoundException(doctorID);
         }
@@ -95,7 +85,6 @@ public class DoctorService extends AbstractService {
         } else {
             throw new DoctorNotFoundException(doctorID);
         }
-        // optionalDoctor.ifPresentOrElse(doctor -> doctorRepository.deleteById(doctor.getID()), () -> { throw new DoctorNotFoundException(doctorID); });
     }
 
 }

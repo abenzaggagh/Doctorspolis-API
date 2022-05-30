@@ -20,5 +20,7 @@ public class WorkScheduleDTO {
 
     private String description;
 
+    // TODO: Validate if no day is repeated
     private List<OpeningHoursDTO> openingHours;
+
 }
