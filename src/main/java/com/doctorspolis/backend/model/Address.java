@@ -27,7 +27,6 @@ public class Address extends AbstractEntity {
 
     private @Column(nullable = false) String city;
 
-    @OneToOne()
-    private Country country;
+    private @OneToOne Country country;
 
 }

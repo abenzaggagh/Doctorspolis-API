@@ -36,8 +36,8 @@ public class PatientController implements CRUDController<PatientDTO> {
     }
 
     @Override
-    public ResponseEntity<PatientDTO> create(PatientDTO entity) {
-        return CRUDController.super.create(entity);
+    public ResponseEntity<PatientDTO> create(PatientDTO patientDTO) {
+        return CRUDController.super.create(patientDTO);
     }
 
     @Override
