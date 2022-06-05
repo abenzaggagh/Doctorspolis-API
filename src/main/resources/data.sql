@@ -395,3 +395,25 @@ INSERT INTO country(id, code, value) VALUES
                                          (250, 'ye', 'Yemen'),
                                          (251, 'zm', 'Zambia'),
                                          (252, 'zw', 'Zimbabwe');
+
+
+INSERT INTO speciality(code, value) VALUES ('ALRG' ,'Allergy and immunology'),
+('ANST' ,'Anesthesiology'),
+('DERMA' ,'Dermatology'),
+('RADIO' ,'Diagnostic radiology'),
+('EMRGN' ,'Emergency medicine'),
+('FAM' ,'Family medicine'),
+('INTR' ,'Internal medicine'),
+('GNTC' ,'Medical genetics'),
+('NERO' ,'Neurology'),
+('NUCLR' ,'Nuclear medicine'),
+('GYNEK' ,'Obstetrics and gynecology'),
+('OPHTA' ,'Ophthalmology'),
+('PTLO' ,'Pathology'),
+('PDTRK' ,'Pediatrics'),
+('PHSC' ,'Physical medicine and rehabilitation'),
+('PRVNT' ,'Preventive medicine'),
+('PSY','Psychiatry'),
+('ONCLG' ,'Radiation oncology'),
+('SURGR' ,'Surgery'),
+('URLO' ,'Urology');
