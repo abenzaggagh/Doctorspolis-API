@@ -58,6 +58,7 @@ public class DoctorController implements CRUDController<DoctorDTO> {
     /* Keep the Search methods for later. */
     // TODO: Implement the search controller for doctors
     //       Change the GET method to POST
+    //       Return 206 PARTIAL CONTENT if totalElement > totalContent
     @GetMapping(DoctorspolisConstants.SEARCH)
     public ResponseEntity<PageDTO<DoctorDTO>> search(String query, Pageable pageable) {
         return ResponseEntity.ok(this.doctorService.searchDoctors(query, pageable));

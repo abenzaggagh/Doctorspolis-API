@@ -6,7 +6,6 @@ plugins {
 
 group = 'com.doctorspolis'
 version = '0.0.1'
-sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
@@ -14,15 +13,20 @@ repositories {
 
 dependencies {
 
-	implementation "org.mapstruct:mapstruct:1.4.2.Final"
+	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 	implementation "io.springfox:springfox-boot-starter:3.0.0"
+
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 	implementation 'org.springframework.security:spring-security-oauth2-jose'
-	implementation 'org.springframework.security:spring-security-oauth2-resource-server'
+
+	// implementation group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.5.2.RELEASE'
+
+	implementation 'org.springframework.security:spring-security-oauth2-authorization-server:0.2.3'
+	implementation 'org.springframework.security:spring-security-oauth2-resource-server:5.6.3'
 
 	annotationProcessor 'org.projectlombok:lombok:1.18.24'
 	annotationProcessor "org.mapstruct:mapstruct-processor:1.4.2.Final"
@@ -30,6 +34,7 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
 	compileOnly 'org.projectlombok:lombok:1.18.24'
+
 
 	runtimeOnly 'org.postgresql:postgresql'
 

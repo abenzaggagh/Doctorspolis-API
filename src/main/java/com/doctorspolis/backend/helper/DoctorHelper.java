@@ -33,14 +33,19 @@ public class DoctorHelper extends AbstractHelper {
     }
 
     /***
-     * This method updates the fields that are
-     * @param doctorDTO DoctorDTO
-     * @param target Doctor
+     * This method updates the fields that are included in the DTO.
+     * @param doctorDTO DoctorDTO request body
+     * @param target Doctor updated entity
      */
     public void updateDoctor(DoctorDTO doctorDTO, Doctor target) {
         super.update(this.setDoctor(doctorDTO), target);
     }
 
+    /**
+     *
+     * @param doctorDTO
+     * @return
+     */
     public Doctor setDoctor(DoctorDTO doctorDTO) {
         Doctor doctor = doctorMapper.map(doctorDTO);
 
@@ -51,18 +56,18 @@ public class DoctorHelper extends AbstractHelper {
     }
 
     public void setSpecialities(DoctorDTO doctorDTO, Doctor doctor) {
-        ArrayList<Speciality> specialities = new ArrayList<>();
-
         if (!CollectionUtils.isEmpty(doctorDTO.getSpecialities())) {
+            ArrayList<Speciality> specialities = new ArrayList<>();
+
             doctorDTO.getSpecialities().forEach(specialityDTO -> specialityRepository.findSpecialityByCode(specialityDTO.getCode()).ifPresent(specialities::add));
             doctor.setSpecialities(specialities);
         }
     }
 
     public void setLanguages(DoctorDTO doctorDTO, Doctor doctor) {
-        ArrayList<Language> languages = new ArrayList<>();
-
         if (!CollectionUtils.isEmpty(doctorDTO.getLanguages())) {
+            ArrayList<Language> languages = new ArrayList<>();
+
             doctorDTO.getLanguages().forEach(languageDTO -> languageRepository.findLanguageByCode(languageDTO.getCode()).ifPresent(languages::add));
             doctor.setLanguages(languages);
         }

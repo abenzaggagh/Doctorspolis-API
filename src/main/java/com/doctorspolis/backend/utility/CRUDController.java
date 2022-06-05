@@ -15,7 +15,7 @@ import java.util.Collection;
 public interface CRUDController<T extends AbstractDTO> {
 
     @GetMapping
-    public default ResponseEntity<Collection<T>> getAll() {
+    default ResponseEntity<Collection<T>> getAll() {
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(null);
     }
 
