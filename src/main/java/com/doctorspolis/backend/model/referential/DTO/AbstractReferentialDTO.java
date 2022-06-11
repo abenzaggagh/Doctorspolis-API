@@ -17,6 +17,7 @@ import lombok.Setter;
 public abstract class AbstractReferentialDTO {
 
     private String code;
+
     private String value;
 
 }

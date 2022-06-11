@@ -3,6 +3,7 @@ package com.doctorspolis.backend.controller;
 import com.doctorspolis.backend.commun.AbstractController;
 import com.doctorspolis.backend.model.referential.DTO.CountryDTO;
 import com.doctorspolis.backend.model.referential.DTO.LanguageDTO;
+import com.doctorspolis.backend.model.referential.DTO.SpecialityDTO;
 import com.doctorspolis.backend.service.ReferentialService;
 import com.doctorspolis.backend.utility.constants.DoctorspolisConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,16 @@ public class ReferentialController extends AbstractController {
     @GetMapping(DoctorspolisConstants.LANGUAGE_BY_CODE)
     public ResponseEntity<LanguageDTO> getLanguageByCode(@PathVariable String code) {
         return ResponseEntity.ok().body(this.referentialService.getLanguageByCode(code));
+    }
+
+    @GetMapping(DoctorspolisConstants.SPECIALITIES)
+    public ResponseEntity<List<SpecialityDTO>> getSpecialities() {
+        return ResponseEntity.ok().body(this.referentialService.getSpecialities());
+    }
+
+    @GetMapping(DoctorspolisConstants.SPECIALITY_BY_CODE)
+    public ResponseEntity<SpecialityDTO> getSpecialityByCode(@PathVariable String code) {
+        return ResponseEntity.ok().body(this.referentialService.getSpecialityByCode(code));
     }
 
 }

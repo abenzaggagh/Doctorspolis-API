@@ -31,8 +31,12 @@ public class DoctorspolisConstants {
 
     public static final String LANGUAGES = "languages";
 
+    public static final String SPECIALITIES = "specialities";
+
     public static final String COUNTRY_BY_CODE  = COUNTRIES + URL_SEPARATOR + CODE_PATH_VARIABLE;
 
     public static final String LANGUAGE_BY_CODE  = LANGUAGES + URL_SEPARATOR + CODE_PATH_VARIABLE;
+
+    public static final String SPECIALITY_BY_CODE  = SPECIALITIES + URL_SEPARATOR + CODE_PATH_VARIABLE;
 
 }

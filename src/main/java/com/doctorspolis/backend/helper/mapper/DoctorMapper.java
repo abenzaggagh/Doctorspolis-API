@@ -10,7 +10,8 @@ import java.util.Collection;
 
 @Mapper(
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
-        componentModel = "spring"
+        componentModel = "spring",
+        uses = { AddressMapper.class }
 )
 public interface DoctorMapper {
 

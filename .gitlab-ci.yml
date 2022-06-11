@@ -1,36 +1,47 @@
+variables:
+  IMAGE_OPENJDK_GRADLE: gradle:7.3.3-jdk11-alpine
+
+
 stages:
-  - publish
+  - clean
+  - build
+  - test
+  - build-image
+  - publish-image
   - deploy
 
-variables:
-  TAG_LATEST: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
-  TAG_COMMIT: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHORT_SHA
 
-publish:
-  image: docker:latest
-  stage: publish
-  services:
-    - docker:dind
+clean:
+  image: $IMAGE_OPENJDK_GRADLE
+  stage: clean
   script:
-    - docker build -t $TAG_COMMIT -t $TAG_LATEST .
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker push $TAG_COMMIT
-    - docker push $TAG_LATEST
+    - echo "Cleaning leftovers from previous builds"
+    - sh $CI_PROJECT_DIR/gradlew clean
 
-deploy:
-  image: alpine:latest
-  stage: deploy
-  tags:
-    - deployment
+
+build:
+  image: $IMAGE_OPENJDK_GRADLE
+  stage: build
   script:
-    - chmod og= $ID_RSA
-    - apk update && apk add openssh-client
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull $TAG_COMMIT"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-app || true"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 80:80 --name my-app $TAG_COMMIT"
-  environment:
-    name: production
-    url: http://159.65.25.202
-  only:
-    - master
+    - echo "Compiling the code..."
+    - sh $CI_PROJECT_DIR/gradlew assemble
+  artifacts:
+    paths:
+      - build/libs/doctorspolis-*.war
+
+
+build-image:
+  stage: build-image
+  script:
+    - echo "Building Docker Image..."
+    - docker build -t $CI_REGISTRY/doctorspolis/blog-api:$CI_COMMIT_SHORT_SHA .
+    - docker build -t $CI_REGISTRY/doctorspolis/blog-api:latest .
+
+
+publish-image:
+  stage: publish-image
+  script:
+    - echo "Publishing Docker Image..."
+    - docker login -u doctorspolis -p $MJOVANC_CONTAINER_REGISTRY_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY/doctorspolis/doctorspolis-api:$CI_COMMIT_SHORT_SHA
+    - docker push $CI_REGISTRY/doctorspolis/doctorspolis-api:latest

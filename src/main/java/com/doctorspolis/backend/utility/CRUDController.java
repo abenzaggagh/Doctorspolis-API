@@ -14,11 +14,20 @@ import java.util.Collection;
  */
 public interface CRUDController<T extends AbstractDTO> {
 
+    /**
+     * Retrieve all entities
+     * @return list of entities
+     */
     @GetMapping
     default ResponseEntity<Collection<T>> getAll() {
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(null);
     }
 
+    /**
+     * Retrieve an entity by id
+     * @param ID entity's id
+     * @return entity
+     */
     @GetMapping(DoctorspolisConstants.ID_PATH_VARIABLE)
     default ResponseEntity<T> getOne(@PathVariable Long ID) {
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(null);
@@ -33,11 +42,22 @@ public interface CRUDController<T extends AbstractDTO> {
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(null);
     }
 
+    /**
+     * Update an existing entity
+     * @param ID entity's ID
+     * @param entity changes
+     * @return updated entity
+     */
     @PutMapping(DoctorspolisConstants.ID_PATH_VARIABLE)
     default ResponseEntity<T> update(@PathVariable Long ID, @RequestBody T entity) {
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(null);
     }
 
+    /**
+     * Remove an entity
+     * @param ID entity's ID
+     * @return true if entity is deleted
+     */
     @DeleteMapping(DoctorspolisConstants.ID_PATH_VARIABLE)
     default ResponseEntity<Boolean> delete(@PathVariable Long ID) {
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(null);
