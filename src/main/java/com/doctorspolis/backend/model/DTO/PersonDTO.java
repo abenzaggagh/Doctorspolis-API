@@ -22,12 +22,15 @@ public abstract class PersonDTO extends AbstractDTO {
 
     @NotEmpty
     @Size(min = 3, message = "Firstname should have at least 3 characters.")
+    @Size(max = 100, message = "Firstname should have less than 100 characters.")
     private String firstname;
 
     private String surname;
 
     @NotEmpty
     @Size(min = 3, message = "Lastname should have at least 3 characters.")
+    @Size(max = 100, message = "Lastname should have less than 100 characters.")
+
     private String lastname;
 
     // TODO: Change to an enum

@@ -23,4 +23,7 @@ public class WorkSchedule extends AbstractEntity {
     @JoinColumn(name = "WORK_SCHEDULE_ID")
     private Collection<OpeningHours> openingHours;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private Doctor doctor;
+
 }

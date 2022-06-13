@@ -14,6 +14,8 @@ import java.util.List;
 )
 public interface CountryMapper {
 
+    Country map(CountryDTO countryDTO);
+
     CountryDTO map(Country country);
 
     List<CountryDTO> map(List<Country> country);

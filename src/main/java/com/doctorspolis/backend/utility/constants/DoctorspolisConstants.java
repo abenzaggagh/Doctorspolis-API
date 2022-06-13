@@ -19,11 +19,14 @@ public class DoctorspolisConstants {
 
     public static final String DOCTORS = "doctors";
 
+
     public static final String PATIENTS = "patients";
 
     public static final String PATIENT_ID_PATH_VARIABLE = "{patientID}";
 
     public static final String DOCTOR_ID_PATH_VARIABLE = "{doctorID}";
+
+    public static final String DOCTORS_WORK_SCHEDULE = DOCTORS + URL_SEPARATOR + DOCTOR_ID_PATH_VARIABLE + URL_SEPARATOR + "workSchedule";
 
     public static final String REFERENTIAL = "referential";
 

@@ -1,13 +1,17 @@
 package com.doctorspolis.backend.controller;
 
+import com.doctorspolis.backend.model.DTO.SearchRequest;
+import com.doctorspolis.backend.model.DTO.WorkScheduleDTO;
 import com.doctorspolis.backend.utility.CRUDController;
 import com.doctorspolis.backend.exception.DoctorNotFoundException;
 import com.doctorspolis.backend.model.DTO.DoctorDTO;
 import com.doctorspolis.backend.model.DTO.PageDTO;
 import com.doctorspolis.backend.service.DoctorService;
 import com.doctorspolis.backend.utility.constants.DoctorspolisConstants;
+import com.doctorspolis.backend.utility.wrapper.WorkScheduleWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,41 +31,86 @@ public class DoctorController implements CRUDController<DoctorDTO> {
     @Override
     @GetMapping
     public ResponseEntity<Collection<DoctorDTO>> getAll() {
-        return ResponseEntity.ok(this.doctorService.getDoctors());
+        return ResponseEntity.ok(doctorService.getDoctors());
     }
 
     @Override
     @GetMapping(DoctorspolisConstants.DOCTOR_ID_PATH_VARIABLE)
     public ResponseEntity<DoctorDTO> getOne(@PathVariable Long doctorID) throws DoctorNotFoundException {
-        return ResponseEntity.ok(this.doctorService.getDoctorBy(doctorID));
+        return ResponseEntity.status(HttpStatus.OK).body(doctorService.getDoctorBy(doctorID));
     }
 
     @Override
     @PostMapping
     public ResponseEntity<DoctorDTO> create(@RequestBody DoctorDTO doctor) {
-        return ResponseEntity.ok(this.doctorService.createDoctor(doctor));
+        return ResponseEntity.status(HttpStatus.CREATED).body(doctorService.createDoctor(doctor));
     }
 
     @Override
     @PutMapping(DoctorspolisConstants.DOCTOR_ID_PATH_VARIABLE)
     public ResponseEntity<DoctorDTO> update(@PathVariable Long doctorID,
                                             @RequestBody DoctorDTO doctorDTO) throws DoctorNotFoundException {
-        return ResponseEntity.ok(this.doctorService.updateDoctor(doctorID, doctorDTO));
+        return ResponseEntity.status(HttpStatus.OK).body(doctorService.updateDoctor(doctorID, doctorDTO));
+    }
+
+    // @Override
+    @PatchMapping(DoctorspolisConstants.DOCTOR_ID_PATH_VARIABLE)
+    public ResponseEntity<DoctorDTO> edit(@PathVariable Long doctorID,
+                                          @RequestBody DoctorDTO doctorDTO) throws DoctorNotFoundException {
+        return ResponseEntity.status(HttpStatus.OK).body(doctorService.updateDoctor(doctorID, doctorDTO));
     }
 
     @Override
     @DeleteMapping(DoctorspolisConstants.DOCTOR_ID_PATH_VARIABLE)
     public ResponseEntity<Boolean> delete(@PathVariable Long doctorID) throws DoctorNotFoundException {
-        return ResponseEntity.ok(this.doctorService.deleteDoctorByID(doctorID));
+        return ResponseEntity.status(HttpStatus.OK).body(doctorService.deleteDoctorByID(doctorID));
+    }
+
+
+    @RestController
+    @RequestMapping(DoctorspolisConstants.DOCTORS_WORK_SCHEDULE)
+    class WorkSchedule {
+
+        @GetMapping
+        public ResponseEntity<Collection<WorkScheduleDTO>> getOne(@PathVariable Long doctorID) {
+            return ResponseEntity.status(HttpStatus.OK).body(doctorService.getWorkScheduleDTOSByDoctorID(doctorID));
+        }
+
+        @PutMapping
+        public ResponseEntity<Collection<WorkScheduleDTO>> replace(@PathVariable Long doctorID,
+                                                                   @RequestBody WorkScheduleWrapper workSchedules) {
+            return ResponseEntity.status(HttpStatus.OK).body(doctorService.replaceWorkScheduleByID(doctorID, workSchedules.getWorkSchedule()));
+        }
+
+        @PostMapping
+        public ResponseEntity<Collection<WorkScheduleDTO>> add(@PathVariable Long doctorID,
+                                                               @RequestBody WorkScheduleDTO workScheduleDTO) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(doctorService.addWorkScheduleByID(doctorID, workScheduleDTO));
+        }
+
+        @PatchMapping("{workScheduleID}")
+        public ResponseEntity<Collection<WorkScheduleDTO>> edit(@PathVariable Long doctorID,
+                                                                @PathVariable Long workScheduleID,
+                                                                WorkScheduleDTO workScheduleDTO) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(doctorService.getDoctorBy(doctorID).getWorkSchedule());
+        }
+
+        @DeleteMapping("{workScheduleID}")
+        public ResponseEntity<Collection<WorkScheduleDTO>> delete(@PathVariable Long doctorID,
+                                                                  @PathVariable Long workScheduleID) throws DoctorNotFoundException {
+            return ResponseEntity.status(HttpStatus.OK).body(doctorService.deleteWorkScheduleByID(doctorID, workScheduleID));
+        }
+
     }
 
     /* Keep the Search methods for later. */
     // TODO: Implement the search controller for doctors
     //       Change the GET method to POST
     //       Return 206 PARTIAL CONTENT if totalElement > totalContent
-    @GetMapping(DoctorspolisConstants.SEARCH)
-    public ResponseEntity<PageDTO<DoctorDTO>> search(String query, Pageable pageable) {
-        return ResponseEntity.ok(this.doctorService.searchDoctors(query, pageable));
+    @PostMapping(DoctorspolisConstants.SEARCH)
+    public ResponseEntity<PageDTO<DoctorDTO>> search(@RequestBody SearchRequest request, Pageable pageable) {
+        PageDTO<DoctorDTO> searchResult = doctorService.searchDoctors(request, pageable);
+        return ResponseEntity.status(searchResult.getTotalPages() > 0 ? HttpStatus.PARTIAL_CONTENT : HttpStatus.OK).body(searchResult);
     }
 
 }

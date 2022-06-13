@@ -36,8 +36,8 @@ public class Doctor extends Person {
 
     private @Enumerated(EnumType.STRING) Availability availability;
 
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="DOCTOR_ID", referencedColumnName="ID")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="DOCTOR_ID", referencedColumnName = "ID")
     private Collection<WorkSchedule> workSchedule;
 
 }

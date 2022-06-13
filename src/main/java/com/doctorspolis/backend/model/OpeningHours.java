@@ -25,6 +25,7 @@ public class OpeningHours extends AbstractEntity {
     private Boolean opens;
 
     private @Temporal(TemporalType.TIME) Date openingTime;
+
     private @Temporal(TemporalType.TIME) Date closingTime;
 
 }
