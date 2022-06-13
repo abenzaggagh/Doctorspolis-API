@@ -21,8 +21,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -54,43 +53,42 @@ public class ReferentialService extends AbstractService {
     }
 
     @Cacheable(DoctorspolisConstants.COUNTRIES)
-    public List<CountryDTO> getCountries() {
-        return countryMapper.map((List<Country>) this.countryRepository.findAll());
+    public Collection<CountryDTO> getCountries() {
+        return countryMapper.toDTOs(this.countryRepository.findAll());
     }
 
     public CountryDTO getCountryByCode(String code) throws ResourceNotFoundException {
         Optional<Country> country = this.countryRepository.findCountryByCode(code.toLowerCase());
         if (country.isPresent()) {
-            return countryMapper.map(country.get());
+            return countryMapper.toDTO(country.get());
         } else {
             throw new ResourceNotFoundException("Country with Code : {0} is Not Found.", code.toLowerCase());
         }
     }
 
     @Cacheable(DoctorspolisConstants.LANGUAGES)
-    public List<LanguageDTO> getLanguages() {
-        return languageMapper.map((List<Language>) this.languageRepository.findAll());
+    public Collection<LanguageDTO> getLanguages() {
+        return languageMapper.toDTOs(this.languageRepository.findAll());
     }
 
     public LanguageDTO getLanguageByCode(String code) {
         Optional<Language> language = this.languageRepository.findLanguageByCode(code.toLowerCase());
         if (language.isPresent()) {
-            return languageMapper.map(language.get());
+            return languageMapper.toDTO(language.get());
         } else {
             throw new ResourceNotFoundException("Language with Code : {0} is Not Found.", code.toLowerCase());
         }
     }
 
     @Cacheable(DoctorspolisConstants.SPECIALITIES)
-    public List<SpecialityDTO> getSpecialities() {
-        return specialityMapper.map((List<Speciality>) this.specialityRepository.findAll());
+    public Collection<SpecialityDTO> getSpecialities() {
+        return specialityMapper.toDTOs(this.specialityRepository.findAll());
     }
 
     public SpecialityDTO getSpecialityByCode(String code) {
         Optional<Speciality> speciality = this.specialityRepository.findSpecialityByCode(code.toLowerCase());
         if (speciality.isPresent()) {
-            return specialityMapper.map(speciality.get());
-            // return new SpecialityDTO();
+            return specialityMapper.toDTO(speciality.get());
         } else {
             throw new ResourceNotFoundException("Language with Code : {0} is Not Found.", code.toLowerCase());
         }

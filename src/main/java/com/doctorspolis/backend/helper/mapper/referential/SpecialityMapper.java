@@ -13,8 +13,8 @@ import java.util.List;
 )
 public interface SpecialityMapper {
 
-    SpecialityDTO map(Speciality speciality);
+    SpecialityDTO toDTO(Speciality speciality);
 
-    List<SpecialityDTO> map(List<Speciality> specialities);
+    List<SpecialityDTO> toDTOs(List<Speciality> specialities);
 
 }

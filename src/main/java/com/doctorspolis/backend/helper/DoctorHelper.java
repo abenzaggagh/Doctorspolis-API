@@ -3,7 +3,9 @@ package com.doctorspolis.backend.helper;
 import com.doctorspolis.backend.commun.AbstractHelper;
 import com.doctorspolis.backend.helper.mapper.DoctorMapper;
 import com.doctorspolis.backend.model.DTO.DoctorDTO;
+import com.doctorspolis.backend.model.DTO.WorkScheduleDTO;
 import com.doctorspolis.backend.model.Doctor;
+import com.doctorspolis.backend.model.WorkSchedule;
 import com.doctorspolis.backend.model.referential.Language;
 import com.doctorspolis.backend.model.referential.Speciality;
 import com.doctorspolis.backend.repository.referential.LanguageRepository;
@@ -47,7 +49,7 @@ public class DoctorHelper extends AbstractHelper {
      * @return
      */
     public Doctor setDoctor(DoctorDTO doctorDTO) {
-        Doctor doctor = doctorMapper.map(doctorDTO);
+        Doctor doctor = doctorMapper.toEntity(doctorDTO);
 
         this.setLanguages(doctorDTO, doctor);
         this.setSpecialities(doctorDTO, doctor);
@@ -71,6 +73,12 @@ public class DoctorHelper extends AbstractHelper {
             doctorDTO.getLanguages().forEach(languageDTO -> languageRepository.findLanguageByCode(languageDTO.getCode()).ifPresent(languages::add));
             doctor.setLanguages(languages);
         }
+    }
+
+
+    public WorkSchedule updateWorkSchedule(WorkSchedule workSchedule, WorkSchedule target) {
+        super.update(workSchedule, target);
+        return target;
     }
 
     public void prepareSearch(String query) {

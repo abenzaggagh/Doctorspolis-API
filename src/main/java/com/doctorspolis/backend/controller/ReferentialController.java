@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Collection;
 
 @RestController
 @RequestMapping(DoctorspolisConstants.REFERENTIAL)
@@ -27,7 +27,7 @@ public class ReferentialController extends AbstractController {
     }
 
     @GetMapping(DoctorspolisConstants.COUNTRIES)
-    public ResponseEntity<List<CountryDTO>> getCountries() {
+    public ResponseEntity<Collection<CountryDTO>> getCountries() {
         return ResponseEntity.ok().body(this.referentialService.getCountries());
     }
 
@@ -37,7 +37,7 @@ public class ReferentialController extends AbstractController {
     }
 
     @GetMapping(DoctorspolisConstants.LANGUAGES)
-    public ResponseEntity<List<LanguageDTO>> getLanguages() {
+    public ResponseEntity<Collection<LanguageDTO>> getLanguages() {
         return ResponseEntity.ok().body(this.referentialService.getLanguages());
     }
 
@@ -47,7 +47,7 @@ public class ReferentialController extends AbstractController {
     }
 
     @GetMapping(DoctorspolisConstants.SPECIALITIES)
-    public ResponseEntity<List<SpecialityDTO>> getSpecialities() {
+    public ResponseEntity<Collection<SpecialityDTO>> getSpecialities() {
         return ResponseEntity.ok().body(this.referentialService.getSpecialities());
     }
 

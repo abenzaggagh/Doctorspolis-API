@@ -52,27 +52,27 @@ public class DoctorService extends AbstractService {
         Page<Doctor> result = doctorRepository.findAllByFirstnameOrLastname(request.getQuery(), request.getQuery(), pageable);
 
         return PageDTO.<DoctorDTO>builder()
-                .content(doctorMapper.map(result.getContent()))
+                .content(doctorMapper.toDTOs(result.getContent()))
                 .totalPages(result.getTotalPages())
                 .totalElements(result.getTotalElements())
                 .build();
     }
 
     public Collection<DoctorDTO> getDoctors() {
-        return doctorMapper.map(this.doctorRepository.findAll());
+        return doctorMapper.toDTOs(this.doctorRepository.findAll());
     }
 
     public DoctorDTO getDoctorBy(Long doctorID) throws DoctorNotFoundException {
         Optional<Doctor> doctor = doctorRepository.findById(doctorID);
         if (doctor.isPresent())
-            return doctorMapper.map(doctor.get());
+            return doctorMapper.toDTO(doctor.get());
         else
             throw new DoctorNotFoundException(doctorID);
     }
 
     @Transactional
     public DoctorDTO createDoctor(DoctorDTO doctorDTO) {
-        return doctorMapper.map(doctorRepository.save(doctorHelper.setDoctor(doctorDTO)));
+        return doctorMapper.toDTO(doctorRepository.save(doctorHelper.setDoctor(doctorDTO)));
     }
     @Transactional
     public DoctorDTO updateDoctor(Long doctorID, DoctorDTO doctorDTO) throws DoctorNotFoundException {
@@ -83,7 +83,7 @@ public class DoctorService extends AbstractService {
 
             doctorHelper.updateDoctor(doctorDTO, doctor);
 
-            return doctorMapper.map(doctorRepository.save(doctor));
+            return doctorMapper.toDTO(doctorRepository.save(doctor));
         } else {
             throw new DoctorNotFoundException(doctorID);
         }
@@ -98,7 +98,7 @@ public class DoctorService extends AbstractService {
 
             doctorHelper.updateDoctor(doctorDTO, doctor);
 
-            return doctorMapper.map(doctorRepository.save(doctor));
+            return doctorMapper.toDTO(doctorRepository.save(doctor));
         } else {
             throw new DoctorNotFoundException(doctorID);
         }
@@ -120,7 +120,7 @@ public class DoctorService extends AbstractService {
         if (optionalDoctor.isPresent()) {
             Doctor doctor = optionalDoctor.get();
 
-            return workScheduleMapper.map(doctor.getWorkSchedule());
+            return workScheduleMapper.toDTOs(doctor.getWorkSchedule());
         } else {
             throw new DoctorNotFoundException(doctorID);
         }
@@ -136,7 +136,7 @@ public class DoctorService extends AbstractService {
 
             doctor.getWorkSchedule().add(workScheduleMapper.toEntity(workScheduleDTO));
 
-            return workScheduleMapper.map(doctorRepository.save(doctor).getWorkSchedule());
+            return workScheduleMapper.toDTOs(doctorRepository.save(doctor).getWorkSchedule());
         } else {
             throw new DoctorNotFoundException(doctorID);
         }
@@ -152,7 +152,35 @@ public class DoctorService extends AbstractService {
             doctor.getWorkSchedule().clear();
             doctor.getWorkSchedule().addAll(workScheduleMapper.toEntities(workScheduleDTOS));
 
-            return workScheduleMapper.map(doctorRepository.save(doctor).getWorkSchedule());
+            return workScheduleMapper.toDTOs(doctorRepository.save(doctor).getWorkSchedule());
+        } else {
+            throw new DoctorNotFoundException(doctorID);
+        }
+    }
+
+    @Transactional
+    public WorkScheduleDTO editWorkScheduleByID(Long doctorID, Long workScheduleID,
+                                                WorkScheduleDTO workScheduleDTO) throws ResourceNotFoundException {
+        Optional<Doctor> optionalDoctor = this.doctorRepository.findById(doctorID);
+
+        if (optionalDoctor.isPresent()) {
+            Doctor doctor = optionalDoctor.get();
+            Collection<WorkSchedule> workSchedules = doctor.getWorkSchedule();
+
+            // WorkSchedule workSchedule;
+
+            doctor.getWorkSchedule().forEach(workSchedule -> {
+                if (workSchedule.getID().equals(workScheduleID)) {
+                    doctorHelper.updateWorkSchedule(workScheduleMapper.toEntity(workScheduleDTO), workSchedule);
+                    // workScheduleRepository.save(workSchedule);
+
+                }
+            });
+
+
+            Doctor newValues = doctorRepository.save(doctor);
+            return workScheduleMapper.toDTOs(newValues.getWorkSchedule()).stream().findFirst().get();
+
         } else {
             throw new DoctorNotFoundException(doctorID);
         }
@@ -170,7 +198,7 @@ public class DoctorService extends AbstractService {
 
             workSchedules.remove(workScheduleRepository.getById(workScheduleID));
 
-            return workScheduleMapper.map(doctorRepository.save(doctor).getWorkSchedule());
+            return workScheduleMapper.toDTOs(doctorRepository.save(doctor).getWorkSchedule());
         } else {
             throw new DoctorNotFoundException(doctorID);
         }

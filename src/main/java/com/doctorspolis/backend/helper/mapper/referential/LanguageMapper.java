@@ -15,8 +15,8 @@ import java.util.List;
 )
 public interface LanguageMapper {
 
-    LanguageDTO map(Language language);
+    LanguageDTO toDTO(Language language);
 
-    List<LanguageDTO> map(List<Language> languages);
+    List<LanguageDTO> toDTOs(List<Language> languages);
 
 }

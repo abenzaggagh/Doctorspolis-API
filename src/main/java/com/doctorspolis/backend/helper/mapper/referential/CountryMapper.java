@@ -6,6 +6,7 @@ import com.doctorspolis.backend.model.referential.DTO.CountryDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;
 
+import java.util.Collection;
 import java.util.List;
 
 @Mapper(
@@ -14,10 +15,10 @@ import java.util.List;
 )
 public interface CountryMapper {
 
-    Country map(CountryDTO countryDTO);
+    Country toEntity(CountryDTO countryDTO);
 
-    CountryDTO map(Country country);
+    CountryDTO toDTO(Country country);
 
-    List<CountryDTO> map(List<Country> country);
+    Collection<CountryDTO> toDTOs(Collection<Country> country);
 
 }

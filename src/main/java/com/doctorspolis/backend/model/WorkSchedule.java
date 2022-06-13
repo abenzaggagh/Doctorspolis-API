@@ -19,11 +19,13 @@ public class WorkSchedule extends AbstractEntity {
 
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "WORK_SCHEDULE_ID")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "WORK_SCHEDULE_ID",
+            foreignKey = @ForeignKey(name = "FK_OPENING_HOURS_ID"),
+            referencedColumnName = "ID")
     private Collection<OpeningHours> openingHours;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Doctor doctor;
 
 }

@@ -13,9 +13,9 @@ import java.util.Collection;
 )
 public interface WorkScheduleMapper {
 
-    WorkScheduleDTO map(WorkSchedule workSchedule);
+    WorkScheduleDTO toDTO(WorkSchedule workSchedule);
 
-    Collection<WorkScheduleDTO> map(Collection<WorkSchedule> workSchedules);
+    Collection<WorkScheduleDTO> toDTOs(Collection<WorkSchedule> workSchedules);
 
     WorkSchedule toEntity(WorkScheduleDTO workScheduleDTO);
 

@@ -16,7 +16,9 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 
 @MappedSuperclass
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+// A class should not be annotated with both @Inheritance and @MappedSuperclass.
+// @Inheritance will be ignored for: com.doctorspolis.backend.model.Person.
+// @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Person extends AbstractEntity {
 
     private @Column(length=50) String firstname;

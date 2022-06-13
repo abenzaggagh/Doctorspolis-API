@@ -15,8 +15,8 @@ import org.mapstruct.NullValueCheckStrategy;
 )
 public interface AddressMapper {
 
-    AddressDTO map(Address address);
+    AddressDTO toDTO(Address address);
 
-    Address map(AddressDTO address);
+    Address toEntity(AddressDTO address);
 
 }

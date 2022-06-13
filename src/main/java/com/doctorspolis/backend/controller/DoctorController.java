@@ -76,11 +76,7 @@ public class DoctorController implements CRUDController<DoctorDTO> {
             return ResponseEntity.status(HttpStatus.OK).body(doctorService.getWorkScheduleDTOSByDoctorID(doctorID));
         }
 
-        @PutMapping
-        public ResponseEntity<Collection<WorkScheduleDTO>> replace(@PathVariable Long doctorID,
-                                                                   @RequestBody WorkScheduleWrapper workSchedules) {
-            return ResponseEntity.status(HttpStatus.OK).body(doctorService.replaceWorkScheduleByID(doctorID, workSchedules.getWorkSchedule()));
-        }
+
 
         @PostMapping
         public ResponseEntity<Collection<WorkScheduleDTO>> add(@PathVariable Long doctorID,
@@ -88,11 +84,17 @@ public class DoctorController implements CRUDController<DoctorDTO> {
             return ResponseEntity.status(HttpStatus.CREATED).body(doctorService.addWorkScheduleByID(doctorID, workScheduleDTO));
         }
 
+        @PutMapping
+        public ResponseEntity<Collection<WorkScheduleDTO>> replace(@PathVariable Long doctorID,
+                                                                   @RequestBody WorkScheduleWrapper workSchedules) {
+            return ResponseEntity.status(HttpStatus.OK).body(doctorService.replaceWorkScheduleByID(doctorID, workSchedules.getWorkSchedule()));
+        }
+
         @PatchMapping("{workScheduleID}")
-        public ResponseEntity<Collection<WorkScheduleDTO>> edit(@PathVariable Long doctorID,
-                                                                @PathVariable Long workScheduleID,
-                                                                WorkScheduleDTO workScheduleDTO) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(doctorService.getDoctorBy(doctorID).getWorkSchedule());
+        public ResponseEntity<WorkScheduleDTO> edit(@PathVariable Long doctorID,
+                                                    @PathVariable Long workScheduleID,
+                                                    @RequestBody WorkScheduleDTO workScheduleDTO) {
+            return ResponseEntity.status(HttpStatus.OK).body(doctorService.editWorkScheduleByID(doctorID, workScheduleID, workScheduleDTO));
         }
 
         @DeleteMapping("{workScheduleID}")

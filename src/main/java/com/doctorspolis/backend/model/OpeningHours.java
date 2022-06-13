@@ -16,8 +16,8 @@ import java.util.Date;
 @Entity
 public class OpeningHours extends AbstractEntity {
 
-    @ManyToOne
-    protected WorkSchedule workSchedule;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private WorkSchedule workSchedule;
 
     private @Enumerated(EnumType.STRING)
     @Column(nullable = false) Day day;

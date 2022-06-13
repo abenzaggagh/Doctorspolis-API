@@ -15,10 +15,12 @@ import java.util.Collection;
 )
 public interface DoctorMapper {
 
-    DoctorDTO map(Doctor doctor);
+    DoctorDTO toDTO(Doctor doctor);
 
-    Doctor map(DoctorDTO doctor);
+    Collection<DoctorDTO> toDTOs(Collection<Doctor> doctors);
 
-    Collection<DoctorDTO> map(Collection<Doctor> doctors);
+    Doctor toEntity(DoctorDTO doctor);
+
+    Collection<DoctorDTO> toEntities(Collection<Doctor> doctors);
 
 }
