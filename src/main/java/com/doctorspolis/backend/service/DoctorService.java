@@ -43,9 +43,9 @@ public class DoctorService extends AbstractService {
                          DoctorHelper doctorHelper,
                          DoctorRepository doctorRepository) {
         this.doctorMapper = doctorMapper;
-        this.workScheduleMapper = workScheduleMapper;
         this.doctorHelper = doctorHelper;
         this.doctorRepository = doctorRepository;
+        this.workScheduleMapper = workScheduleMapper;
     }
 
     public PageDTO<DoctorDTO> searchDoctors(SearchRequest request, Pageable pageable) {
@@ -74,6 +74,7 @@ public class DoctorService extends AbstractService {
     public DoctorDTO createDoctor(DoctorDTO doctorDTO) {
         return doctorMapper.toDTO(doctorRepository.save(doctorHelper.setDoctor(doctorDTO)));
     }
+
     @Transactional
     public DoctorDTO updateDoctor(Long doctorID, DoctorDTO doctorDTO) throws DoctorNotFoundException {
         Optional<Doctor> optionalDoctor = doctorRepository.findById(doctorID);
@@ -96,7 +97,7 @@ public class DoctorService extends AbstractService {
         if (optionalDoctor.isPresent()) {
             Doctor doctor = optionalDoctor.get();
 
-            doctorHelper.updateDoctor(doctorDTO, doctor);
+            doctorHelper.replaceDoctor(doctorDTO, doctor);
 
             return doctorMapper.toDTO(doctorRepository.save(doctor));
         } else {
@@ -106,8 +107,10 @@ public class DoctorService extends AbstractService {
 
     public Boolean deleteDoctorByID(Long doctorID) throws DoctorNotFoundException {
         Optional<Doctor> optionalDoctor = this.doctorRepository.findById(doctorID);
+
         if (optionalDoctor.isPresent()) {
             doctorRepository.deleteById(doctorID);
+
             return true;
         } else {
             throw new DoctorNotFoundException(doctorID);
@@ -149,6 +152,7 @@ public class DoctorService extends AbstractService {
 
         if (optionalDoctor.isPresent()) {
             Doctor doctor = optionalDoctor.get();
+
             doctor.getWorkSchedule().clear();
             doctor.getWorkSchedule().addAll(workScheduleMapper.toEntities(workScheduleDTOS));
 
@@ -158,28 +162,31 @@ public class DoctorService extends AbstractService {
         }
     }
 
+    // TODO: Refactor this method with clean code approach
     @Transactional
-    public WorkScheduleDTO editWorkScheduleByID(Long doctorID, Long workScheduleID,
+    public WorkScheduleDTO editWorkScheduleByID(Long doctorID,
+                                                Long workScheduleID,
                                                 WorkScheduleDTO workScheduleDTO) throws ResourceNotFoundException {
         Optional<Doctor> optionalDoctor = this.doctorRepository.findById(doctorID);
 
         if (optionalDoctor.isPresent()) {
             Doctor doctor = optionalDoctor.get();
-            Collection<WorkSchedule> workSchedules = doctor.getWorkSchedule();
 
-            // WorkSchedule workSchedule;
+            Optional<WorkSchedule> workScheduleOptional = workScheduleRepository.findById(workScheduleID);
 
-            doctor.getWorkSchedule().forEach(workSchedule -> {
-                if (workSchedule.getID().equals(workScheduleID)) {
-                    doctorHelper.updateWorkSchedule(workScheduleMapper.toEntity(workScheduleDTO), workSchedule);
-                    // workScheduleRepository.save(workSchedule);
+            if (workScheduleOptional.isPresent()) {
+                WorkSchedule workSchedule = workScheduleOptional.get();
+                WorkSchedule newWS = workScheduleMapper.toEntity(workScheduleDTO);
 
-                }
-            });
+                doctorHelper.updateWorkSchedule(newWS, workSchedule);
 
-
-            Doctor newValues = doctorRepository.save(doctor);
-            return workScheduleMapper.toDTOs(newValues.getWorkSchedule()).stream().findFirst().get();
+                workScheduleRepository.save(workSchedule);
+                Doctor newValues = doctorRepository.save(doctor);
+                // Fix the value returned
+                return workScheduleMapper.toDTO(workSchedule);
+            } else {
+                throw new ResourceNotFoundException(workScheduleID.toString());
+            }
 
         } else {
             throw new DoctorNotFoundException(doctorID);

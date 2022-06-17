@@ -4,7 +4,6 @@ import com.doctorspolis.backend.model.enumeration.Availability;
 import com.doctorspolis.backend.model.referential.Language;
 import com.doctorspolis.backend.model.referential.Speciality;
 import lombok.*;
-
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -36,7 +35,7 @@ public class Doctor extends Person {
 
     private @Enumerated(EnumType.STRING) Availability availability;
 
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "DOCTOR_ID", referencedColumnName = "ID")
     private Collection<WorkSchedule> workSchedule;
 

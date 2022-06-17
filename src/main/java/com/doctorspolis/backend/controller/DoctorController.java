@@ -1,12 +1,12 @@
 package com.doctorspolis.backend.controller;
 
-import com.doctorspolis.backend.model.DTO.SearchRequest;
-import com.doctorspolis.backend.model.DTO.WorkScheduleDTO;
-import com.doctorspolis.backend.utility.CRUDController;
 import com.doctorspolis.backend.exception.DoctorNotFoundException;
 import com.doctorspolis.backend.model.DTO.DoctorDTO;
 import com.doctorspolis.backend.model.DTO.PageDTO;
+import com.doctorspolis.backend.model.DTO.SearchRequest;
+import com.doctorspolis.backend.model.DTO.WorkScheduleDTO;
 import com.doctorspolis.backend.service.DoctorService;
+import com.doctorspolis.backend.utility.CRUDController;
 import com.doctorspolis.backend.utility.constants.DoctorspolisConstants;
 import com.doctorspolis.backend.utility.wrapper.WorkScheduleWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +50,7 @@ public class DoctorController implements CRUDController<DoctorDTO> {
     @PutMapping(DoctorspolisConstants.DOCTOR_ID_PATH_VARIABLE)
     public ResponseEntity<DoctorDTO> update(@PathVariable Long doctorID,
                                             @RequestBody DoctorDTO doctorDTO) throws DoctorNotFoundException {
-        return ResponseEntity.status(HttpStatus.OK).body(doctorService.updateDoctor(doctorID, doctorDTO));
+        return ResponseEntity.status(HttpStatus.OK).body(doctorService.replaceDoctor(doctorID, doctorDTO));
     }
 
     // @Override
@@ -76,16 +76,14 @@ public class DoctorController implements CRUDController<DoctorDTO> {
             return ResponseEntity.status(HttpStatus.OK).body(doctorService.getWorkScheduleDTOSByDoctorID(doctorID));
         }
 
-
-
         @PostMapping
-        public ResponseEntity<Collection<WorkScheduleDTO>> add(@PathVariable Long doctorID,
+        public ResponseEntity<Collection<WorkScheduleDTO>> create(@PathVariable Long doctorID,
                                                                @RequestBody WorkScheduleDTO workScheduleDTO) {
             return ResponseEntity.status(HttpStatus.CREATED).body(doctorService.addWorkScheduleByID(doctorID, workScheduleDTO));
         }
 
         @PutMapping
-        public ResponseEntity<Collection<WorkScheduleDTO>> replace(@PathVariable Long doctorID,
+        public ResponseEntity<Collection<WorkScheduleDTO>> update(@PathVariable Long doctorID,
                                                                    @RequestBody WorkScheduleWrapper workSchedules) {
             return ResponseEntity.status(HttpStatus.OK).body(doctorService.replaceWorkScheduleByID(doctorID, workSchedules.getWorkSchedule()));
         }

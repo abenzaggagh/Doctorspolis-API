@@ -3,7 +3,6 @@ package com.doctorspolis.backend.helper;
 import com.doctorspolis.backend.commun.AbstractHelper;
 import com.doctorspolis.backend.helper.mapper.DoctorMapper;
 import com.doctorspolis.backend.model.DTO.DoctorDTO;
-import com.doctorspolis.backend.model.DTO.WorkScheduleDTO;
 import com.doctorspolis.backend.model.Doctor;
 import com.doctorspolis.backend.model.WorkSchedule;
 import com.doctorspolis.backend.model.referential.Language;
@@ -40,7 +39,11 @@ public class DoctorHelper extends AbstractHelper {
      * @param target Doctor updated entity
      */
     public void updateDoctor(DoctorDTO doctorDTO, Doctor target) {
-        super.update(this.setDoctor(doctorDTO), target);
+        super.replace(this.setDoctor(doctorDTO), target);
+    }
+
+    public void replaceDoctor(DoctorDTO doctorDTO, Doctor target) {
+        super.replace(this.setDoctor(doctorDTO), target);
     }
 
     /**
@@ -55,6 +58,13 @@ public class DoctorHelper extends AbstractHelper {
         this.setSpecialities(doctorDTO, doctor);
 
         return doctor;
+    }
+
+    public void clear(Doctor doctor) {
+        doctor.getWorkSchedule().clear();
+        doctor.getLanguages().clear();
+        doctor.getSpecialities().clear();
+
     }
 
     public void setSpecialities(DoctorDTO doctorDTO, Doctor doctor) {
@@ -77,7 +87,14 @@ public class DoctorHelper extends AbstractHelper {
 
 
     public WorkSchedule updateWorkSchedule(WorkSchedule workSchedule, WorkSchedule target) {
-        super.update(workSchedule, target);
+        if (workSchedule.getOpeningHours() == null) {
+            super.update(workSchedule, target);
+        } else {
+            // target.getOpeningHours().clear();
+            target.setDescription(workSchedule.getDescription());
+            target.setOpeningHours(workSchedule.getOpeningHours());
+        }
+
         return target;
     }
 

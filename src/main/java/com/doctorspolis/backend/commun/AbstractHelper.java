@@ -1,6 +1,5 @@
 package com.doctorspolis.backend.commun;
 
-import lombok.experimental.Helper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -13,6 +12,10 @@ public abstract class AbstractHelper {
 
     public void update(Object source, Object target) {
         BeanUtils.copyProperties(source, target, getNullPropertyNames(source));
+    }
+
+    public void replace(Object source, Object target) {
+        BeanUtils.copyProperties(source, target, new String[0]);
     }
 
     private static String[] getNullPropertyNames(Object source) {

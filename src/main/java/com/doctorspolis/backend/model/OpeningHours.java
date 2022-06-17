@@ -1,6 +1,5 @@
 package com.doctorspolis.backend.model;
 
-import com.doctorspolis.backend.commun.AbstractEntity;
 import com.doctorspolis.backend.model.enumeration.Day;
 import lombok.*;
 
@@ -13,11 +12,8 @@ import java.util.Date;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 
-@Entity
-public class OpeningHours extends AbstractEntity {
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private WorkSchedule workSchedule;
+@Embeddable
+public class OpeningHours /* extends AbstractEntity */ {
 
     private @Enumerated(EnumType.STRING)
     @Column(nullable = false) Day day;
