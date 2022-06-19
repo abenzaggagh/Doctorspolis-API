@@ -1,6 +1,5 @@
 package com.doctorspolis.backend.service;
 
-import com.doctorspolis.backend.model.User;
 import com.doctorspolis.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,7 @@ public class AuthenticationService {
     }
 
     public String signin() {
-        userRepository.save(new User("Amine", "", "BEN ZAGGAGH"));
+        // userRepository.save(new User("Amine", "", "BEN ZAGGAGH"));
         return "Doctorspolis";
     }
 
