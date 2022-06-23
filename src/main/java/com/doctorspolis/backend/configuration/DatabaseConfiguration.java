@@ -17,12 +17,13 @@ public class DatabaseConfiguration implements CommandLineRunner  {
     // private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
     private final UserRepository userRepository;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public DatabaseConfiguration(UserRepository userRepository) {
+    public DatabaseConfiguration(UserRepository userRepository,
+                                 PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 /*
     @Bean

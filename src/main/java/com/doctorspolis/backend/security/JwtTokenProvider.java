@@ -3,6 +3,7 @@ package com.doctorspolis.backend.security;
 import com.doctorspolis.backend.exception.ResourceNotFoundException;
 import com.doctorspolis.backend.model.User;
 import com.doctorspolis.backend.service.UserService;
+import com.doctorspolis.backend.utility.constants.DoctorspolisConstants;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,9 +16,11 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-private String secretKey = "serrrrrrrdfqhdfgqdfsgvqdsgvqzedsgfefahjzrttT5EZAR65E6434YErrrrrrrcret";
+    private String secretKey = "serrrrrrrdfqhdfgqdfsgvqdsgvqzedsgfefahjzrttT5EZAR65E6434YErrrrrrrcret";
 
-    private final long expiresIn = 3600000;
+    private final long accessExpirationPeriod = 900000;
+
+    private final long refreshExpirationPeriod = 604800000;
 
     private final UserService userService;
 
@@ -26,12 +29,13 @@ private String secretKey = "serrrrrrrdfqhdfgqdfsgvqdsgvqzedsgfefahjzrttT5EZAR65E
         this.userService = userService;
     }
 
-    public String createToken(String username) {
+    public String createAccessToken(String username) {
         Claims claims = Jwts.claims().setSubject(username);
 
         Date now = new Date();
-        Date validity = new Date(now.getTime() + expiresIn);
+        Date validity = new Date(now.getTime() + accessExpirationPeriod);
 
+        // TODO: Replace the deprecated signWith method
         return Jwts.builder().setClaims(claims).setIssuedAt(now).setExpiration(validity).signWith(SignatureAlgorithm.HS256, secretKey).compact();
     }
 
@@ -46,8 +50,8 @@ private String secretKey = "serrrrrrrdfqhdfgqdfsgvqdsgvqzedsgfefahjzrttT5EZAR65E
     }
 
     public String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+        String bearerToken = request.getHeader(DoctorspolisConstants.AUTHORIZATION);
+        if (bearerToken != null && bearerToken.startsWith(DoctorspolisConstants.BEARER)) {
             return bearerToken.substring(7);
         }
         return null;

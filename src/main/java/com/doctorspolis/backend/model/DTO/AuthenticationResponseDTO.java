@@ -4,10 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
-import javax.validation.constraints.Email;
-
 @Getter
 @Setter
+
 @Builder
 
 @ToString
@@ -15,13 +14,10 @@ import javax.validation.constraints.Email;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public class AuthenticationRequestDTO {
+public class AuthenticationResponseDTO {
 
-    @Email
-    private String email;
+    private String accessToken;
 
-    private String username;
-
-    private String password;
+    private String refreshToken;
 
 }

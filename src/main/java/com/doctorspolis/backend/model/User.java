@@ -1,14 +1,13 @@
 package com.doctorspolis.backend.model;
 
 import com.doctorspolis.backend.commun.AbstractEntity;
+import com.doctorspolis.backend.model.enumeration.Role;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.util.Collection;
+import javax.persistence.*;
+import java.util.Set;
 
 
 @Getter
@@ -34,9 +33,12 @@ public class User extends AbstractEntity implements UserDetails {
 
     private Boolean enabled;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    public Set<? extends GrantedAuthority> getAuthorities() {
+        return Set.of(role);
     }
 
     @Override
@@ -58,4 +60,5 @@ public class User extends AbstractEntity implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
+
 }

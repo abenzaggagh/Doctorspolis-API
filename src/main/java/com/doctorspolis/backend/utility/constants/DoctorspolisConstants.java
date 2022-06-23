@@ -19,6 +19,9 @@ public class DoctorspolisConstants {
 
     public static final String DOCTORS = "doctors";
 
+    public static final String AUTHORIZATION = "Authorization";
+
+    public static final String BEARER = "Bearer ";
 
     public static final String PATIENTS = "patients";
 
