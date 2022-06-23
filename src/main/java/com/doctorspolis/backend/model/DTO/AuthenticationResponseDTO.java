@@ -16,6 +16,8 @@ import lombok.*;
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class AuthenticationResponseDTO {
 
+    private UserDTO user;
+
     private String accessToken;
 
     private String refreshToken;

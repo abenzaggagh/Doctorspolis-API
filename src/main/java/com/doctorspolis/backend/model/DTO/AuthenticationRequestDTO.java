@@ -24,4 +24,6 @@ public class AuthenticationRequestDTO {
 
     private String password;
 
+    private String role;
+
 }

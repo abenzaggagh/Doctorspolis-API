@@ -1,12 +1,13 @@
 package com.doctorspolis.backend.model;
 
-import com.doctorspolis.backend.commun.AbstractEntity;
 import com.doctorspolis.backend.model.enumeration.Role;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -20,16 +21,13 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User extends AbstractEntity implements UserDetails {
+public class User extends Person implements UserDetails {
 
     @Column(length=200, nullable = false, unique = true)
     private String username;
 
     @Column(length=200, nullable = false)
     private String password;
-
-    @Column(length=200, unique = true)
-    private String email;
 
     private Boolean enabled;
 
@@ -38,7 +36,7 @@ public class User extends AbstractEntity implements UserDetails {
 
     @Override
     public Set<? extends GrantedAuthority> getAuthorities() {
-        return Set.of(role);
+        return Objects.isNull(role) ? new HashSet<>() : Set.of(role);
     }
 
     @Override

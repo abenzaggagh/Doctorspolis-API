@@ -13,7 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public class UserDTO {
+public class UserDTO extends PersonDTO {
 
     private String username;
 
