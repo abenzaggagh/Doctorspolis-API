@@ -14,6 +14,7 @@ import com.doctorspolis.backend.model.Doctor;
 import com.doctorspolis.backend.model.WorkSchedule;
 import com.doctorspolis.backend.repository.DoctorRepository;
 import com.doctorspolis.backend.repository.WorkScheduleRepository;
+import com.doctorspolis.backend.utility.CRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +25,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 @Service
-public class DoctorService extends AbstractService {
+public class DoctorService extends AbstractService implements CRUDService<Doctor, DoctorDTO> {
 
     private final DoctorMapper doctorMapper;
 
@@ -34,18 +35,19 @@ public class DoctorService extends AbstractService {
 
     private final DoctorRepository doctorRepository;
 
-    @Autowired
-    private WorkScheduleRepository workScheduleRepository;
+    private final WorkScheduleRepository workScheduleRepository;
 
     @Autowired
     public DoctorService(DoctorMapper doctorMapper,
-                         WorkScheduleMapper workScheduleMapper,
                          DoctorHelper doctorHelper,
-                         DoctorRepository doctorRepository) {
+                         DoctorRepository doctorRepository,
+                         WorkScheduleMapper workScheduleMapper,
+                         WorkScheduleRepository workScheduleRepository) {
         this.doctorMapper = doctorMapper;
         this.doctorHelper = doctorHelper;
         this.doctorRepository = doctorRepository;
         this.workScheduleMapper = workScheduleMapper;
+        this.workScheduleRepository = workScheduleRepository;
     }
 
     public PageDTO<DoctorDTO> searchDoctors(SearchRequest request, Pageable pageable) {
@@ -58,25 +60,39 @@ public class DoctorService extends AbstractService {
                 .build();
     }
 
-    public Collection<DoctorDTO> getDoctors() {
-        return doctorMapper.toDTOs(this.doctorRepository.findAll());
+    @Override
+    public Collection<DoctorDTO> allDTOs() {
+        return doctorMapper.toDTOs(this.allEntities());
     }
 
-    public DoctorDTO getDoctorBy(Long doctorID) throws DoctorNotFoundException {
+    @Override
+    public Collection<Doctor> allEntities() {
+        return this.doctorRepository.findAll();
+    }
+
+    @Override
+    public DoctorDTO oneDTO(Long doctorID) throws DoctorNotFoundException {
+        return doctorMapper.toDTO(this.oneEntity(doctorID));
+    }
+
+    @Override
+    public Doctor oneEntity(Long doctorID) throws DoctorNotFoundException {
         Optional<Doctor> doctor = doctorRepository.findById(doctorID);
         if (doctor.isPresent())
-            return doctorMapper.toDTO(doctor.get());
+            return doctor.get();
         else
             throw new DoctorNotFoundException(doctorID);
     }
 
+    @Override
     @Transactional
-    public DoctorDTO createDoctor(DoctorDTO doctorDTO) {
+    public DoctorDTO create(DoctorDTO doctorDTO) {
         return doctorMapper.toDTO(doctorRepository.save(doctorHelper.setDoctor(doctorDTO)));
     }
 
+    @Override
     @Transactional
-    public DoctorDTO updateDoctor(Long doctorID, DoctorDTO doctorDTO) throws DoctorNotFoundException {
+    public DoctorDTO updateByID(Long doctorID, DoctorDTO doctorDTO) throws DoctorNotFoundException {
         Optional<Doctor> optionalDoctor = doctorRepository.findById(doctorID);
 
         if (optionalDoctor.isPresent()) {
@@ -105,7 +121,8 @@ public class DoctorService extends AbstractService {
         }
     }
 
-    public Boolean deleteDoctorByID(Long doctorID) throws DoctorNotFoundException {
+    @Override
+    public Boolean deleteByID(Long doctorID) throws DoctorNotFoundException {
         Optional<Doctor> optionalDoctor = this.doctorRepository.findById(doctorID);
 
         if (optionalDoctor.isPresent()) {

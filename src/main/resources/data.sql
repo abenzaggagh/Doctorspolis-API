@@ -424,12 +424,12 @@ INSERT INTO public.doctor (id, firstname, gender, lastname, surname, phone, emai
 
 INSERT INTO public.work_schedule (id, description, doctor_id) VALUES (1, 'Full-time', 1);
 
-INSERT INTO public.opening_hours (id, closing_time, day, opening_time, opens, work_schedule_id) VALUES (1, '08:00:00', 'MONDAY', '18:00:00', true, 1);
-INSERT INTO public.opening_hours (id, closing_time, day, opening_time, opens, work_schedule_id) VALUES (2, '08:00:00', 'TUESDAY', '18:00:00', true, 1);
-INSERT INTO public.opening_hours (id, closing_time, day, opening_time, opens, work_schedule_id) VALUES (3, '08:00:00', 'WEDNESDAY', '18:00:00', true, 1);
-INSERT INTO public.opening_hours (id, closing_time, day, opening_time, opens, work_schedule_id) VALUES (4, '08:00:00', 'THURSDAY', '18:00:00', true, 1);
-INSERT INTO public.opening_hours (id, closing_time, day, opening_time, opens, work_schedule_id) VALUES (5, '08:00:00', 'FRIDAY', '18:00:00', true, 1);
-INSERT INTO public.opening_hours (id, closing_time, day, opening_time, opens, work_schedule_id) VALUES (7, null, 'SUNDAY', null, false, 1);
-INSERT INTO public.opening_hours (id, closing_time, day, opening_time, opens, work_schedule_id) VALUES (6, null, 'SATURDAY', null, false, 1);
+INSERT INTO work_schedule_opening_hours (closing_time, day, opening_time, opens, work_schedule_id) VALUES ('08:00:00', 'MONDAY', '18:00:00', true, 1);
+INSERT INTO work_schedule_opening_hours (closing_time, day, opening_time, opens, work_schedule_id) VALUES ('08:00:00', 'TUESDAY', '18:00:00', true, 1);
+INSERT INTO work_schedule_opening_hours (closing_time, day, opening_time, opens, work_schedule_id) VALUES ('08:00:00', 'WEDNESDAY', '18:00:00', true, 1);
+INSERT INTO work_schedule_opening_hours (closing_time, day, opening_time, opens, work_schedule_id) VALUES ('08:00:00', 'THURSDAY', '18:00:00', true, 1);
+INSERT INTO work_schedule_opening_hours (closing_time, day, opening_time, opens, work_schedule_id) VALUES ('08:00:00', 'FRIDAY', '18:00:00', true, 1);
+INSERT INTO work_schedule_opening_hours (closing_time, day, opening_time, opens, work_schedule_id) VALUES (null, 'SUNDAY', null, false, 1);
+INSERT INTO work_schedule_opening_hours (closing_time, day, opening_time, opens, work_schedule_id) VALUES (null, 'SATURDAY', null, false, 1);
 
 COMMIT;

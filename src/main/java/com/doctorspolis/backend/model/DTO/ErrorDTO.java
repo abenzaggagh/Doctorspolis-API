@@ -6,20 +6,23 @@ import lombok.*;
 
 @Getter
 @Setter
+@ToString
 
 @Builder
 
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public class AuthenticationResponseDTO {
+public class ErrorDTO {
 
-    private UserDTO user;
+    private String error;
 
-    private String accessToken;
+    private String status;
 
-    private String refreshToken;
+    private String message;
+
+    private String details;
 
 }

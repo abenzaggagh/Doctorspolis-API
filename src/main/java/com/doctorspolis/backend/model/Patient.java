@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
+
+@Builder
 
 @Entity
 public class Patient extends Person {

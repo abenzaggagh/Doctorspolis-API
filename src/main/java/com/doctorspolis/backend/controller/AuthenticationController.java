@@ -1,10 +1,11 @@
 package com.doctorspolis.backend.controller;
 
-import com.doctorspolis.backend.model.DTO.AuthenticationRequestDTO;
-import com.doctorspolis.backend.model.DTO.AuthenticationResponseDTO;
 import com.doctorspolis.backend.model.DTO.UserDTO;
+import com.doctorspolis.backend.model.DTO.authentication.AuthenticationRequestDTO;
+import com.doctorspolis.backend.model.DTO.authentication.AuthenticationResponseDTO;
 import com.doctorspolis.backend.model.User;
 import com.doctorspolis.backend.service.AuthenticationService;
+import com.doctorspolis.backend.utility.constants.DoctorspolisConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,7 +16,7 @@ import javax.validation.Valid;
 
 @CrossOrigin
 @RestController
-@RequestMapping("auth")
+@RequestMapping(DoctorspolisConstants.AUTHENTICATION)
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;

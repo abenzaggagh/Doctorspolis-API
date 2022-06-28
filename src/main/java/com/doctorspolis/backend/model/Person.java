@@ -1,7 +1,6 @@
 package com.doctorspolis.backend.model;
 
 import com.doctorspolis.backend.commun.AbstractEntity;
-
 import com.doctorspolis.backend.model.enumeration.Gender;
 import lombok.*;
 
@@ -11,6 +10,7 @@ import java.util.Date;
 
 @Getter
 @Setter
+
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)

@@ -3,31 +3,53 @@ package com.doctorspolis.backend.service;
 import com.doctorspolis.backend.commun.AbstractService;
 import com.doctorspolis.backend.exception.ResourceNotFoundException;
 import com.doctorspolis.backend.model.DTO.PatientDTO;
+import com.doctorspolis.backend.model.Patient;
+import com.doctorspolis.backend.repository.PatientRepository;
 import com.doctorspolis.backend.utility.CRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
-public class PatientService extends AbstractService implements CRUDService<PatientDTO> {
+public class PatientService extends AbstractService implements CRUDService<Patient, PatientDTO> {
+
+    private final PatientRepository patientRepository;
 
     @Autowired
-    public PatientService() {}
+    public PatientService(PatientRepository patientRepository) {
+        this.patientRepository = patientRepository;
+    }
 
 
     @Override
-    public Collection<PatientDTO> getAll() {
+    public Collection<Patient> allEntities() {
+        return this.patientRepository.findAll();
+    }
+
+    @Override
+    public Patient oneEntity(Long patientID) throws ResourceNotFoundException {
+        Optional<Patient> patient = patientRepository.findById(patientID);
+
+        if (patient.isPresent())
+            return patient.get();
+        else
+            throw new ResourceNotFoundException(patientID.toString());
+    }
+
+    @Override
+    public Collection<PatientDTO> allDTOs() {
         return null;
     }
 
     @Override
-    public PatientDTO getOneBy(Long ID) throws ResourceNotFoundException {
+    public PatientDTO oneDTO(Long ID) throws ResourceNotFoundException {
         return null;
     }
 
     @Override
-    public PatientDTO createDoctor(PatientDTO entityDTO) {
+    public PatientDTO create(PatientDTO entityDTO) {
         return null;
     }
 

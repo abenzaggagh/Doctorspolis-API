@@ -1,10 +1,10 @@
-package com.doctorspolis.backend.model.DTO;
+package com.doctorspolis.backend.model.DTO.authentication;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
-import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
@@ -15,15 +15,9 @@ import javax.validation.constraints.Email;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public class AuthenticationRequestDTO {
+public class AuthenticationRenewalRequestDTO {
 
-    @Email
-    private String email;
-
-    private String username;
-
-    private String password;
-
-    private String role;
+    @NotBlank
+    private String refreshToken;
 
 }

@@ -1,23 +1,27 @@
 package com.doctorspolis.backend.utility;
 
 import com.doctorspolis.backend.commun.AbstractDTO;
+import com.doctorspolis.backend.commun.AbstractEntity;
 import com.doctorspolis.backend.exception.ResourceNotFoundException;
-
 
 import javax.transaction.Transactional;
 import java.util.Collection;
 
-public interface CRUDService<T extends AbstractDTO> {
+public interface CRUDService<T extends AbstractEntity, V extends AbstractDTO> {
 
-    Collection<T> getAll();
+    Collection<T> allEntities();
 
-    T getOneBy(Long ID) throws ResourceNotFoundException;
+    T oneEntity(Long ID) throws ResourceNotFoundException;
+
+    Collection<V> allDTOs();
+
+    V oneDTO(Long ID) throws ResourceNotFoundException;
 
     @Transactional
-    T createDoctor(T entityDTO);
+    V create(V entityDTO);
 
     @Transactional
-    T updateByID(Long ID, T entityDTO) throws ResourceNotFoundException;
+    V updateByID(Long ID, V entityDTO) throws ResourceNotFoundException;
 
     Boolean deleteByID(Long ID) throws ResourceNotFoundException;
 

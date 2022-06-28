@@ -1,7 +1,7 @@
 package com.doctorspolis.backend.configuration;
 
-import com.doctorspolis.backend.model.User;
 import com.doctorspolis.backend.repository.UserRepository;
+import com.doctorspolis.backend.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -14,32 +14,32 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableJpaRepositories("com.doctorspolis.backend.repository")
 public class DatabaseConfiguration implements CommandLineRunner  {
 
-    // private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
     private final UserRepository userRepository;
+
+    // private final PatientRepository patientRepository;
 
     private final PasswordEncoder passwordEncoder;
 
+    private final JwtTokenProvider jwtTokenProvider;
+
     @Autowired
     public DatabaseConfiguration(UserRepository userRepository,
-                                 PasswordEncoder passwordEncoder) {
+                                 PasswordEncoder passwordEncoder,
+                                 JwtTokenProvider jwtTokenProvider) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
-/*
-    @Bean
-    CommandLineRunner initDatabase(DoctorRepository repository) {
-        return args -> {
-            // repository.save(new Doctor("Nephrology nurse", null, "burglar"));
-            // repository.save(new Doctor("Frodo Baggins", "thief"));
-        };
-    }
-*/
+
     @Override
-    public void run(String... args) throws Exception {
-        this.userRepository.save(User.builder()
+    public void run(String... args) {
+        /*this.userRepository.save(User.builder()
                 .username("abenzaggagh")
                 .password(this.passwordEncoder.encode("password"))
+                .refreshToken(jwtTokenProvider.createRefreshToken())
                 .enabled(true)
-                .build());
+                .build());*/
+        // this.patientRepository.save(Patient.builder()..build())
     }
+
 }

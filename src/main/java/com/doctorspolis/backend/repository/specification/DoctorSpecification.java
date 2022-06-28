@@ -1,4 +1,4 @@
-package com.doctorspolis.backend.model.specification;
+package com.doctorspolis.backend.repository.specification;
 
 import com.doctorspolis.backend.model.Doctor;
 import org.springframework.data.jpa.domain.Specification;

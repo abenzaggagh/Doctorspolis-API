@@ -8,7 +8,7 @@ public class ResourceNotFoundException extends AbstractException {
         super(message);
     }
 
-    public ResourceNotFoundException(String messageFormat, Object... args) {
+    public ResourceNotFoundException(String messageFormat, String... args) {
         super(messageFormat, args);
     }
 

@@ -4,6 +4,8 @@ public class DoctorspolisConstants {
 
     public static final String T = "T";
 
+    public static final String EXCEPTION = "exception";
+
     public static final String EMPTY = "";
 
     public static final String URL_SEPARATOR = "/";
@@ -14,6 +16,11 @@ public class DoctorspolisConstants {
 
 
     public static final String ID = "ID";
+
+    public static final String AUTHENTICATION = "auth";
+
+
+    public static final String APPOINTMENTS = "appointments";
 
     public static final String ID_PATH_VARIABLE = "{ID}";
 

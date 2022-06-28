@@ -1,12 +1,11 @@
 package com.doctorspolis.backend.security;
 
-import com.doctorspolis.backend.exception.ResourceNotFoundException;
 import com.doctorspolis.backend.model.User;
 import com.doctorspolis.backend.service.UserService;
 import com.doctorspolis.backend.utility.constants.DoctorspolisConstants;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class JwtTokenProvider {
@@ -60,8 +60,8 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public String createRefreshToken(String username) {
-        Claims claims = Jwts.claims().setSubject(username);
+    public String createRefreshToken() {
+        Claims claims = Jwts.claims().setSubject(UUID.randomUUID().toString());
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + refreshExpirationPeriod);
@@ -97,16 +97,15 @@ public class JwtTokenProvider {
         return null;
     }
 
-    public boolean isAccessTokenValid(String token) {
-        try {
-            Jws<Claims> claims = Jwts.parserBuilder()
-                    .setSigningKey(key)
-                    .build()
-                    .parseClaimsJws(token);
-            return !claims.getBody().getExpiration().before(new Date());
-        } catch (JwtException | IllegalArgumentException e) {
-            throw new ResourceNotFoundException("Expired or invalid JWT token");
-        }
+    public boolean isAccessTokenValid(String token) throws ExpiredJwtException {
+
+        Jws<Claims> claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token);
+
+        return !claims.getBody().getExpiration().before(new Date());
+
     }
 
 }

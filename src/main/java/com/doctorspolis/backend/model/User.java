@@ -13,7 +13,9 @@ import java.util.Set;
 
 @Getter
 @Setter
+
 @Builder
+
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
@@ -30,6 +32,9 @@ public class User extends Person implements UserDetails {
     private String password;
 
     private Boolean enabled;
+
+    @Column(nullable = false)
+    private String refreshToken;
 
     @Enumerated(EnumType.STRING)
     private Role role;

@@ -25,14 +25,14 @@ public class PatientController implements CRUDController<PatientDTO> {
 
     @Override
     @GetMapping
-    public ResponseEntity<Collection<PatientDTO>> getAll() {
-        return CRUDController.super.getAll();
+    public ResponseEntity<Collection<PatientDTO>> all() {
+        return CRUDController.super.all();
     }
 
     @Override
     @GetMapping(DoctorspolisConstants.PATIENT_ID_PATH_VARIABLE)
-    public ResponseEntity<PatientDTO> getOne(@PathVariable Long patientID) {
-        return CRUDController.super.getOne(patientID);
+    public ResponseEntity<PatientDTO> one(@PathVariable Long patientID) {
+        return CRUDController.super.one(patientID);
     }
 
     @Override

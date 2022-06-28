@@ -1,13 +1,14 @@
 package com.doctorspolis.backend.service;
 
 import com.doctorspolis.backend.helper.mapper.UserMapper;
-import com.doctorspolis.backend.model.DTO.AuthenticationRequestDTO;
-import com.doctorspolis.backend.model.DTO.AuthenticationResponseDTO;
 import com.doctorspolis.backend.model.DTO.UserDTO;
+import com.doctorspolis.backend.model.DTO.authentication.AuthenticationRequestDTO;
+import com.doctorspolis.backend.model.DTO.authentication.AuthenticationResponseDTO;
 import com.doctorspolis.backend.model.User;
 import com.doctorspolis.backend.model.enumeration.Role;
 import com.doctorspolis.backend.repository.UserRepository;
 import com.doctorspolis.backend.security.JwtTokenProvider;
+import com.doctorspolis.backend.utility.constants.DoctorspolisConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,8 +16,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
-import java.util.UUID;
+import javax.transaction.Transactional;
+
 
 @Service
 public class AuthenticationService {
@@ -53,6 +56,8 @@ public class AuthenticationService {
         return authenticationResponseDTO;
     }
 
+    // TODO: Change the request to add the user's details in the request body.
+    @Transactional
     public AuthenticationResponseDTO signUp(AuthenticationRequestDTO authenticationRequestDTO) {
         AuthenticationResponseDTO authenticationResponseDTO;
 
@@ -61,16 +66,22 @@ public class AuthenticationService {
             String username = authenticationRequestDTO.getUsername();
 
             if (!userRepository.existsByUsername(username)) {
-                // TODO: Change the request to add the user's details in the request body.
+
+                if (ObjectUtils.isEmpty(authenticationRequestDTO.getUser())) {
+
+                }
+
                 User user = userRepository.save(User.builder()
                         .password(passwordEncoder.encode(authenticationRequestDTO.getPassword()))
                         .username(authenticationRequestDTO.getUsername())
-                        // .email(authenticationRequestDTO.getEmail())
-                        .role(Role.valueOf(authenticationRequestDTO.getRole()))
+                        .refreshToken(DoctorspolisConstants.EMPTY)
+                        .role(Role.USER)
                         .enabled(true)
                         .build());
 
                 authenticationResponseDTO = authenticate(username, authenticationRequestDTO.getPassword());
+
+                userRepository.setRefreshToken(username, authenticationResponseDTO.getRefreshToken());
 
                 authenticationResponseDTO.setUser(userMapper.toDTO(user));
 
@@ -96,9 +107,10 @@ public class AuthenticationService {
             return AuthenticationResponseDTO
                     .builder()
                     .accessToken(jwtTokenProvider.createAccessToken(username))
-                    .refreshToken(jwtTokenProvider.createRefreshToken(UUID.randomUUID().toString()))
+                    .refreshToken(jwtTokenProvider.createRefreshToken())
                     .build();
         }
+
         throw new BadCredentialsException("BAD CREDENTIALS EXCEPTION");
     }
 

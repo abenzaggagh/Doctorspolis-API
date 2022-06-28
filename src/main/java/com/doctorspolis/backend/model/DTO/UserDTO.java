@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotEmpty;
+
 @Getter
 @Setter
 @ToString
@@ -15,9 +17,11 @@ import lombok.ToString;
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class UserDTO extends PersonDTO {
 
+    @NotEmpty
     private String username;
 
-    private String password;
+    // No need to send the password
+    // private String password;
 
     private Boolean enabled;
 

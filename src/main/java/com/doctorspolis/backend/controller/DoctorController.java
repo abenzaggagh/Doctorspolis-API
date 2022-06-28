@@ -30,20 +30,20 @@ public class DoctorController implements CRUDController<DoctorDTO> {
 
     @Override
     @GetMapping
-    public ResponseEntity<Collection<DoctorDTO>> getAll() {
-        return ResponseEntity.ok(doctorService.getDoctors());
+    public ResponseEntity<Collection<DoctorDTO>> all() {
+        return ResponseEntity.ok(doctorService.allDTOs());
     }
 
     @Override
     @GetMapping(DoctorspolisConstants.DOCTOR_ID_PATH_VARIABLE)
-    public ResponseEntity<DoctorDTO> getOne(@PathVariable Long doctorID) throws DoctorNotFoundException {
-        return ResponseEntity.status(HttpStatus.OK).body(doctorService.getDoctorBy(doctorID));
+    public ResponseEntity<DoctorDTO> one(@PathVariable Long doctorID) throws DoctorNotFoundException {
+        return ResponseEntity.status(HttpStatus.OK).body(doctorService.oneDTO(doctorID));
     }
 
     @Override
     @PostMapping
     public ResponseEntity<DoctorDTO> create(@RequestBody DoctorDTO doctor) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(doctorService.createDoctor(doctor));
+        return ResponseEntity.status(HttpStatus.CREATED).body(doctorService.create(doctor));
     }
 
     @Override
@@ -53,17 +53,17 @@ public class DoctorController implements CRUDController<DoctorDTO> {
         return ResponseEntity.status(HttpStatus.OK).body(doctorService.replaceDoctor(doctorID, doctorDTO));
     }
 
-    // @Override
+    @Override
     @PatchMapping(DoctorspolisConstants.DOCTOR_ID_PATH_VARIABLE)
     public ResponseEntity<DoctorDTO> edit(@PathVariable Long doctorID,
                                           @RequestBody DoctorDTO doctorDTO) throws DoctorNotFoundException {
-        return ResponseEntity.status(HttpStatus.OK).body(doctorService.updateDoctor(doctorID, doctorDTO));
+        return ResponseEntity.status(HttpStatus.OK).body(doctorService.updateByID(doctorID, doctorDTO));
     }
 
     @Override
     @DeleteMapping(DoctorspolisConstants.DOCTOR_ID_PATH_VARIABLE)
     public ResponseEntity<Boolean> delete(@PathVariable Long doctorID) throws DoctorNotFoundException {
-        return ResponseEntity.status(HttpStatus.OK).body(doctorService.deleteDoctorByID(doctorID));
+        return ResponseEntity.status(HttpStatus.OK).body(doctorService.deleteByID(doctorID));
     }
 
 
