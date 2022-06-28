@@ -19,12 +19,13 @@ import javax.persistence.Enumerated;
 @Entity
 public class Medication extends AbstractReferential {
 
-    private String name;
-
     @Enumerated(EnumType.STRING)
     private Form form;
 
     @Enumerated(EnumType.STRING)
     private Category category;
+
+    private Integer composition;
+
 
 }
