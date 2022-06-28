@@ -1,12 +1,12 @@
 package com.doctorspolis.backend.service;
 
-import com.doctorspolis.backend.exception.AppointmentConflictException;
-import com.doctorspolis.backend.exception.ResourceNotFoundException;
+import com.doctorspolis.backend.controller.exception.AppointmentConflictException;
+import com.doctorspolis.backend.controller.exception.ResourceNotFoundException;
 import com.doctorspolis.backend.model.Appointment;
 import com.doctorspolis.backend.model.DTO.AppointmentDTO;
 import com.doctorspolis.backend.model.Doctor;
 import com.doctorspolis.backend.model.Patient;
-import com.doctorspolis.backend.repository.AppointmentRepository;
+import com.doctorspolis.backend.model.repository.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;

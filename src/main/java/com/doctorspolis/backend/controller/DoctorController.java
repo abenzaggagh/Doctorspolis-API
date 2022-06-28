@@ -1,6 +1,6 @@
 package com.doctorspolis.backend.controller;
 
-import com.doctorspolis.backend.exception.DoctorNotFoundException;
+import com.doctorspolis.backend.controller.exception.DoctorNotFoundException;
 import com.doctorspolis.backend.model.DTO.DoctorDTO;
 import com.doctorspolis.backend.model.DTO.PageDTO;
 import com.doctorspolis.backend.model.DTO.SearchRequest;

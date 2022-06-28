@@ -1,10 +1,10 @@
 package com.doctorspolis.backend.service;
 
 import com.doctorspolis.backend.commun.AbstractService;
-import com.doctorspolis.backend.exception.ResourceNotFoundException;
+import com.doctorspolis.backend.controller.exception.ResourceNotFoundException;
 import com.doctorspolis.backend.model.DTO.PatientDTO;
 import com.doctorspolis.backend.model.Patient;
-import com.doctorspolis.backend.repository.PatientRepository;
+import com.doctorspolis.backend.model.repository.PatientRepository;
 import com.doctorspolis.backend.utility.CRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

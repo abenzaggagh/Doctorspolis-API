@@ -1,14 +1,14 @@
 package com.doctorspolis.backend.service;
 
-import com.doctorspolis.backend.helper.mapper.UserMapper;
 import com.doctorspolis.backend.model.DTO.UserDTO;
 import com.doctorspolis.backend.model.DTO.authentication.AuthenticationRequestDTO;
 import com.doctorspolis.backend.model.DTO.authentication.AuthenticationResponseDTO;
 import com.doctorspolis.backend.model.User;
 import com.doctorspolis.backend.model.enumeration.Role;
-import com.doctorspolis.backend.repository.UserRepository;
+import com.doctorspolis.backend.model.repository.UserRepository;
 import com.doctorspolis.backend.security.JwtTokenProvider;
 import com.doctorspolis.backend.utility.constants.DoctorspolisConstants;
+import com.doctorspolis.backend.utility.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;

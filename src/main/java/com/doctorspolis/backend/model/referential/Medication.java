@@ -1,9 +1,13 @@
 package com.doctorspolis.backend.model.referential;
 
 import com.doctorspolis.backend.commun.AbstractReferential;
+import com.doctorspolis.backend.model.enumeration.Category;
+import com.doctorspolis.backend.model.enumeration.Form;
 import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Getter
 @Setter
@@ -15,11 +19,12 @@ import javax.persistence.Entity;
 @Entity
 public class Medication extends AbstractReferential {
 
+    private String name;
+
+    @Enumerated(EnumType.STRING)
+    private Form form;
+
+    @Enumerated(EnumType.STRING)
     private Category category;
-
-    public enum Category {
-        UNRESTRICTED, PHARMACY, PRESCRIPTION, CONTROLLED
-    }
-
 
 }

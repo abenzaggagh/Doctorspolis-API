@@ -19,6 +19,7 @@ public class DoctorspolisConstants {
 
     public static final String AUTHENTICATION = "auth";
 
+    public static final String PRESCRIPTIONS = "prescriptions";
 
     public static final String APPOINTMENTS = "appointments";
 

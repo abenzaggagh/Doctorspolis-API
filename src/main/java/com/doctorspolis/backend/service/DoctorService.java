@@ -1,20 +1,20 @@
 package com.doctorspolis.backend.service;
 
 import com.doctorspolis.backend.commun.AbstractService;
-import com.doctorspolis.backend.exception.DoctorNotFoundException;
-import com.doctorspolis.backend.exception.ResourceNotFoundException;
-import com.doctorspolis.backend.helper.DoctorHelper;
-import com.doctorspolis.backend.helper.mapper.DoctorMapper;
-import com.doctorspolis.backend.helper.mapper.WorkScheduleMapper;
+import com.doctorspolis.backend.controller.exception.DoctorNotFoundException;
+import com.doctorspolis.backend.controller.exception.ResourceNotFoundException;
 import com.doctorspolis.backend.model.DTO.DoctorDTO;
 import com.doctorspolis.backend.model.DTO.PageDTO;
 import com.doctorspolis.backend.model.DTO.SearchRequest;
 import com.doctorspolis.backend.model.DTO.WorkScheduleDTO;
 import com.doctorspolis.backend.model.Doctor;
 import com.doctorspolis.backend.model.WorkSchedule;
-import com.doctorspolis.backend.repository.DoctorRepository;
-import com.doctorspolis.backend.repository.WorkScheduleRepository;
+import com.doctorspolis.backend.model.repository.DoctorRepository;
+import com.doctorspolis.backend.model.repository.WorkScheduleRepository;
 import com.doctorspolis.backend.utility.CRUDService;
+import com.doctorspolis.backend.utility.helper.DoctorHelper;
+import com.doctorspolis.backend.utility.mapper.DoctorMapper;
+import com.doctorspolis.backend.utility.mapper.WorkScheduleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -3,8 +3,11 @@ package com.doctorspolis.backend.model;
 import com.doctorspolis.backend.commun.AbstractEntity;
 import lombok.*;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import java.util.Collection;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -24,6 +27,14 @@ public class Prescription extends AbstractEntity {
     @OneToOne
     private Patient patient;
 
+    private Date issueDate;
 
+    @ElementCollection
+    private Collection<Ingredient> ingredients;
+
+
+
+
+    // Instructions
 
 }

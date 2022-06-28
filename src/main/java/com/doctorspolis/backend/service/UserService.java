@@ -1,8 +1,8 @@
 package com.doctorspolis.backend.service;
 
-import com.doctorspolis.backend.exception.ResourceNotFoundException;
+import com.doctorspolis.backend.controller.exception.ResourceNotFoundException;
 import com.doctorspolis.backend.model.User;
-import com.doctorspolis.backend.repository.UserRepository;
+import com.doctorspolis.backend.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
