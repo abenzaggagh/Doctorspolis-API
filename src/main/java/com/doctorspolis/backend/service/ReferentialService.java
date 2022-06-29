@@ -61,7 +61,7 @@ public class ReferentialService extends AbstractService {
         if (country.isPresent()) {
             return countryMapper.toDTO(country.get());
         } else {
-            throw new ResourceNotFoundException("Country with Code : {0} is Not Found.", code.toLowerCase());
+            throw new ResourceNotFoundException("error.referential.country.not.found", code);
         }
     }
 
@@ -75,7 +75,7 @@ public class ReferentialService extends AbstractService {
         if (language.isPresent()) {
             return languageMapper.toDTO(language.get());
         } else {
-            throw new ResourceNotFoundException("Language with Code : {0} is Not Found.", code.toLowerCase());
+            throw new ResourceNotFoundException("error.referential.language.not.found", code);
         }
     }
 
@@ -89,7 +89,7 @@ public class ReferentialService extends AbstractService {
         if (speciality.isPresent()) {
             return specialityMapper.toDTO(speciality.get());
         } else {
-            throw new ResourceNotFoundException("Language with Code : {0} is Not Found.", code.toLowerCase());
+            throw new ResourceNotFoundException("error.referential.speciality.not.found", code.toLowerCase());
         }
     }
 

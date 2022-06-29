@@ -20,16 +20,14 @@ import java.util.Date;
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class PrescriptionDTO {
 
-    @NotBlank
-    private Long doctorID;
+    private DoctorDTO doctor;
 
     @NotBlank
-    private Long patientID;
+    private PatientDTO patient;
 
     @NotBlank
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date issueDate;
-
 
     private Collection<IngredientDTO> ingredients;
 

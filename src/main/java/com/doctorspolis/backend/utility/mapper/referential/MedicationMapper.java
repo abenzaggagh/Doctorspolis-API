@@ -1,6 +1,6 @@
 package com.doctorspolis.backend.utility.mapper.referential;
 
-import com.doctorspolis.backend.model.DTO.MedicationDTO;
+import com.doctorspolis.backend.model.referential.DTO.MedicationDTO;
 import com.doctorspolis.backend.model.referential.Medication;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;

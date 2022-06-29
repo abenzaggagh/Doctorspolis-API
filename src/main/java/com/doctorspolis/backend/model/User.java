@@ -64,4 +64,12 @@ public class User extends Person implements UserDetails {
         return enabled;
     }
 
+    public boolean isAdmin() {
+        return role == Role.ADMIN;
+    }
+
+    public boolean roleEquals(Role role) {
+        return this.role.equals(role);
+    }
+
 }

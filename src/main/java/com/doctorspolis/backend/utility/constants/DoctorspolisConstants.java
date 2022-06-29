@@ -19,6 +19,9 @@ public class DoctorspolisConstants {
 
     public static final String AUTHENTICATION = "auth";
 
+
+    public static final String WORK_SCHEDULE = "workSchedule";
+
     public static final String PRESCRIPTIONS = "prescriptions";
 
     public static final String APPOINTMENTS = "appointments";
@@ -37,7 +40,12 @@ public class DoctorspolisConstants {
 
     public static final String DOCTOR_ID_PATH_VARIABLE = "{doctorID}";
 
-    public static final String DOCTORS_WORK_SCHEDULE = DOCTORS + URL_SEPARATOR + DOCTOR_ID_PATH_VARIABLE + URL_SEPARATOR + "workSchedule";
+    public static final String DOCTORS_WORK_SCHEDULE = DOCTORS + URL_SEPARATOR + DOCTOR_ID_PATH_VARIABLE + URL_SEPARATOR + WORK_SCHEDULE;
+
+
+    public static final String PATIENTS_PRESCRIPTIONS = PATIENTS + URL_SEPARATOR + PATIENT_ID_PATH_VARIABLE + URL_SEPARATOR + PRESCRIPTIONS;
+
+    public static final String DOCTORS_PRESCRIPTIONS = DOCTORS + URL_SEPARATOR + DOCTOR_ID_PATH_VARIABLE + URL_SEPARATOR + PRESCRIPTIONS;
 
     public static final String REFERENTIAL = "referential";
 
@@ -47,7 +55,7 @@ public class DoctorspolisConstants {
 
     public static final String SPECIALITIES = "specialities";
 
-    public static final String COUNTRY_BY_CODE  = COUNTRIES + URL_SEPARATOR + CODE_PATH_VARIABLE;
+    public static final String COUNTRY_BY_CODE = COUNTRIES + URL_SEPARATOR + CODE_PATH_VARIABLE;
 
     public static final String LANGUAGE_BY_CODE  = LANGUAGES + URL_SEPARATOR + CODE_PATH_VARIABLE;
 

@@ -8,6 +8,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -24,6 +25,10 @@ public class Ingredient {
     private Integer quantity; // In MG
 
     private Integer treatmentLength; // In Days
+
+    private Date treatmentStartingDate;
+
+    private Date treatmentEndingDate;
 
     @Enumerated(EnumType.STRING)
     private Frequency frequency;

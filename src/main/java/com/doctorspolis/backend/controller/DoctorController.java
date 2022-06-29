@@ -1,10 +1,7 @@
 package com.doctorspolis.backend.controller;
 
 import com.doctorspolis.backend.controller.exception.DoctorNotFoundException;
-import com.doctorspolis.backend.model.DTO.DoctorDTO;
-import com.doctorspolis.backend.model.DTO.PageDTO;
-import com.doctorspolis.backend.model.DTO.SearchRequest;
-import com.doctorspolis.backend.model.DTO.WorkScheduleDTO;
+import com.doctorspolis.backend.model.DTO.*;
 import com.doctorspolis.backend.service.DoctorService;
 import com.doctorspolis.backend.utility.CRUDController;
 import com.doctorspolis.backend.utility.constants.DoctorspolisConstants;
@@ -72,7 +69,7 @@ public class DoctorController implements CRUDController<DoctorDTO> {
     class WorkSchedule {
 
         @GetMapping
-        public ResponseEntity<Collection<WorkScheduleDTO>> getOne(@PathVariable Long doctorID) {
+        public ResponseEntity<Collection<WorkScheduleDTO>> all(@PathVariable Long doctorID) {
             return ResponseEntity.status(HttpStatus.OK).body(doctorService.getWorkScheduleDTOSByDoctorID(doctorID));
         }
 
@@ -99,6 +96,19 @@ public class DoctorController implements CRUDController<DoctorDTO> {
         public ResponseEntity<Collection<WorkScheduleDTO>> delete(@PathVariable Long doctorID,
                                                                   @PathVariable Long workScheduleID) throws DoctorNotFoundException {
             return ResponseEntity.status(HttpStatus.OK).body(doctorService.deleteWorkScheduleByID(doctorID, workScheduleID));
+        }
+
+    }
+
+
+    @RestController
+    @RequestMapping(DoctorspolisConstants.DOCTORS_PRESCRIPTIONS)
+    class Prescriptions {
+
+        @PostMapping
+        public ResponseEntity<PrescriptionDTO> create(@PathVariable Long doctorID,
+                                                      @RequestBody PrescriptionDTO prescriptionDTO) {
+            return null;
         }
 
     }

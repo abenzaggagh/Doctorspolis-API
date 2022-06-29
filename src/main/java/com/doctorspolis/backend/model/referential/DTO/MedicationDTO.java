@@ -1,6 +1,5 @@
-package com.doctorspolis.backend.model.DTO;
+package com.doctorspolis.backend.model.referential.DTO;
 
-import com.doctorspolis.backend.model.referential.DTO.AbstractReferentialDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
