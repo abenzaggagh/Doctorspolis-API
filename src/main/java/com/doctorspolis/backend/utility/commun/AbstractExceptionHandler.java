@@ -1,4 +1,4 @@
-package com.doctorspolis.backend.commun;
+package com.doctorspolis.backend.utility.commun;
 
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.ControllerAdvice;

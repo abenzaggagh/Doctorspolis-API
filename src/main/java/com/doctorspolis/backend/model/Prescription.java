@@ -1,6 +1,6 @@
 package com.doctorspolis.backend.model;
 
-import com.doctorspolis.backend.commun.AbstractEntity;
+import com.doctorspolis.backend.utility.commun.AbstractEntity;
 import lombok.*;
 
 import javax.persistence.ElementCollection;

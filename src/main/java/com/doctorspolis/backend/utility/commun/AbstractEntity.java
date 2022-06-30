@@ -1,10 +1,9 @@
-package com.doctorspolis.backend.commun;
+package com.doctorspolis.backend.utility.commun;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-
 import java.io.Serializable;
 
 @Getter

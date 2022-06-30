@@ -1,8 +1,8 @@
 package com.doctorspolis.backend.model.referential;
 
-import com.doctorspolis.backend.commun.AbstractReferential;
 import com.doctorspolis.backend.model.enumeration.Category;
 import com.doctorspolis.backend.model.enumeration.Form;
+import com.doctorspolis.backend.utility.commun.AbstractReferential;
 import lombok.*;
 
 import javax.persistence.Entity;

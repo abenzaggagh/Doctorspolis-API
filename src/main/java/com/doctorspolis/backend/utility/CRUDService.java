@@ -1,8 +1,8 @@
 package com.doctorspolis.backend.utility;
 
-import com.doctorspolis.backend.commun.AbstractDTO;
-import com.doctorspolis.backend.commun.AbstractEntity;
 import com.doctorspolis.backend.controller.exception.ResourceNotFoundException;
+import com.doctorspolis.backend.utility.commun.AbstractDTO;
+import com.doctorspolis.backend.utility.commun.AbstractEntity;
 
 import javax.transaction.Transactional;
 import java.util.Collection;

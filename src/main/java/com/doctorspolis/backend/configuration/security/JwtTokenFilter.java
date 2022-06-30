@@ -1,4 +1,4 @@
-package com.doctorspolis.backend.security;
+package com.doctorspolis.backend.configuration.security;
 
 import com.doctorspolis.backend.utility.constants.DoctorspolisConstants;
 import io.jsonwebtoken.ExpiredJwtException;

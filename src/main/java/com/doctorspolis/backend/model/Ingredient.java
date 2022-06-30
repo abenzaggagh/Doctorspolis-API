@@ -4,10 +4,7 @@ import com.doctorspolis.backend.model.enumeration.Frequency;
 import com.doctorspolis.backend.model.referential.Medication;
 import lombok.*;
 
-import javax.persistence.Embeddable;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 @Getter
@@ -19,7 +16,7 @@ import java.util.Date;
 @Embeddable
 public class Ingredient {
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Medication medication;
 
     private Integer quantity; // Times

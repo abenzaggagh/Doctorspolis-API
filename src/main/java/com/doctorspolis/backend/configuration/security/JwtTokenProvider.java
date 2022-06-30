@@ -1,4 +1,4 @@
-package com.doctorspolis.backend.security;
+package com.doctorspolis.backend.configuration.security;
 
 import com.doctorspolis.backend.model.User;
 import com.doctorspolis.backend.service.UserService;

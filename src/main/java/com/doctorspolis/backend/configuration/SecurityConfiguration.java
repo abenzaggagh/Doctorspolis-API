@@ -1,8 +1,8 @@
 package com.doctorspolis.backend.configuration;
 
-import com.doctorspolis.backend.security.JwtConfigurer;
-import com.doctorspolis.backend.security.JwtEntryPoint;
-import com.doctorspolis.backend.security.JwtFailureHandler;
+import com.doctorspolis.backend.configuration.security.JwtConfigurer;
+import com.doctorspolis.backend.configuration.security.JwtEntryPoint;
+import com.doctorspolis.backend.configuration.security.JwtFailureHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

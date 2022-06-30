@@ -1,12 +1,12 @@
 package com.doctorspolis.backend.service;
 
+import com.doctorspolis.backend.configuration.security.JwtTokenProvider;
 import com.doctorspolis.backend.model.DTO.UserDTO;
 import com.doctorspolis.backend.model.DTO.authentication.AuthenticationRequestDTO;
 import com.doctorspolis.backend.model.DTO.authentication.AuthenticationResponseDTO;
 import com.doctorspolis.backend.model.User;
 import com.doctorspolis.backend.model.enumeration.Role;
 import com.doctorspolis.backend.model.repository.UserRepository;
-import com.doctorspolis.backend.security.JwtTokenProvider;
 import com.doctorspolis.backend.utility.constants.DoctorspolisConstants;
 import com.doctorspolis.backend.utility.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,17 +67,22 @@ public class AuthenticationService {
 
             if (!userRepository.existsByUsername(username)) {
 
-                if (ObjectUtils.isEmpty(authenticationRequestDTO.getUser())) {
-
-                }
-
                 User user = userRepository.save(User.builder()
                         .password(passwordEncoder.encode(authenticationRequestDTO.getPassword()))
-                        .username(authenticationRequestDTO.getUsername())
                         .refreshToken(DoctorspolisConstants.EMPTY)
+                        .username(username)
                         .role(Role.USER)
                         .enabled(true)
                         .build());
+
+                if (!ObjectUtils.isEmpty(authenticationRequestDTO.getUser())
+                        && !ObjectUtils.isEmpty(authenticationRequestDTO.getUser().getRole())) {
+                    Role role = Role.valueOf(authenticationRequestDTO.getUser().getRole());
+                    if (role.equals(Role.PATIENT) || role.equals(Role.DOCTOR)) {
+                        user.setRole(role);
+                    }
+                }
+
 
                 authenticationResponseDTO = authenticate(username, authenticationRequestDTO.getPassword());
 

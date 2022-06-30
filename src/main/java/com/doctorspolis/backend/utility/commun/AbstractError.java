@@ -1,4 +1,4 @@
-package com.doctorspolis.backend.commun;
+package com.doctorspolis.backend.utility.commun;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.http.HttpStatus;

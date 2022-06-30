@@ -25,4 +25,6 @@ public class UserDTO extends PersonDTO {
 
     private Boolean enabled;
 
+    private String role;
+
 }

@@ -1,6 +1,5 @@
 package com.doctorspolis.backend.utility.helper;
 
-import com.doctorspolis.backend.commun.AbstractHelper;
 import com.doctorspolis.backend.model.DTO.DoctorDTO;
 import com.doctorspolis.backend.model.Doctor;
 import com.doctorspolis.backend.model.WorkSchedule;
@@ -8,6 +7,7 @@ import com.doctorspolis.backend.model.referential.Language;
 import com.doctorspolis.backend.model.referential.Speciality;
 import com.doctorspolis.backend.model.repository.referential.LanguageRepository;
 import com.doctorspolis.backend.model.repository.referential.SpecialityRepository;
+import com.doctorspolis.backend.utility.commun.AbstractHelper;
 import com.doctorspolis.backend.utility.mapper.DoctorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

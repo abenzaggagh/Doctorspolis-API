@@ -1,6 +1,6 @@
 package com.doctorspolis.backend.controller.exception;
 
-import com.doctorspolis.backend.commun.AbstractException;
+import com.doctorspolis.backend.utility.commun.AbstractException;
 
 public class ResourceNotFoundException extends AbstractException {
 

@@ -26,4 +26,5 @@ public class AuthenticationRequestDTO {
     @NotBlank
     private String password;
 
+
 }

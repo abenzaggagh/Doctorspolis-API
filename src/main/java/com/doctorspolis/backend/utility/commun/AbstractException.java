@@ -1,4 +1,4 @@
-package com.doctorspolis.backend.commun;
+package com.doctorspolis.backend.utility.commun;
 
 
 import org.apache.logging.log4j.util.Strings;

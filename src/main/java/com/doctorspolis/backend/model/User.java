@@ -1,7 +1,7 @@
 package com.doctorspolis.backend.model;
 
-import com.doctorspolis.backend.commun.AbstractEntity;
 import com.doctorspolis.backend.model.enumeration.Role;
+import com.doctorspolis.backend.utility.commun.AbstractEntity;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +24,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User /*extends Person*/ extends AbstractEntity implements UserDetails {
+public class User /* extends Person */ extends AbstractEntity implements UserDetails {
 
     @Column(length = 200, nullable = false, unique = true)
     private String username;
@@ -32,13 +32,14 @@ public class User /*extends Person*/ extends AbstractEntity implements UserDetai
     @Column(length = 200, nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     private Boolean enabled;
 
     @Column(nullable = false)
     private String refreshToken;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
 
     @Override
     public Set<? extends GrantedAuthority> getAuthorities() {

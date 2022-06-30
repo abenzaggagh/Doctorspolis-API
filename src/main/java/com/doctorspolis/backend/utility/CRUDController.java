@@ -1,7 +1,7 @@
 package com.doctorspolis.backend.utility;
 
-import com.doctorspolis.backend.commun.AbstractDTO;
 import com.doctorspolis.backend.controller.exception.ResourceNotFoundException;
+import com.doctorspolis.backend.utility.commun.AbstractDTO;
 import com.doctorspolis.backend.utility.constants.DoctorspolisConstants;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

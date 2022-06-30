@@ -1,6 +1,5 @@
 package com.doctorspolis.backend.service;
 
-import com.doctorspolis.backend.commun.AbstractService;
 import com.doctorspolis.backend.controller.exception.DoctorNotFoundException;
 import com.doctorspolis.backend.controller.exception.ResourceNotFoundException;
 import com.doctorspolis.backend.model.DTO.DoctorDTO;
@@ -12,6 +11,7 @@ import com.doctorspolis.backend.model.WorkSchedule;
 import com.doctorspolis.backend.model.repository.DoctorRepository;
 import com.doctorspolis.backend.model.repository.WorkScheduleRepository;
 import com.doctorspolis.backend.utility.CRUDService;
+import com.doctorspolis.backend.utility.commun.AbstractService;
 import com.doctorspolis.backend.utility.helper.DoctorHelper;
 import com.doctorspolis.backend.utility.mapper.DoctorMapper;
 import com.doctorspolis.backend.utility.mapper.WorkScheduleMapper;

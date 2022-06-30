@@ -1,7 +1,6 @@
 package com.doctorspolis.backend.model.DTO;
 
-import com.doctorspolis.backend.commun.AbstractDTO;
-import com.doctorspolis.backend.model.OpeningHours;
+import com.doctorspolis.backend.utility.commun.AbstractDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;

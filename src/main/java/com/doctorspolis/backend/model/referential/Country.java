@@ -1,7 +1,8 @@
 package com.doctorspolis.backend.model.referential;
 
-import com.doctorspolis.backend.commun.AbstractReferential;
-import lombok.*;
+import com.doctorspolis.backend.utility.commun.AbstractReferential;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Entity;
 

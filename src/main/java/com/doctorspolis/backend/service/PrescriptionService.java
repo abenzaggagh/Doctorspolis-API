@@ -6,7 +6,9 @@ import com.doctorspolis.backend.model.Doctor;
 import com.doctorspolis.backend.model.Patient;
 import com.doctorspolis.backend.model.Prescription;
 import com.doctorspolis.backend.model.User;
+import com.doctorspolis.backend.model.referential.Medication;
 import com.doctorspolis.backend.model.repository.DoctorRepository;
+import com.doctorspolis.backend.model.repository.MedicationRepository;
 import com.doctorspolis.backend.model.repository.PatientRepository;
 import com.doctorspolis.backend.model.repository.PrescriptionRepository;
 import com.doctorspolis.backend.utility.mapper.PrescriptionMapper;
@@ -20,23 +22,25 @@ import java.util.Collection;
 @Service
 public class PrescriptionService {
 
-
     private final DoctorRepository doctorRepository;
 
     private final PatientRepository patientRepository;
 
     private final PrescriptionMapper prescriptionMapper;
 
+    private final MedicationRepository medicationRepository;
     private final PrescriptionRepository prescriptionRepository;
 
     @Autowired
     public PrescriptionService(DoctorRepository doctorRepository,
                                PatientRepository patientRepository,
                                PrescriptionMapper prescriptionMapper,
+                               MedicationRepository medicationRepository,
                                PrescriptionRepository prescriptionRepository) {
         this.doctorRepository = doctorRepository;
         this.patientRepository = patientRepository;
         this.prescriptionMapper = prescriptionMapper;
+        this.medicationRepository = medicationRepository;
         this.prescriptionRepository = prescriptionRepository;
     }
 
@@ -48,7 +52,7 @@ public class PrescriptionService {
     public PrescriptionDTO create(User user,
                                   Long doctorID,
                                   PrescriptionDTO prescriptionDTO) throws ResourceNotFoundException {
-        if (!ObjectUtils.isEmpty(user) && user.getID().equals(doctorID) && user.isDoctor()) {
+        if (!ObjectUtils.isEmpty(user) && user.isDoctor()) {
 
             Doctor doctor = doctorRepository.findById(doctorID).orElseThrow(() -> new ResourceNotFoundException(""));
 
@@ -63,8 +67,24 @@ public class PrescriptionService {
             Prescription prescription = prescriptionMapper.toEntity(prescriptionDTO);
             prescription.setDoctor(doctor);
             prescription.setPatient(patient);
+            /*
+            for(IngredientDTO ingredientDTO: prescriptionDTO.getIngredients()) {
+                if (!ObjectUtils.isEmpty(ingredientDTO)
+                        && !ObjectUtils.isEmpty(ingredientDTO.getMedication())
+                        && !ObjectUtils.isEmpty(ingredientDTO.getMedication().getCode())) {
+                    Medication medication = medicationRepository.findMedicationByCode(ingredientDTO.getMedication().getCode()).orElseThrow(() -> new ResourceNotFoundException("ffff"));
 
-            prescriptionDTO.getIngredients().forEach(ingredientDTO -> {
+                }
+            } */
+
+            prescription.getIngredients().forEach(ingredient -> {
+                /*
+                if (!ObjectUtils.isEmpty(ingredientDTO)
+                && !ObjectUtils.isEmpty(ingredientDTO.getMedication())
+                && !ObjectUtils.isEmpty(ingredientDTO.getMedication().getCode())) {*/
+                Medication medication = medicationRepository.findMedicationByCode(ingredient.getMedication().getCode()).orElseThrow(() -> new ResourceNotFoundException("ffff"));
+                ingredient.setMedication(medication);
+                // }
 
             });
 

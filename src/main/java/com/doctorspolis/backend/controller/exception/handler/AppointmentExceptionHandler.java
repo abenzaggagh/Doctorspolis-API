@@ -1,10 +1,10 @@
 package com.doctorspolis.backend.controller.exception.handler;
 
-import com.doctorspolis.backend.commun.AbstractException;
-import com.doctorspolis.backend.commun.AbstractExceptionHandler;
 import com.doctorspolis.backend.controller.exception.AppointmentCancellationProhibitedException;
 import com.doctorspolis.backend.controller.exception.AppointmentConflictException;
 import com.doctorspolis.backend.model.DTO.ErrorDTO;
+import com.doctorspolis.backend.utility.commun.AbstractException;
+import com.doctorspolis.backend.utility.commun.AbstractExceptionHandler;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;

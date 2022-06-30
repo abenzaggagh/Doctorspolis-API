@@ -1,11 +1,12 @@
 package com.doctorspolis.backend.model;
 
-import com.doctorspolis.backend.commun.AbstractEntity;
 import com.doctorspolis.backend.model.referential.Country;
-
+import com.doctorspolis.backend.utility.commun.AbstractEntity;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 
 @Getter
