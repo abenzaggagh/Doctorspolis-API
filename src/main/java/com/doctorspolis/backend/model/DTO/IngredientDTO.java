@@ -1,6 +1,7 @@
 package com.doctorspolis.backend.model.DTO;
 
 import com.doctorspolis.backend.model.referential.DTO.MedicationDTO;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
@@ -25,11 +26,11 @@ public class IngredientDTO {
     private Integer treatmentLength;
 
     @NotBlank
-    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private String treatmentStartingDate;
 
     @NotBlank
-    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private String treatmentEndingDate;
 
     private String frequency;

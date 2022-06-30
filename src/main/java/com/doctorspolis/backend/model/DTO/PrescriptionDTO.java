@@ -10,7 +10,6 @@ import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -27,7 +26,7 @@ public class PrescriptionDTO {
 
     @NotBlank
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private Date issueDate;
+    private String issueDate;
 
     private Collection<IngredientDTO> ingredients;
 

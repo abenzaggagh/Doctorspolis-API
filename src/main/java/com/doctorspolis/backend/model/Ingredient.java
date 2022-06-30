@@ -22,7 +22,7 @@ public class Ingredient {
     @OneToOne
     private Medication medication;
 
-    private Integer quantity; // In MG
+    private Integer quantity; // Times
 
     private Integer treatmentLength; // In Days
 

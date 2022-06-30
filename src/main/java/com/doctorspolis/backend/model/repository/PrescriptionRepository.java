@@ -1,5 +1,6 @@
 package com.doctorspolis.backend.model.repository;
 
+import com.doctorspolis.backend.model.Doctor;
 import com.doctorspolis.backend.model.Patient;
 import com.doctorspolis.backend.model.Prescription;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +12,7 @@ import java.util.List;
 public interface PrescriptionRepository extends JpaRepository<Prescription, Long> {
 
     List<Prescription> findAllByPatient(Patient patient);
+
+    List<Prescription> findAllByDoctor(Doctor doctor);
 
 }

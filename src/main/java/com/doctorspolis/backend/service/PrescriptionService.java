@@ -2,8 +2,11 @@ package com.doctorspolis.backend.service;
 
 import com.doctorspolis.backend.controller.exception.ResourceNotFoundException;
 import com.doctorspolis.backend.model.DTO.PrescriptionDTO;
+import com.doctorspolis.backend.model.Doctor;
 import com.doctorspolis.backend.model.Patient;
+import com.doctorspolis.backend.model.Prescription;
 import com.doctorspolis.backend.model.User;
+import com.doctorspolis.backend.model.repository.DoctorRepository;
 import com.doctorspolis.backend.model.repository.PatientRepository;
 import com.doctorspolis.backend.model.repository.PrescriptionRepository;
 import com.doctorspolis.backend.utility.mapper.PrescriptionMapper;
@@ -18,6 +21,8 @@ import java.util.Collection;
 public class PrescriptionService {
 
 
+    private final DoctorRepository doctorRepository;
+
     private final PatientRepository patientRepository;
 
     private final PrescriptionMapper prescriptionMapper;
@@ -25,9 +30,11 @@ public class PrescriptionService {
     private final PrescriptionRepository prescriptionRepository;
 
     @Autowired
-    public PrescriptionService(PatientRepository patientRepository,
+    public PrescriptionService(DoctorRepository doctorRepository,
+                               PatientRepository patientRepository,
                                PrescriptionMapper prescriptionMapper,
                                PrescriptionRepository prescriptionRepository) {
+        this.doctorRepository = doctorRepository;
         this.patientRepository = patientRepository;
         this.prescriptionMapper = prescriptionMapper;
         this.prescriptionRepository = prescriptionRepository;
@@ -38,13 +45,52 @@ public class PrescriptionService {
         return ResponseEntity.ok(prescriptionMapper.toDTOs(prescriptionRepository.findAllByPatient(patient)));
     }
 
+    public PrescriptionDTO create(User user,
+                                  Long doctorID,
+                                  PrescriptionDTO prescriptionDTO) throws ResourceNotFoundException {
+        if (!ObjectUtils.isEmpty(user) && user.getID().equals(doctorID) && user.isDoctor()) {
+
+            Doctor doctor = doctorRepository.findById(doctorID).orElseThrow(() -> new ResourceNotFoundException(""));
+
+            if (ObjectUtils.isEmpty(prescriptionDTO)
+                    && ObjectUtils.isEmpty(prescriptionDTO.getPatient())
+                    && ObjectUtils.isEmpty(prescriptionDTO.getPatient().getID())) {
+                throw new ResourceNotFoundException("");
+            }
+
+            Patient patient = patientRepository.findById(prescriptionDTO.getPatient().getID()).orElseThrow(() -> new ResourceNotFoundException(""));
+
+            Prescription prescription = prescriptionMapper.toEntity(prescriptionDTO);
+            prescription.setDoctor(doctor);
+            prescription.setPatient(patient);
+
+            prescriptionDTO.getIngredients().forEach(ingredientDTO -> {
+
+            });
+
+            return prescriptionMapper.toDTO(prescriptionRepository.save(prescription));
+        }
+
+        // TODO: Change th e Exception for an Forbidden resource
+        throw new ResourceNotFoundException("dddd");
+    }
+
     public Collection<PrescriptionDTO> allByPatientID(User user, Long patientID) throws ResourceNotFoundException {
-        if ((!ObjectUtils.isEmpty(user) && !user.getID().equals(patientID) || !user.isAdmin())) {
+        /* if ((!ObjectUtils.isEmpty(user) && !user.getID().equals(patientID) || !user.isAdmin())) {
+            // TODO: Change th e Exception for an Forbidden resource
+            throw new ResourceNotFoundException("dddd");
+        } */
+        Patient patient = patientRepository.getById(patientID);
+        return prescriptionMapper.toDTOs(prescriptionRepository.findAllByPatient(patient));
+    }
+
+    public Collection<PrescriptionDTO> allByDoctorID(User user, Long doctorID) throws ResourceNotFoundException {
+        if ((!ObjectUtils.isEmpty(user) && !user.getID().equals(doctorID) || user.isAdmin())) {
             // TODO: Change th e Exception for an Forbidden resource
             throw new ResourceNotFoundException("dddd");
         }
-        Patient patient = patientRepository.getById(patientID);
-        return prescriptionMapper.toDTOs(prescriptionRepository.findAllByPatient(patient));
+        Doctor doctor = doctorRepository.getById(doctorID);
+        return prescriptionMapper.toDTOs(prescriptionRepository.findAllByDoctor(doctor));
     }
 
 

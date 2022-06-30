@@ -19,7 +19,10 @@ import java.util.Collection;
 @DynamicUpdate
 public class Doctor extends Person {
 
-    private @Column(length=500) String overview;
+    @OneToOne
+    private User user;
+
+    private @Column(length = 500) String overview;
 
     @OneToOne()
     private Address address;

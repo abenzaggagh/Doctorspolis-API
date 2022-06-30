@@ -25,6 +25,10 @@ public interface IngredientMapper {
 
     Collection<IngredientDTO> toDTOs(Collection<Ingredient> ingredients);
 
+    @Mappings({
+            @Mapping(target = "treatmentStartingDate", dateFormat = "dd-MM-yyyy"),
+            @Mapping(target = "treatmentEndingDate", dateFormat = "dd-MM-yyyy"),
+    })
     Ingredient toEntity(IngredientDTO ingredientDTO);
 
     Collection<Ingredient> toEntities(Collection<IngredientDTO> ingredientDTOS);

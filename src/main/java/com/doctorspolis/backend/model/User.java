@@ -1,5 +1,6 @@
 package com.doctorspolis.backend.model;
 
+import com.doctorspolis.backend.commun.AbstractEntity;
 import com.doctorspolis.backend.model.enumeration.Role;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,12 +24,12 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User extends Person implements UserDetails {
+public class User /*extends Person*/ extends AbstractEntity implements UserDetails {
 
-    @Column(length=200, nullable = false, unique = true)
+    @Column(length = 200, nullable = false, unique = true)
     private String username;
 
-    @Column(length=200, nullable = false)
+    @Column(length = 200, nullable = false)
     private String password;
 
     private Boolean enabled;
@@ -65,7 +66,15 @@ public class User extends Person implements UserDetails {
     }
 
     public boolean isAdmin() {
-        return role == Role.ADMIN;
+        return role.equals(Role.ADMIN);
+    }
+
+    public boolean isDoctor() {
+        return role == Role.DOCTOR;
+    }
+
+    public boolean isPatient() {
+        return role.equals(Role.PATIENT);
     }
 
     public boolean roleEquals(Role role) {

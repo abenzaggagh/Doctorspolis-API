@@ -32,9 +32,4 @@ public class Prescription extends AbstractEntity {
     @ElementCollection
     private Collection<Ingredient> ingredients;
 
-
-
-
-    // Instructions
-
 }

@@ -28,6 +28,11 @@ public interface PrescriptionMapper {
 
     Collection<PrescriptionDTO> toDTOs(Collection<Prescription> prescriptions);
 
+    @Mappings({
+            @Mapping(target = "doctor", ignore = true),
+            @Mapping(target = "patient", ignore = true),
+            @Mapping(target = "issueDate", dateFormat = "dd-MM-yyyy")
+    })
     Prescription toEntity(PrescriptionDTO prescriptionDTO);
 
     Collection<Prescription> toEntities(Collection<PrescriptionDTO> prescriptionDTOS);

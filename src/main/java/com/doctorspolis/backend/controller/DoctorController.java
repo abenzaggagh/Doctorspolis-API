@@ -2,7 +2,9 @@ package com.doctorspolis.backend.controller;
 
 import com.doctorspolis.backend.controller.exception.DoctorNotFoundException;
 import com.doctorspolis.backend.model.DTO.*;
+import com.doctorspolis.backend.model.User;
 import com.doctorspolis.backend.service.DoctorService;
+import com.doctorspolis.backend.service.PrescriptionService;
 import com.doctorspolis.backend.utility.CRUDController;
 import com.doctorspolis.backend.utility.constants.DoctorspolisConstants;
 import com.doctorspolis.backend.utility.wrapper.WorkScheduleWrapper;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -20,9 +23,12 @@ public class DoctorController implements CRUDController<DoctorDTO> {
 
     private final DoctorService doctorService;
 
+    private final PrescriptionService prescriptionService;
+
     @Autowired
-    public DoctorController(DoctorService doctorService) {
+    public DoctorController(DoctorService doctorService, PrescriptionService prescriptionService) {
         this.doctorService = doctorService;
+        this.prescriptionService = prescriptionService;
     }
 
     @Override
@@ -106,9 +112,12 @@ public class DoctorController implements CRUDController<DoctorDTO> {
     class Prescriptions {
 
         @PostMapping
-        public ResponseEntity<PrescriptionDTO> create(@PathVariable Long doctorID,
+        public ResponseEntity<PrescriptionDTO> create(@AuthenticationPrincipal User user,
+                                                      @PathVariable Long doctorID,
                                                       @RequestBody PrescriptionDTO prescriptionDTO) {
-            return null;
+            // TODO Change the created response with URI
+            //  ResponseEntity.created(prescriptionService.create(user, doctorID, prescriptionDTO));
+            return ResponseEntity.status(HttpStatus.CREATED).body(prescriptionService.create(user, doctorID, prescriptionDTO));
         }
 
     }

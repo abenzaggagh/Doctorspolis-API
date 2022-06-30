@@ -7,6 +7,10 @@ import org.springframework.security.core.GrantedAuthority;
 public enum Role implements GrantedAuthority {
 
     ADMIN("Admin"),
+
+    DOCTOR("Doctor"),
+    PATIENT("Patient"),
+
     USER("User"),
     MODERATOR("Moderator"),
     GUEST("GUEST");
