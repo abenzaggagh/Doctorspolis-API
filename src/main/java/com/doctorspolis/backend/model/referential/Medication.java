@@ -5,9 +5,7 @@ import com.doctorspolis.backend.model.enumeration.Form;
 import com.doctorspolis.backend.utility.commun.AbstractReferential;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -17,7 +15,12 @@ import javax.persistence.Enumerated;
 @EqualsAndHashCode(callSuper = false)
 
 @Entity
+@Table(name = "medication", uniqueConstraints = @UniqueConstraint(columnNames = { "code", "form" }) )
 public class Medication extends AbstractReferential {
+
+    private String description;
+
+    private String indications;
 
     @Enumerated(EnumType.STRING)
     private Form form;

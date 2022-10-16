@@ -16,10 +16,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
-
-import javax.transaction.Transactional;
-
 
 @Service
 public class AuthenticationService {
@@ -75,8 +73,7 @@ public class AuthenticationService {
                         .enabled(true)
                         .build());
 
-                if (!ObjectUtils.isEmpty(authenticationRequestDTO.getUser())
-                        && !ObjectUtils.isEmpty(authenticationRequestDTO.getUser().getRole())) {
+                if (!ObjectUtils.isEmpty(authenticationRequestDTO.getUser()) && !ObjectUtils.isEmpty(authenticationRequestDTO.getUser().getRole())) {
                     Role role = Role.valueOf(authenticationRequestDTO.getUser().getRole());
                     if (role.equals(Role.PATIENT) || role.equals(Role.DOCTOR)) {
                         user.setRole(role);
@@ -117,6 +114,15 @@ public class AuthenticationService {
         }
 
         throw new BadCredentialsException("BAD CREDENTIALS EXCEPTION");
+    }
+
+    @Transactional
+    public Boolean signOut(User user) {
+        if (!ObjectUtils.isEmpty(user) && !ObjectUtils.isEmpty(user.getUsername()) && !ObjectUtils.isEmpty(user.getRefreshToken())) {
+            userRepository.setRefreshToken(user.getUsername(), null);
+            return true;
+        }
+        return false;
     }
 
 }

@@ -37,7 +37,7 @@ public class User /* extends Person */ extends AbstractEntity implements UserDet
 
     private Boolean enabled;
 
-    @Column(nullable = false)
+    // @Column(nullable = false)
     private String refreshToken;
 
 

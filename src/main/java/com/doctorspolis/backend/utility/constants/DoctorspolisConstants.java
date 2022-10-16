@@ -1,5 +1,7 @@
 package com.doctorspolis.backend.utility.constants;
 
+import java.net.URL;
+
 public class DoctorspolisConstants {
 
     public static final String T = "T";
@@ -23,6 +25,9 @@ public class DoctorspolisConstants {
     public static final String WORK_SCHEDULE = "workSchedule";
 
     public static final String PRESCRIPTIONS = "prescriptions";
+
+    public static final String MEDICATIONS = "medications";
+
 
     public static final String APPOINTMENTS = "appointments";
 
@@ -60,5 +65,7 @@ public class DoctorspolisConstants {
     public static final String LANGUAGE_BY_CODE  = LANGUAGES + URL_SEPARATOR + CODE_PATH_VARIABLE;
 
     public static final String SPECIALITY_BY_CODE  = SPECIALITIES + URL_SEPARATOR + CODE_PATH_VARIABLE;
+
+    public static final String MEDICATIONS_BY_CODE = MEDICATIONS + URL_SEPARATOR + CODE_PATH_VARIABLE;
 
 }

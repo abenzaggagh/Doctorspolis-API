@@ -1,17 +1,18 @@
 package com.doctorspolis.backend.controller;
 
+import com.doctorspolis.backend.model.User;
 import com.doctorspolis.backend.model.referential.DTO.CountryDTO;
 import com.doctorspolis.backend.model.referential.DTO.LanguageDTO;
+import com.doctorspolis.backend.model.referential.DTO.MedicationDTO;
 import com.doctorspolis.backend.model.referential.DTO.SpecialityDTO;
+import com.doctorspolis.backend.model.referential.Medication;
 import com.doctorspolis.backend.service.ReferentialService;
 import com.doctorspolis.backend.utility.commun.AbstractController;
 import com.doctorspolis.backend.utility.constants.DoctorspolisConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -54,6 +55,21 @@ public class ReferentialController extends AbstractController {
     @GetMapping(DoctorspolisConstants.SPECIALITY_BY_CODE)
     public ResponseEntity<SpecialityDTO> getSpecialityByCode(@PathVariable String code) {
         return ResponseEntity.ok().body(this.referentialService.getSpecialityByCode(code));
+    }
+
+    @GetMapping(DoctorspolisConstants.MEDICATIONS)
+    public ResponseEntity<Collection<MedicationDTO>> getMedications() {
+        return ResponseEntity.ok().body(this.referentialService.getMedications());
+    }
+
+    @GetMapping(DoctorspolisConstants.MEDICATIONS_BY_CODE)
+    public ResponseEntity<MedicationDTO> getMedicationByCode(@PathVariable String code) {
+        return ResponseEntity.ok().body(this.referentialService.getMedicationByCode(code));
+    }
+
+    @PostMapping(DoctorspolisConstants.MEDICATIONS)
+    public ResponseEntity<MedicationDTO> addMedication(@AuthenticationPrincipal User user, @RequestBody MedicationDTO medicationDTO) {
+        return ResponseEntity.ok().body(this.referentialService.createMedication(user, medicationDTO));
     }
 
 }

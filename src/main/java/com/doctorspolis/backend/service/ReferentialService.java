@@ -1,20 +1,22 @@
 package com.doctorspolis.backend.service;
 
 import com.doctorspolis.backend.controller.exception.ResourceNotFoundException;
+import com.doctorspolis.backend.model.User;
 import com.doctorspolis.backend.model.referential.Country;
 import com.doctorspolis.backend.model.referential.DTO.CountryDTO;
 import com.doctorspolis.backend.model.referential.DTO.LanguageDTO;
+import com.doctorspolis.backend.model.referential.DTO.MedicationDTO;
 import com.doctorspolis.backend.model.referential.DTO.SpecialityDTO;
 import com.doctorspolis.backend.model.referential.Language;
+import com.doctorspolis.backend.model.referential.Medication;
 import com.doctorspolis.backend.model.referential.Speciality;
+import com.doctorspolis.backend.model.repository.MedicationRepository;
 import com.doctorspolis.backend.model.repository.referential.CountryRepository;
 import com.doctorspolis.backend.model.repository.referential.LanguageRepository;
 import com.doctorspolis.backend.model.repository.referential.SpecialityRepository;
 import com.doctorspolis.backend.utility.commun.AbstractService;
 import com.doctorspolis.backend.utility.constants.DoctorspolisConstants;
-import com.doctorspolis.backend.utility.mapper.referential.CountryMapper;
-import com.doctorspolis.backend.utility.mapper.referential.LanguageMapper;
-import com.doctorspolis.backend.utility.mapper.referential.SpecialityMapper;
+import com.doctorspolis.backend.utility.mapper.referential.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -39,16 +41,25 @@ public class ReferentialService extends AbstractService {
 
     private final SpecialityRepository specialityRepository;
 
+
+    private final MedicationMapper medicationMapper;
+
+    private final MedicationRepository medicationRepository;
+
+
     @Autowired
     public ReferentialService(CountryMapper countryMapper, CountryRepository countryRepository,
                               LanguageMapper languageMapper, LanguageRepository languageRepository,
-                              SpecialityMapper specialityMapper, SpecialityRepository specialityRepository) {
+                              SpecialityMapper specialityMapper, SpecialityRepository specialityRepository,
+                              MedicationMapper medicationMapper, MedicationRepository medicationRepository) {
         this.countryMapper = countryMapper;
         this.countryRepository = countryRepository;
         this.languageMapper = languageMapper;
         this.languageRepository = languageRepository;
         this.specialityMapper = specialityMapper;
         this.specialityRepository = specialityRepository;
+        this.medicationMapper = medicationMapper;
+        this.medicationRepository = medicationRepository;
     }
 
     @Cacheable(DoctorspolisConstants.COUNTRIES)
@@ -91,6 +102,21 @@ public class ReferentialService extends AbstractService {
         } else {
             throw new ResourceNotFoundException("error.referential.speciality.not.found", code.toLowerCase());
         }
+    }
+
+    @Cacheable(DoctorspolisConstants.MEDICATIONS)
+    public Collection<MedicationDTO> getMedications() {
+        return medicationMapper.toDTOs(medicationRepository.findAll());
+    }
+
+    public MedicationDTO getMedicationByCode(String code) {
+        return medicationMapper.toDTO(this.medicationRepository.findMedicationByCode(code).orElseThrow(() -> new ResourceNotFoundException("error.referential.medication.not.found", code)));
+    }
+
+    public MedicationDTO createMedication(User user, MedicationDTO medicationDTO) {
+        if (user.isDoctor() || user.isAdmin())
+            return medicationMapper.toDTO(medicationRepository.save(medicationMapper.toEntity(medicationDTO)));
+        throw new ResourceNotFoundException("unauthorized");
     }
 
 }

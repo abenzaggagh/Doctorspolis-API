@@ -17,4 +17,6 @@ public interface MedicationMapper {
 
     List<MedicationDTO> toDTOs(List<Medication> medications);
 
+    Medication toEntity(MedicationDTO medicationDTO);
+
 }

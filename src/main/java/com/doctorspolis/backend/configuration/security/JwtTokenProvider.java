@@ -86,14 +86,17 @@ public class JwtTokenProvider {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+
         return claims.getSubject();
     }
 
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(DoctorspolisConstants.AUTHORIZATION);
+
         if (bearerToken != null && bearerToken.startsWith(DoctorspolisConstants.BEARER)) {
             return bearerToken.substring(7);
         }
+
         return null;
     }
 
@@ -104,8 +107,9 @@ public class JwtTokenProvider {
                 .build()
                 .parseClaimsJws(token);
 
-        return !claims.getBody().getExpiration().before(new Date());
+        String username = claims.getBody().getSubject();
 
+        return !claims.getBody().getExpiration().before(new Date()) && userService.isAuthenticated(username);
     }
 
 }

@@ -37,8 +37,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/sign-out")
-    public String signOut() {
-        return "Doctorspolis";
+    public ResponseEntity<Boolean> signOut(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(authenticationService.signOut(user));
     }
 
     @GetMapping("/profile")

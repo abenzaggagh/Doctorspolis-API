@@ -7,7 +7,8 @@ import org.mapstruct.NullValueCheckStrategy;
 
 @Mapper(
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
-        componentModel = "spring"
+        componentModel = "spring",
+        uses = { PatientMapper.class, DoctorMapper.class }
 )
 public interface UserMapper {
 

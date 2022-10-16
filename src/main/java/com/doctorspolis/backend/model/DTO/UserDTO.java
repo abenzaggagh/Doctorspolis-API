@@ -1,5 +1,6 @@
 package com.doctorspolis.backend.model.DTO;
 
+import com.doctorspolis.backend.utility.commun.AbstractDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
@@ -15,16 +16,18 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public class UserDTO extends PersonDTO {
+public class UserDTO extends AbstractDTO {
 
     @NotEmpty
     private String username;
 
-    // No need to send the password
-    // private String password;
-
     private Boolean enabled;
 
     private String role;
+
+    // TODO: Implement a way to retrieve user infos patient and doctor one only or both if they exists.
+    private DoctorDTO doctorInfos;
+
+    private PatientDTO patientInfos;
 
 }
