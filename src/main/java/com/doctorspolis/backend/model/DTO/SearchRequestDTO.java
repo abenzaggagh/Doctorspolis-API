@@ -13,7 +13,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public class SearchRequest {
+public class SearchRequestDTO {
+// TODO: Create an middle class/interface RequestDTO
 
     String query;
 

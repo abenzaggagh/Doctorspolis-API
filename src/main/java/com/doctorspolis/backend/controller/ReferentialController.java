@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Pattern;
 import java.util.Collection;
 
 @RestController
@@ -43,7 +44,7 @@ public class ReferentialController extends AbstractController {
     }
 
     @GetMapping(DoctorspolisConstants.LANGUAGE_BY_CODE)
-    public ResponseEntity<LanguageDTO> getLanguageByCode(@PathVariable String code) {
+    public ResponseEntity<LanguageDTO> getLanguageByCode(@PathVariable @Pattern(regexp = DoctorspolisConstants.Patterns.LANGUAGE_CODE_PATTERN, message = "Incorrect Language") String code) {
         return ResponseEntity.ok().body(this.referentialService.getLanguageByCode(code));
     }
 

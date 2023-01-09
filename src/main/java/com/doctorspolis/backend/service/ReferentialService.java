@@ -8,7 +8,6 @@ import com.doctorspolis.backend.model.referential.DTO.LanguageDTO;
 import com.doctorspolis.backend.model.referential.DTO.MedicationDTO;
 import com.doctorspolis.backend.model.referential.DTO.SpecialityDTO;
 import com.doctorspolis.backend.model.referential.Language;
-import com.doctorspolis.backend.model.referential.Medication;
 import com.doctorspolis.backend.model.referential.Speciality;
 import com.doctorspolis.backend.model.repository.MedicationRepository;
 import com.doctorspolis.backend.model.repository.referential.CountryRepository;
@@ -40,7 +39,6 @@ public class ReferentialService extends AbstractService {
     private final LanguageRepository languageRepository;
 
     private final SpecialityRepository specialityRepository;
-
 
     private final MedicationMapper medicationMapper;
 

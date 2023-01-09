@@ -1,6 +1,6 @@
 package com.doctorspolis.backend.controller.exception.handler;
 
-import com.doctorspolis.backend.controller.exception.DoctorNotFoundException;
+import com.doctorspolis.backend.controller.exception.ResourceNotFoundException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -10,18 +10,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class DoctorExceptionHandler /*extends ResponseEntityExceptionHandler */{
+public class DoctorExceptionHandler {
 
     // TODO: Create a custom Error Message DTO
-    @ExceptionHandler(DoctorNotFoundException.class)
-    protected ResponseEntity<String> handleEntityNotFound(DoctorNotFoundException exception) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    protected ResponseEntity<String> handleEntityNotFound(ResourceNotFoundException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
-/*
-    @Override
-    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
-                                                             HttpStatus status, WebRequest request) {
-       return new ResponseEntity<>(ex.getMessage(), status);
-    }
-*/
+
 }

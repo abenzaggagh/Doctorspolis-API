@@ -20,7 +20,7 @@ public class AuthenticationExceptionHandler {
         return new ResponseEntity<>(ErrorDTO
                 .builder()
                 .error("00001")
-                .status("400")
+                .status(HttpStatus.BAD_REQUEST)
                 .message(exception.getMessage())
                 .details(exception.getMessage())
                 .build(),

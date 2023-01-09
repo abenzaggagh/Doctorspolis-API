@@ -29,24 +29,16 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         String token = jwtTokenProvider.resolveToken(request);
+
         try {
             if (token != null && jwtTokenProvider.isAccessTokenValid(token)) {
                 Authentication auth = jwtTokenProvider.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         } catch (ExpiredJwtException | BadCredentialsException exception) {
-            /*
-            String isRefreshToken = request.getHeader("refreshToken");
 
-            String requestURL = request.getRequestURL().toString();
-            // allow for Refresh Token creation if following conditions are true.
-            if (isRefreshToken != null && isRefreshToken.equals("true") && requestURL.contains("refreshtoken")) {
-                // allowForRefreshToken(ex, request);
-            } else  */
             request.setAttribute(DoctorspolisConstants.EXCEPTION, exception);
-        } /* catch (BadCredentialsException exception) {
-            request.setAttribute(DoctorspolisConstants.EXCEPTION, exception);
-        } */
+        }
 
         filterChain.doFilter(request, response);
     }

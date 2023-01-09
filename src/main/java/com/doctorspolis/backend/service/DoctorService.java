@@ -1,10 +1,9 @@
 package com.doctorspolis.backend.service;
 
-import com.doctorspolis.backend.controller.exception.DoctorNotFoundException;
 import com.doctorspolis.backend.controller.exception.ResourceNotFoundException;
 import com.doctorspolis.backend.model.DTO.DoctorDTO;
 import com.doctorspolis.backend.model.DTO.PageDTO;
-import com.doctorspolis.backend.model.DTO.SearchRequest;
+import com.doctorspolis.backend.model.DTO.SearchRequestDTO;
 import com.doctorspolis.backend.model.DTO.WorkScheduleDTO;
 import com.doctorspolis.backend.model.Doctor;
 import com.doctorspolis.backend.model.WorkSchedule;
@@ -50,7 +49,7 @@ public class DoctorService extends AbstractService implements CRUDService<Doctor
         this.workScheduleRepository = workScheduleRepository;
     }
 
-    public PageDTO<DoctorDTO> searchDoctors(SearchRequest request, Pageable pageable) {
+    public PageDTO<DoctorDTO> searchDoctors(SearchRequestDTO request, Pageable pageable) {
         Page<Doctor> result = doctorRepository.findAllByFirstnameOrLastname(request.getQuery(), request.getQuery(), pageable);
 
         return PageDTO.<DoctorDTO>builder()
@@ -71,17 +70,17 @@ public class DoctorService extends AbstractService implements CRUDService<Doctor
     }
 
     @Override
-    public DoctorDTO oneDTO(Long doctorID) throws DoctorNotFoundException {
+    public DoctorDTO oneDTO(Long doctorID) throws ResourceNotFoundException {
         return doctorMapper.toDTO(this.oneEntity(doctorID));
     }
 
     @Override
-    public Doctor oneEntity(Long doctorID) throws DoctorNotFoundException {
+    public Doctor oneEntity(Long doctorID) throws ResourceNotFoundException {
         Optional<Doctor> doctor = doctorRepository.findById(doctorID);
         if (doctor.isPresent())
             return doctor.get();
         else
-            throw new DoctorNotFoundException(doctorID);
+            throw new ResourceNotFoundException(doctorID);
     }
 
     @Override
@@ -92,7 +91,7 @@ public class DoctorService extends AbstractService implements CRUDService<Doctor
 
     @Override
     @Transactional
-    public DoctorDTO updateByID(Long doctorID, DoctorDTO doctorDTO) throws DoctorNotFoundException {
+    public DoctorDTO updateByID(Long doctorID, DoctorDTO doctorDTO) throws ResourceNotFoundException {
         Optional<Doctor> optionalDoctor = doctorRepository.findById(doctorID);
 
         if (optionalDoctor.isPresent()) {
@@ -102,12 +101,12 @@ public class DoctorService extends AbstractService implements CRUDService<Doctor
 
             return doctorMapper.toDTO(doctorRepository.save(doctor));
         } else {
-            throw new DoctorNotFoundException(doctorID);
+            throw new ResourceNotFoundException(doctorID);
         }
     }
 
     @Transactional
-    public DoctorDTO replaceDoctor(Long doctorID, DoctorDTO doctorDTO) throws DoctorNotFoundException {
+    public DoctorDTO replaceDoctor(Long doctorID, DoctorDTO doctorDTO) throws ResourceNotFoundException {
         Optional<Doctor> optionalDoctor = doctorRepository.findById(doctorID);
 
         if (optionalDoctor.isPresent()) {
@@ -117,12 +116,12 @@ public class DoctorService extends AbstractService implements CRUDService<Doctor
 
             return doctorMapper.toDTO(doctorRepository.save(doctor));
         } else {
-            throw new DoctorNotFoundException(doctorID);
+            throw new ResourceNotFoundException(doctorID);
         }
     }
 
     @Override
-    public Boolean deleteByID(Long doctorID) throws DoctorNotFoundException {
+    public Boolean deleteByID(Long doctorID) throws ResourceNotFoundException {
         Optional<Doctor> optionalDoctor = this.doctorRepository.findById(doctorID);
 
         if (optionalDoctor.isPresent()) {
@@ -130,7 +129,7 @@ public class DoctorService extends AbstractService implements CRUDService<Doctor
 
             return true;
         } else {
-            throw new DoctorNotFoundException(doctorID);
+            throw new ResourceNotFoundException(doctorID);
         }
     }
 
@@ -142,13 +141,12 @@ public class DoctorService extends AbstractService implements CRUDService<Doctor
 
             return workScheduleMapper.toDTOs(doctor.getWorkSchedule());
         } else {
-            throw new DoctorNotFoundException(doctorID);
+            throw new ResourceNotFoundException(doctorID);
         }
     }
 
     @Transactional
-    public Collection<WorkScheduleDTO> addWorkScheduleByID(Long doctorID,
-                                                           WorkScheduleDTO workScheduleDTO) throws ResourceNotFoundException {
+    public Collection<WorkScheduleDTO> addWorkScheduleByID(Long doctorID, WorkScheduleDTO workScheduleDTO) throws ResourceNotFoundException {
         Optional<Doctor> optionalDoctor = this.doctorRepository.findById(doctorID);
 
         if (optionalDoctor.isPresent()) {
@@ -158,7 +156,7 @@ public class DoctorService extends AbstractService implements CRUDService<Doctor
 
             return workScheduleMapper.toDTOs(doctorRepository.save(doctor).getWorkSchedule());
         } else {
-            throw new DoctorNotFoundException(doctorID);
+            throw new ResourceNotFoundException(doctorID);
         }
     }
 
@@ -175,7 +173,7 @@ public class DoctorService extends AbstractService implements CRUDService<Doctor
 
             return workScheduleMapper.toDTOs(doctorRepository.save(doctor).getWorkSchedule());
         } else {
-            throw new DoctorNotFoundException(doctorID);
+            throw new ResourceNotFoundException(doctorID);
         }
     }
 
@@ -206,7 +204,7 @@ public class DoctorService extends AbstractService implements CRUDService<Doctor
             }
 
         } else {
-            throw new DoctorNotFoundException(doctorID);
+            throw new ResourceNotFoundException(doctorID);
         }
     }
 
@@ -224,7 +222,7 @@ public class DoctorService extends AbstractService implements CRUDService<Doctor
 
             return workScheduleMapper.toDTOs(doctorRepository.save(doctor).getWorkSchedule());
         } else {
-            throw new DoctorNotFoundException(doctorID);
+            throw new ResourceNotFoundException(doctorID);
         }
     }
 

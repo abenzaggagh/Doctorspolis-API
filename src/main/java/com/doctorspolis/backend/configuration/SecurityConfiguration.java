@@ -20,14 +20,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private static final String[] AUTH_WHITELIST = {"/**/sign-up", "/**/sign-in"};
+
     private final JwtConfigurer jwtConfigurer;
-    // private final JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    public SecurityConfiguration(JwtConfigurer jwtConfigurer
-                                 /* JwtTokenProvider jwtTokenProvider */) {
+    public SecurityConfiguration(JwtConfigurer jwtConfigurer) {
         this.jwtConfigurer = jwtConfigurer;
-        // this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Bean
@@ -51,13 +50,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity
                 // TODO: Learn more about Spring Interceptors and Filters
                 // TODO: Send a Error DTO when the Token is expired
-                .csrf().disable()
+                .csrf()
+                .disable()
+                .headers()
+                .frameOptions()
+                .deny()
+                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**/sign-in").permitAll()
-                .antMatchers("/**/sign-up").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers(AUTH_WHITELIST).permitAll()
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(new JwtFailureHandler())

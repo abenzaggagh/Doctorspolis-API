@@ -18,14 +18,20 @@ import java.util.Collection;
 @RequestMapping(DoctorspolisConstants.PRESCRIPTIONS)
 public class PrescriptionController {
 
-    @Autowired
-    private PrescriptionMapper prescriptionMapper;
+    private final PrescriptionMapper prescriptionMapper;
+
+    private final PatientRepository patientRepository;
+
+    private final PrescriptionRepository prescriptionRepository;
 
     @Autowired
-    private PatientRepository patientRepository;
-
-    @Autowired
-    private PrescriptionRepository prescriptionRepository;
+    public PrescriptionController(PrescriptionMapper prescriptionMapper,
+                                  PatientRepository patientRepository,
+                                  PrescriptionRepository prescriptionRepository) {
+        this.prescriptionMapper = prescriptionMapper;
+        this.patientRepository = patientRepository;
+        this.prescriptionRepository = prescriptionRepository;
+    }
 
     @GetMapping
     public ResponseEntity<Collection<PrescriptionDTO>> all() {

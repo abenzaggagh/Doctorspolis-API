@@ -1,10 +1,12 @@
 package com.doctorspolis.backend.controller.exception.handler;
 
+import com.doctorspolis.backend.controller.exception.ResourceNotFoundException;
 import com.doctorspolis.backend.controller.exception.TokenExpiredException;
 import com.doctorspolis.backend.model.DTO.ErrorDTO;
 import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -16,8 +18,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -29,6 +35,21 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 "Access denied message here", new HttpHeaders(), HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler({ ResourceNotFoundException.class })
+    public ResponseEntity<ErrorDTO> handleResourceNotFoundException(Exception exception, WebRequest request) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        httpHeaders.setAcceptCharset(List.of(StandardCharsets.UTF_8, StandardCharsets.UTF_16));
+
+        ErrorDTO errorDTO = ErrorDTO.builder()
+                                    .error(request.getParameter("code"))
+                                    .status(HttpStatus.NOT_FOUND)
+                                    .message(exception.getMessage())
+                                    .details(String.valueOf(exception))
+                                    .build();
+
+        return new ResponseEntity<>(errorDTO, httpHeaders, HttpStatus.NOT_FOUND);
+    }
 
     @Override
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
@@ -48,12 +69,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(JwtException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(INTERNAL_SERVER_ERROR)
     public ResponseEntity<Object> handleAllUncaughtException(RuntimeException exception, WebRequest request){
         return new ResponseEntity<>(ErrorDTO
                 .builder()
                 .error("10001")
-                .status("500")
+                .status(INTERNAL_SERVER_ERROR)
                 .message("")
                 .details("")
                 .build(),
@@ -65,7 +86,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(ErrorDTO
                 .builder()
                 .error("10001")
-                .status("500")
+                .status(INTERNAL_SERVER_ERROR)
                 .message("")
                 .details("")
                 .build(),

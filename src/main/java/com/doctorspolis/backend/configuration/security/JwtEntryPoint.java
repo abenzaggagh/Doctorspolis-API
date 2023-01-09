@@ -22,7 +22,7 @@ public class JwtEntryPoint implements AuthenticationEntryPoint, Serializable {
         ErrorDTO errorDTO = ErrorDTO
                 .builder()
                 .error("00001")
-                .status("400")
+                .status(HttpStatus.BAD_REQUEST)
                 .message(authException.getMessage())
                 .details(authException.getMessage())
                 .build();

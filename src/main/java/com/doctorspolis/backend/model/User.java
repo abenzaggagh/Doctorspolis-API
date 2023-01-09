@@ -3,6 +3,7 @@ package com.doctorspolis.backend.model;
 import com.doctorspolis.backend.model.enumeration.Role;
 import com.doctorspolis.backend.utility.commun.AbstractEntity;
 import lombok.*;
+import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -19,7 +20,6 @@ import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
 
 
 @Entity

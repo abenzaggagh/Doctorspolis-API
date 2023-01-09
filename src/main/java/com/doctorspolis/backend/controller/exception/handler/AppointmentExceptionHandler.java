@@ -23,7 +23,7 @@ public class AppointmentExceptionHandler extends AbstractExceptionHandler {
         return new ResponseEntity<>(ErrorDTO
                 .builder()
                 .error("10001")
-                .status("400")
+                .status(HttpStatus.BAD_REQUEST)
                 .message(loadMessage(exception.getMessage()))
                 .details(loadMessage(exception.getMessage() + ".details", exception.getArguments()))
                 .build(),

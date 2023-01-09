@@ -20,6 +20,11 @@ public class AppointmentController {
         this.appointmentService = appointmentService;
     }
 
+    @PostMapping("available")
+    public ResponseEntity<AppointmentDTO> available(@RequestBody AppointmentDTO appointmentDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(appointmentService.make(appointmentDTO));
+    }
+
     @PostMapping("request")
     public ResponseEntity<AppointmentDTO> request(@RequestBody AppointmentDTO appointmentDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(appointmentService.make(appointmentDTO));

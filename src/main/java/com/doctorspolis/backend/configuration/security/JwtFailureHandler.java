@@ -22,7 +22,7 @@ public class JwtFailureHandler implements AccessDeniedHandler {
         ErrorDTO errorDTO = ErrorDTO
                 .builder()
                 .error("00001")
-                .status("400")
+                .status(HttpStatus.NOT_FOUND)
                 .message(accessDeniedException.getMessage())
                 .details(accessDeniedException.getMessage())
                 .build();

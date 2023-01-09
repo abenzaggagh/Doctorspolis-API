@@ -1,5 +1,7 @@
 package com.doctorspolis.backend.utility.constants;
 
+import lombok.Getter;
+
 import java.net.URL;
 
 public class DoctorspolisConstants {
@@ -47,7 +49,6 @@ public class DoctorspolisConstants {
 
     public static final String DOCTORS_WORK_SCHEDULE = DOCTORS + URL_SEPARATOR + DOCTOR_ID_PATH_VARIABLE + URL_SEPARATOR + WORK_SCHEDULE;
 
-
     public static final String PATIENTS_PRESCRIPTIONS = PATIENTS + URL_SEPARATOR + PATIENT_ID_PATH_VARIABLE + URL_SEPARATOR + PRESCRIPTIONS;
 
     public static final String DOCTORS_PRESCRIPTIONS = DOCTORS + URL_SEPARATOR + DOCTOR_ID_PATH_VARIABLE + URL_SEPARATOR + PRESCRIPTIONS;
@@ -67,5 +68,16 @@ public class DoctorspolisConstants {
     public static final String SPECIALITY_BY_CODE  = SPECIALITIES + URL_SEPARATOR + CODE_PATH_VARIABLE;
 
     public static final String MEDICATIONS_BY_CODE = MEDICATIONS + URL_SEPARATOR + CODE_PATH_VARIABLE;
+
+
+
+
+    // public static final Patterns PATTERNS = new Patterns();
+
+    public static class Patterns {
+
+        public static final String LANGUAGE_CODE_PATTERN = "[a-z]{2}";
+
+    }
 
 }
