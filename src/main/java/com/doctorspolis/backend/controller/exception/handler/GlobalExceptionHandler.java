@@ -29,10 +29,8 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ AccessDeniedException.class, TokenExpiredException.class })
-    public ResponseEntity<Object> handleAccessDeniedException(
-            Exception ex, WebRequest request) {
-        return new ResponseEntity<Object>(
-                "Access denied message here", new HttpHeaders(), HttpStatus.FORBIDDEN);
+    public ResponseEntity<Object> handleAccessDeniedException(Exception exception, WebRequest request) {
+        return new ResponseEntity<Object>("Access denied message here", new HttpHeaders(), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler({ ResourceNotFoundException.class })
@@ -53,8 +51,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(
-            @NonNull MethodArgumentNotValidException ex,
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(@NonNull MethodArgumentNotValidException ex,
             @NonNull HttpHeaders headers,
             @NonNull HttpStatus status,
             @NonNull WebRequest request

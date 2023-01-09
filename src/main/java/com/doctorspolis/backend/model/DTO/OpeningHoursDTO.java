@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -20,17 +21,17 @@ import java.util.Date;
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class OpeningHoursDTO {
 
-    // TODO: Change day to Enum format
-    // TODO: Validate if no day is repeated
     @NotNull
     private Day day;
 
     @NotNull
     private Boolean opens;
 
+    @NotEmpty
     @JsonFormat(pattern = "HH:mm:ss")
     private Date openingTime;
 
+    @NotEmpty
     @JsonFormat(pattern = "HH:mm:ss")
     private Date closingTime;
 

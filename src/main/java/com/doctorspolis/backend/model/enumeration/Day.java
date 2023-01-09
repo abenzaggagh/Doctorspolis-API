@@ -7,6 +7,7 @@ import java.time.DayOfWeek;
 
 @Getter
 public enum Day {
+
     MONDAY("Monday"),
     TUESDAY("Tuesday"),
     WEDNESDAY("Wednesday"),
@@ -14,6 +15,8 @@ public enum Day {
     FRIDAY("Friday"),
     SATURDAY("Saturday"),
     SUNDAY("Sunday");
+
+    public static final int COUNT = 7;
 
     private final String label;
 
