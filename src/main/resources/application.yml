@@ -1,0 +1,28 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: Doctorspolis-API
+  datasource:
+    url: jdbc:postgresql://localhost:5432/doctorspolis_db
+    username: postgres
+    password: postgres
+    driver-classname: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+doctorspolis:
+  jwt:
+    secret:
+      key: MIIJKQIBAAKCAgEAjrxKCP8eKDPJkTodb6f98G0T+Ic9HyljdSPmTPO8zMcgg7Rf
+    expiration:
+      period:
+        access: 900000
+        refresh: 604800000

@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "doctorspolis.jwt.expiration.period.access",
+      "type": "java.lang.Integer",
+      "description": "Description for doctorspolis.jwt.expiration.period.access."
+    },
+    {
+      "name": "doctorspolis.jwt.expiration.period.refresh",
+      "type": "java.lang.Integer",
+      "description": "Description for doctorspolis.jwt.expiration.period.refresh."
+    }
+  ]
+}
