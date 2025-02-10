@@ -1,5 +1,6 @@
-package com.doctorspolis.model.data;
+package com.doctorspolis.model.data.doctor;
 
+import com.doctorspolis.model.data.Address;
 import com.doctorspolis.utility.AbstractEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -10,10 +11,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 
 @Entity
 public class WorkPlace extends AbstractEntity {

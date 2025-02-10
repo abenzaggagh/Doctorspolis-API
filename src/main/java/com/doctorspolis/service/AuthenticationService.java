@@ -2,12 +2,12 @@ package com.doctorspolis.service;
 
 import com.doctorspolis.configuration.security.JwtTokenProvider;
 import com.doctorspolis.controller.exception.AuthenticationException;
-import com.doctorspolis.model.data.Doctor;
+import com.doctorspolis.model.data.doctor.Doctor;
 import com.doctorspolis.model.data.OTPCode;
 import com.doctorspolis.model.data.Patient;
 import com.doctorspolis.model.data.User;
-import com.doctorspolis.model.dto.UserDTO;
 import com.doctorspolis.model.dto.authentication.*;
+import com.doctorspolis.utility.mapper.PatientMapper;
 import com.doctorspolis.utility.mapper.UserMapper;
 import com.doctorspolis.repository.DoctorRepository;
 import com.doctorspolis.repository.OTPCodeRepository;
@@ -47,8 +47,7 @@ public class AuthenticationService {
     private final PatientRepository patientRepository;
     private final OTPCodeRepository otpCodeRepository;
 
-    private final UserMapper userMapper;
-
+    private final PatientMapper patientMapper;
 
     public AuthenticationResponseDTO signIn(SignInRequestDTO signInRequestDTO) {
         val username = signInRequestDTO.getEmail();
@@ -60,9 +59,12 @@ public class AuthenticationService {
 
         user.setRefreshToken(authenticationResponseDTO.getRefreshToken());
 
-        UserDTO userDTO = userMapper.toDTO(userRepository.save(user));
+        userRepository.save(user);
 
-        authenticationResponseDTO.setUser(userDTO);
+        switch (user.getRole()) {
+            case DOCTOR -> {}
+            case PATIENT -> authenticationResponseDTO.setPatient(patientMapper.toDTO(patientRepository.findByUser(user).orElseThrow()));
+        }
 
         return authenticationResponseDTO;
     }
@@ -114,8 +116,6 @@ public class AuthenticationService {
 
         userRepository.setRefreshToken(email, response.getRefreshToken());
 
-        response.setUser(userMapper.toDTO(user));
-
         return response;
     }
 
@@ -129,6 +129,7 @@ public class AuthenticationService {
         user.setRole(PATIENT);
 
         Patient patient = new Patient();
+        patient.setUser(user);
         patient.setFirstname(signUpRequestDTO.getFirstName());
         patient.setLastname(signUpRequestDTO.getLastName());
         patient.setGender(signUpRequestDTO.getGender());
@@ -141,7 +142,7 @@ public class AuthenticationService {
 
         userRepository.setRefreshToken(email, response.getRefreshToken());
 
-        response.setUser(userMapper.toDTO(user));
+        response.setPatient(patientMapper.toDTO(patient));
 
         return response;
     }
@@ -171,10 +172,17 @@ public class AuthenticationService {
 
     public AuthenticationResponseDTO profile(User user) {
         if (!ObjectUtils.isEmpty(user) && !ObjectUtils.isEmpty(user.getRefreshToken())) {
-            return AuthenticationResponseDTO
-                    .builder()
-                    .user(userMapper.toDTO(user))
-                    .build();
+            switch (user.getRole()) {
+                case DOCTOR -> {
+                    // return AuthenticationResponseDTO.builder().doctor()
+                }
+                case PATIENT -> {
+                    return AuthenticationResponseDTO
+                            .builder()
+                            .patient(patientMapper.toDTO(patientRepository.findByUser(user).orElseThrow()))
+                            .build();
+                }
+            }
         }
 
         return null;

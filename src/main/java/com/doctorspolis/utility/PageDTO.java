@@ -4,18 +4,30 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+
+@Builder
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public abstract class AbstractDTO implements Serializable {
+public class PageDTO<T> {
 
-    private Long ID;
+    private Set<T> result = new HashSet<>();
+
+    private Integer pageNumber = 0;
+
+    private Integer pageSize = 0;
+
+    private Integer total;
+
+    private Boolean hasNextPage = false;
 
 }

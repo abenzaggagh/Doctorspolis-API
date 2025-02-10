@@ -14,8 +14,6 @@ public enum DurationEnum {
 
     private final int duration;
 
-    // TODO : Clean this mess
-    // This code is garbage
     DurationEnum(int duration) {
         this.duration = duration;
     }

@@ -1,9 +1,10 @@
-package com.doctorspolis.model.data;
+package com.doctorspolis.model.data.doctor;
 
 import com.doctorspolis.model.enumuration.Day;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalTime;
 import java.util.Date;
 
 @Getter
@@ -24,15 +25,15 @@ public class OpeningHours {
     private Boolean hasBreak;
 
     @Temporal(TemporalType.TIME)
-    private Date openingTime;
+    private LocalTime openingTime;
 
     @Temporal(TemporalType.TIME)
-    private Date closingTime;
+    private LocalTime closingTime;
 
     @Temporal(TemporalType.TIME)
-    private Date breakTime;
+    private LocalTime breakTime;
 
     @Temporal(TemporalType.TIME)
-    private Date resumeTime;
+    private LocalTime resumeTime;
 
 }

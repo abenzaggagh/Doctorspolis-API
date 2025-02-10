@@ -28,9 +28,6 @@ public abstract class Person extends AbstractEntity {
     private String firstname;
 
     @Column(length = 50)
-    private String surname;
-
-    @Column(length = 50)
     private String lastname;
 
     @Enumerated(EnumType.STRING)

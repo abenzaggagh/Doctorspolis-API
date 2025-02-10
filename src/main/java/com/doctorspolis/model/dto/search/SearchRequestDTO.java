@@ -1,21 +1,23 @@
-package com.doctorspolis.utility;
+package com.doctorspolis.model.dto.search;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.Data;
 
 import java.io.Serializable;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@Data
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public abstract class AbstractDTO implements Serializable {
+public class SearchRequestDTO implements Serializable {
 
-    private Long ID;
+    private String query;
+
+    private String speciality;
+
+    private LocationDTO location;
+
+    private String city;
 
 }

@@ -1,8 +1,8 @@
-package com.doctorspolis.model.data;
+package com.doctorspolis.model.data.doctor;
 
+import com.doctorspolis.model.data.*;
 import com.doctorspolis.model.enumuration.AppointmentType;
 import com.doctorspolis.model.enumuration.Availability;
-import com.doctorspolis.model.enumuration.DurationEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,13 +42,22 @@ public class Doctor extends Person {
     @Enumerated(EnumType.STRING)
     private Availability availability;
 
-    @Enumerated(EnumType.STRING)
-    private DurationEnum appointmentDuration;
+    @ManyToOne
+    private Speciality speciality;
+
+    @ManyToMany
+    private List<Language> languages;
+
+    @OneToMany
+    private List<Education> educations;
 
     @CollectionTable
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = AppointmentType.class)
     private List<AppointmentType> appointmentTypes;
+
+    @OneToMany
+    private List<AppointmentReason> appointmentReasons;
 
     @OneToOne
     private User user;

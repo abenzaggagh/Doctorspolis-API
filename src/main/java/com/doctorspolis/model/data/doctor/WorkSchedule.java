@@ -1,10 +1,8 @@
-package com.doctorspolis.model.data;
+package com.doctorspolis.model.data.doctor;
 
 import com.doctorspolis.utility.AbstractEntity;
 import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

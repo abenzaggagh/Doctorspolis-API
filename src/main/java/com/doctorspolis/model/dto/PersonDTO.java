@@ -10,10 +10,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.Date;
 
@@ -21,8 +18,10 @@ import java.util.Date;
 @Setter
 @ToString
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(value = JsonInclude.Include.NON_NULL)
+@JsonInclude(value = JsonInclude.Include.ALWAYS)
 public abstract class PersonDTO extends AbstractDTO {
 
     private String profilePicture;

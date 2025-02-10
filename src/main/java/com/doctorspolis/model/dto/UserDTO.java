@@ -30,6 +30,4 @@ public class UserDTO extends AbstractDTO {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
-    private PatientDTO patient;
-
 }

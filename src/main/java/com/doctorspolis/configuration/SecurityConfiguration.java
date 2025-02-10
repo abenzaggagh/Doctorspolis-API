@@ -31,7 +31,9 @@ public class SecurityConfiguration {
             "/auth/check-phone",
             "/auth/verify-phone",
             "/auth/verify-otp",
-            "/auth/refresh-tokens",
+            "/auth/**",
+            "/search/**",
+            "/referential/**"
     };
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;

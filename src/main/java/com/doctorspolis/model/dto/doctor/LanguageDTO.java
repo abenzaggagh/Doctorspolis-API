@@ -1,21 +1,25 @@
-package com.doctorspolis.utility;
+package com.doctorspolis.model.dto.doctor;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.io.Serializable;
+import java.util.Map;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public abstract class AbstractDTO implements Serializable {
+public class LanguageDTO {
 
-    private Long ID;
+    private String code;
+
+    private Map<String, String> value;
 
 }

@@ -2,17 +2,11 @@ package com.doctorspolis.utility;
 
 public class DoctorspolisConstants {
 
-    /**
-     *
-     */
 
     public static final String AUTHORIZATION = "Authorization";
 
     public static final String BEARER = "Bearer ";
 
-    /**
-     *
-     */
 
     public static final String ID = "ID";
 
@@ -21,6 +15,7 @@ public class DoctorspolisConstants {
     public static final String DOCTOR_TABLE = "DOCTORS";
 
     public static final String PATIENT_TABLE = "PATIENTS";
+
 
 
     /**
@@ -49,5 +44,22 @@ public class DoctorspolisConstants {
 
 
     public static final String SEARCH_ENDPOINT = "/search";
+
+
+    public static final String DOCTOR_ENDPOINT = "/doctor";
+
+
+    public static final String REFERENTIAL_ENDPOINT = "/referential";
+
+    public static final String SPECIALITY_ENDPOINT = "/speciality";
+
+    public static final String SPECIALITIES_ENDPOINT = "/specialities";
+
+
+    public static final String SPACE = " ";
+
+    public static final String EMPTY_QUERY = "";
+
+    public static final Integer NEARBY_RADIUS = 15;
 
 }

@@ -17,7 +17,7 @@ public class AuthenticationExceptionHandler {
 
     @ExceptionHandler({ MethodArgumentNotValidException.class })
     public ResponseEntity<Object> handleMethodArgumentNotValid() {
-        return new ResponseEntity<Object>("", new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("", new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 
 }
