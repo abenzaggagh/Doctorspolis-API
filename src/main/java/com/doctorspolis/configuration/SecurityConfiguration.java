@@ -33,7 +33,8 @@ public class SecurityConfiguration {
             "/auth/verify-otp",
             "/auth/**",
             "/search/**",
-            "/referential/**"
+            "/referential/**",
+            "/schedule/**",
     };
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;

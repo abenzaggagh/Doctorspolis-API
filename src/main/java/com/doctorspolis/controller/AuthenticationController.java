@@ -1,6 +1,6 @@
 package com.doctorspolis.controller;
 
-import com.doctorspolis.model.data.User;
+import com.doctorspolis.model.data.authentication.User;
 import com.doctorspolis.model.dto.authentication.*;
 import com.doctorspolis.service.AuthenticationService;
 import jakarta.validation.Valid;
@@ -63,11 +63,5 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponseDTO> refreshTokens(@RequestBody RefreshTokenDTO refreshToken) {
         return ResponseEntity.ok(this.authenticationService.refreshTokens(refreshToken.getRefreshToken()));
     }
-
-
-
-
-
-
 
 }

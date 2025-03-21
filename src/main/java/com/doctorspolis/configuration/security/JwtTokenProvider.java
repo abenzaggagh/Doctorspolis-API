@@ -1,33 +1,15 @@
 package com.doctorspolis.configuration.security;
 
-import com.doctorspolis.controller.exception.AuthenticationException;
-import com.doctorspolis.model.data.User;
-import com.doctorspolis.model.dto.authentication.AuthenticationResponseDTO;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 
 import java.security.Key;
 import java.util.Date;
-import java.util.UUID;
-import java.util.function.Function;
-
-import static com.doctorspolis.controller.exception.AuthenticationExceptionEnum.*;
-import static com.doctorspolis.utility.DoctorspolisConstants.AUTHORIZATION;
-import static com.doctorspolis.utility.DoctorspolisConstants.BEARER;
 
 @RequiredArgsConstructor
 

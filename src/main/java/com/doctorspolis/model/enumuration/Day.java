@@ -16,8 +16,6 @@ public enum Day {
     SATURDAY("SATURDAY",6),
     SUNDAY("SUNDAY", 7);
 
-    public static final int COUNT = 7;
-
     private final String label;
 
     private final Integer value;

@@ -1,6 +1,7 @@
 package com.doctorspolis.model.data.doctor;
 
 import com.doctorspolis.model.data.*;
+import com.doctorspolis.model.data.authentication.User;
 import com.doctorspolis.model.enumuration.AppointmentType;
 import com.doctorspolis.model.enumuration.Availability;
 import jakarta.persistence.*;
@@ -50,6 +51,8 @@ public class Doctor extends Person {
 
     @OneToMany
     private List<Education> educations;
+
+    private Integer appointmentDuration;
 
     @CollectionTable
     @Enumerated(EnumType.STRING)

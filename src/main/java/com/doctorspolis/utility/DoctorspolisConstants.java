@@ -16,6 +16,8 @@ public class DoctorspolisConstants {
 
     public static final String PATIENT_TABLE = "PATIENTS";
 
+    public static final String APPOINTMENT_TABLE = "APPOINTMENTS";
+
 
 
     /**
@@ -48,6 +50,7 @@ public class DoctorspolisConstants {
 
     public static final String DOCTOR_ENDPOINT = "/doctor";
 
+    public static final String SCHEDULE_ENDPOINT = "/schedule";
 
     public static final String REFERENTIAL_ENDPOINT = "/referential";
 

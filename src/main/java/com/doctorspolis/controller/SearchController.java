@@ -30,9 +30,4 @@ public class SearchController {
         return ResponseEntity.ok(searchService.nearbyDoctors(request));
     }
 
-    @GetMapping("doctor")
-    public ResponseEntity<DoctorDTO> searchDoctor(@RequestParam Long id) {
-        return ResponseEntity.ok(this.searchService.searchDoctorByID(id));
-    }
-
 }

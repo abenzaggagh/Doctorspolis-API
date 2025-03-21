@@ -1,13 +1,12 @@
 package com.doctorspolis.configuration.security;
 
-import com.doctorspolis.model.data.User;
+import com.doctorspolis.model.data.authentication.User;
 import com.doctorspolis.service.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.BadCredentialsException;

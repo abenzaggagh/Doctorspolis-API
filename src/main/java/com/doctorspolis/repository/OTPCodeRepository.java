@@ -1,8 +1,7 @@
 package com.doctorspolis.repository;
 
-import com.doctorspolis.model.data.OTPCode;
+import com.doctorspolis.model.data.authentication.OTPCode;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;

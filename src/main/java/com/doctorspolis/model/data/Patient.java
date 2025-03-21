@@ -1,5 +1,6 @@
 package com.doctorspolis.model.data;
 
+import com.doctorspolis.model.data.authentication.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;

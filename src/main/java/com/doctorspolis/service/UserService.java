@@ -1,6 +1,6 @@
 package com.doctorspolis.service;
 
-import com.doctorspolis.model.data.User;
+import com.doctorspolis.model.data.authentication.User;
 import com.doctorspolis.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;

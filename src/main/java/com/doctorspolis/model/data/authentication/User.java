@@ -1,4 +1,4 @@
-package com.doctorspolis.model.data;
+package com.doctorspolis.model.data.authentication;
 
 import com.doctorspolis.model.enumuration.Role;
 import com.doctorspolis.utility.AbstractEntity;

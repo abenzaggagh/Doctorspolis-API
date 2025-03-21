@@ -1,4 +1,4 @@
-package com.doctorspolis.model.data;
+package com.doctorspolis.model.data.authentication;
 
 import java.time.LocalDateTime;
 import java.util.Date;
