@@ -93,8 +93,8 @@ public class AuthenticationService {
         return null;
     }
 
-    @Transactional
-    public AuthenticationResponseDTO signUpDoctor(SignUpRequestDTO signUpRequestDTO) {
+
+    private AuthenticationResponseDTO signUpDoctor(SignUpRequestDTO signUpRequestDTO) {
         val email = signUpRequestDTO.getEmail();
         val phone = signUpRequestDTO.getPhone();
         val password = signUpRequestDTO.getPassword();
@@ -120,8 +120,8 @@ public class AuthenticationService {
         return response;
     }
 
-    @Transactional
-    public AuthenticationResponseDTO signUpPatient(SignUpRequestDTO signUpRequestDTO) {
+
+    private AuthenticationResponseDTO signUpPatient(SignUpRequestDTO signUpRequestDTO) {
         val email = signUpRequestDTO.getEmail();
         val phone = signUpRequestDTO.getPhone();
         val password = signUpRequestDTO.getPassword();
@@ -227,6 +227,7 @@ public class AuthenticationService {
     private OTPCode generateOrRenewOTPCode(String phone) {
         val otpCodes = otpCodeRepository.findByPhoneAndExpiryDateIsAfterAndIsUsed(phone, LocalDateTime.now(), false);
 
+        val random = new Random();
         int randomFourDigits = random.nextInt(10000);
         String code = String.format("%4d", randomFourDigits);
 
