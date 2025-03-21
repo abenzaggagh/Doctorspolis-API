@@ -107,10 +107,6 @@ public class SearchService {
     }
 
 
-    public DoctorDTO searchDoctorByID(Long id) {
-        return doctorMapper.toDTO(doctorRepository.findById(id).orElseThrow(RuntimeException::new));
-    }
-
 
     private PageDTO<DoctorDTO> calculateDistance(final SearchRequestDTO request, PageDTO<DoctorDTO> resultPage) {
         resultPage.getResult().forEach(doctorDTO -> {

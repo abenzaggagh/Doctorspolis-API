@@ -37,6 +37,8 @@ import static com.doctorspolis.model.enumuration.Role.PATIENT;
 @Service
 public class AuthenticationService {
 
+    private final Random random = new Random();
+
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManager authenticationManager;
@@ -92,7 +94,7 @@ public class AuthenticationService {
     }
 
     @Transactional
-    protected AuthenticationResponseDTO signUpDoctor(SignUpRequestDTO signUpRequestDTO) {
+    public AuthenticationResponseDTO signUpDoctor(SignUpRequestDTO signUpRequestDTO) {
         val email = signUpRequestDTO.getEmail();
         val phone = signUpRequestDTO.getPhone();
         val password = signUpRequestDTO.getPassword();
@@ -119,7 +121,7 @@ public class AuthenticationService {
     }
 
     @Transactional
-    protected AuthenticationResponseDTO signUpPatient(SignUpRequestDTO signUpRequestDTO) {
+    public AuthenticationResponseDTO signUpPatient(SignUpRequestDTO signUpRequestDTO) {
         val email = signUpRequestDTO.getEmail();
         val phone = signUpRequestDTO.getPhone();
         val password = signUpRequestDTO.getPassword();
@@ -225,7 +227,6 @@ public class AuthenticationService {
     private OTPCode generateOrRenewOTPCode(String phone) {
         val otpCodes = otpCodeRepository.findByPhoneAndExpiryDateIsAfterAndIsUsed(phone, LocalDateTime.now(), false);
 
-        val random = new Random();
         int randomFourDigits = random.nextInt(10000);
         String code = String.format("%4d", randomFourDigits);
 
